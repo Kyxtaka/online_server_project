@@ -1,3 +1,4 @@
 docker/mariadb/docker-compose.yml
 docker/flaskapi/DOCKERFILE
 docker/flaskapi/docker-compose.yml
+.venv

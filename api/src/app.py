@@ -20,6 +20,10 @@ api.init_app(app)
 db.init_app(app)
 
 
-from .views.hellowviews import ns
 api_version_path = "/api/v1"
-api.add_namespace(ns, path=api_version_path + "/hello")    
+
+from .services.hellowviews import hello_ns
+api.add_namespace(hello_ns, path=api_version_path)    
+
+from .services.usersviews import user_ns
+api.add_namespace(user_ns, path=api_version_path)

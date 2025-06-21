@@ -1,5 +1,5 @@
 from flask_restx import fields, Model
-from ..extensions import api
+from src.extensions import api
 
 computer_model = api.model("ComputerDTO", {
     "macAddress": fields.String(required=True, description="MAC address of the computer"),

@@ -1,7 +1,7 @@
 from flask_restx import Resource, Namespace, fields
-from ...model.entityModel import user_model, user_input_model, usercomputer_access_model, usercomputer_access_input_model
-from ...model.entityORM import Users, UserComputerRights, Computers, UsersCRUD
-from ...extensions import db
+from src.model.datamodel.entityModel import user_model, user_input_model, usercomputer_access_model, usercomputer_access_input_model
+from src.model.datamodel.entityORM import Users, UserComputerRights, Computers, UsersCRUD
+from src.extensions import db
 
 user_ns:Namespace = Namespace("users", description="User management API")
 
@@ -53,7 +53,6 @@ class UserItem(Resource):
             return {"message": "User deleted successfully"}, 204
         else:   
             return {"message": "User not found"}, 404
-        # return {"message": "Delete functionality not implemented yet"}, 501 
 
    
         

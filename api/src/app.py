@@ -1,5 +1,5 @@
 from flask import Flask
-from .extensions import db, api, jwt
+from src.extensions import db, api, jwt
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
@@ -34,4 +34,6 @@ api.init_app(app)
 # api.add_namespace(hello_ns, path=api_version_path)    
 
 from .services.users.usersviews import user_ns
+from .services.auth.authviews import auth_ns
 api.add_namespace(user_ns, path=api_version_path)
+api.add_namespace(auth_ns, path=api_version_path)

@@ -1,4 +1,4 @@
-from ..extensions import db
+from src.extensions import db
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, TIMESTAMP, Enum
 from werkzeug.security import generate_password_hash, check_password_hash
 

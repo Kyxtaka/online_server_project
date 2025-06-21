@@ -10,6 +10,6 @@ auth_output_model = api.model("Auth Output Model", {
     "access_token": fields.String(required=True, description="JWT access token for the user")
 })
 
-auth_jwt_accesstoken_input_model = api.model("Auth JWT Access Token Input Model", {
-    "access_token": fields.String(required=True, description="JWT access token for the user")
-})
+# auth_jwt_accesstoken_input_model = api.model("Auth JWT Access Token Input Model", {
+#     "access_token": fields.String(required=True, description="JWT access token for the user")
+# })

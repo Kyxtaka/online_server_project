@@ -1,5 +1,6 @@
 from ..extensions import db
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, TIMESTAMP, Enum
+from werkzeug.security import generate_password_hash, check_password_hash
 
 import enum
 class AppRoleList(enum.Enum):
@@ -72,11 +73,12 @@ class Users(db.Model):
         return f"<User {self.username}> with email {self.email} and role {self.role}>"  
     
     def __init__(self, username, email, role, password):
-        username = username
-        email = email
-        role = role
-        password = password
+        self.username = username
+        self.email = email
+        self.role = role
+        self.password = password
         self.createdAt = db.func.current_timestamp()
+    
 
 class UserComputerRights(db.Model):
     __tablename__ = "USERCOMPUTERRIGHTS"
@@ -93,3 +95,49 @@ class UserComputerRights(db.Model):
         self.systemAuthorityLevel = systemAuthorityLevel
 
 
+class UsersCRUD:
+    @staticmethod
+    def get_by_email(email):
+        return Users.query.filter_by(email=email).first()
+    
+    @staticmethod
+    def get_by_id(user_id):
+        return Users.query.get(user_id)
+    
+    @staticmethod
+    def get_all_users():
+        return Users.query.all()
+    
+    @staticmethod
+    def get_all_users_by_role(role):
+        return Users.query.filter_by(role=AppRoleList(role)).all()
+    
+    @staticmethod
+    def create(username:str, email:str, role:str, password:str) -> Users:
+        user = Users(username, email, AppRoleList(role), generate_password_hash(password))
+        print(f"Creating user with username: {username}, email: {email}, role: {role}")
+        print(user)
+        db.session.add(user)
+        db.session.commit()
+        return user
+    
+    @staticmethod
+    def update(id:int, username:str, email:str, role:str, password:str) -> None:
+        user:Users = Users.query.get(id)
+        if not user:
+            return None
+        user.username = username
+        user.email = email
+        user.role = AppRoleList(role)
+        user.password = generate_password_hash(password)
+        print(f"Updating user with id: {id}, username: {username}, email: {email}, role: {role}")
+        db.session.commit()
+
+    @staticmethod
+    def delete(id:int) -> bool: 
+        user:Users = Users.query.get(id)
+        if not user:
+            return False
+        db.session.delete(user)
+        db.session.commit()
+        return True

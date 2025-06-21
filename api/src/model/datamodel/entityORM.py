@@ -79,7 +79,6 @@ class Users(db.Model):
         self.password = password
         self.createdAt = db.func.current_timestamp()
     
-
 class UserComputerRights(db.Model):
     __tablename__ = "USERCOMPUTERRIGHTS"
     email = Column(String(100), ForeignKey('USERS.email'), name="email", primary_key=True)
@@ -93,7 +92,6 @@ class UserComputerRights(db.Model):
         self.email = email
         self.macAddress = macAddress
         self.systemAuthorityLevel = systemAuthorityLevel
-
 
 class UsersCRUD:
     @staticmethod

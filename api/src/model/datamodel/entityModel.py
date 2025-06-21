@@ -1,4 +1,4 @@
-from flask_restx import fields, Model
+from flask_restx import fields
 from src.extensions import api
 
 computer_model = api.model("ComputerDTO", {

@@ -116,7 +116,6 @@ class UsersCRUD:
     def create(username:str, email:str, role:str, password:str) -> Users:
         user = Users(username, email, AppRoleList(role), generate_password_hash(password))
         print(f"Creating user with username: {username}, email: {email}, role: {role}")
-        print(user)
         db.session.add(user)
         db.session.commit()
         return user

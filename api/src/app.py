@@ -34,6 +34,6 @@ api.init_app(app)
 # api.add_namespace(hello_ns, path=api_version_path)    
 
 from .services.users.usersviews import user_ns
-from .services.auth.authviews import auth_ns
+from .services.auth.auth_views import auth_ns
 api.add_namespace(user_ns, path=api_version_path)
 api.add_namespace(auth_ns, path=api_version_path)

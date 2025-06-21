@@ -14,5 +14,9 @@ def role_required(role):
         return wrapper
     return decorator
 
+
 def admin_required(fn):
-    return role_required("admin")(fn)
+    return role_required("ADMIN")(fn)
+
+def friends_required(fn):
+    return role_required("FRIENDS")(fn)

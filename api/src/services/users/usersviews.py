@@ -1,7 +1,7 @@
 from flask_restx import Resource, Namespace, fields
-from ..model.entityModel import user_model, user_input_model, usercomputer_access_model, usercomputer_access_input_model
-from ..model.entityORM import Users, UserComputerRights, Computers, UsersCRUD
-from ..extensions import db
+from ...model.entityModel import user_model, user_input_model, usercomputer_access_model, usercomputer_access_input_model
+from ...model.entityORM import Users, UserComputerRights, Computers, UsersCRUD
+from ...extensions import db
 
 user_ns:Namespace = Namespace("users", description="User management API")
 

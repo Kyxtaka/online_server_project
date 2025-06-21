@@ -16,12 +16,12 @@ db_host = os.getenv("DB_HOST")
 db_name = os.getenv("DB_NAME")
 db_port = os.getenv("DB_PORT")
 db_uri = "mysql://"+db_user+":"+db_pwd+"@"+db_host+":"+db_port+"/"+db_name
-db.init_app(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
+db.init_app(app)
 
 # SETUP JWT
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
-app.config["JWT_ALGORITHM"] = "HS256"  
+app.config["JWT_ALGORITHM"] = "HS256"
 jwt.init_app(app)
 
 
@@ -30,7 +30,8 @@ api_version_path = "/api/v1"
 api.init_app(app)
 
 #Namespaces
-from .services.hellowviews import hello_ns
-from .services.usersviews import user_ns
-api.add_namespace(hello_ns, path=api_version_path)    
+# from .services.hellowviews import hello_ns
+# api.add_namespace(hello_ns, path=api_version_path)    
+
+from .services.users.usersviews import user_ns
 api.add_namespace(user_ns, path=api_version_path)

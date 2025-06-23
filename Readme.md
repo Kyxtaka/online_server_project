@@ -29,7 +29,7 @@ I made this project to wake up and shutdown my home computers without being worr
 Note : It more preferable to install pytthon 3.13 from the online python support, it would install the `py` cli
 - Clone this repository
 - create python virtual environnement `py -3.13 -m venv .venv` 
-- activate the venv with `.venv/Script/Activate`
+- activate the venv with `.venv/Script/activate`
 - install python project dependencies with pip `pip install -r requirements.txt` 
 - mode to the focder ./api `cd ./api`
 - create the .flaskenv ==> follow steps below

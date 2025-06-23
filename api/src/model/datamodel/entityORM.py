@@ -140,3 +140,86 @@ class UsersCRUD:
         db.session.delete(user)
         db.session.commit()
         return True
+    
+class ComputersCRUD:
+    @staticmethod
+    def get_by_mac(macAddress):
+        return Computers.query.filter_by(macAddress=macAddress).first()
+    
+    @staticmethod
+    def get_all_computers():
+        return Computers.query.all()
+    
+    @staticmethod
+    def create(macAddress:str, localV4IpAddress:str, v6IpAddress:str, name:str, hostname:str, os:str, status:str) -> Computers:
+        computer = Computers(macAddress, localV4IpAddress, v6IpAddress, name, hostname, OSList(os), StatusList(status))
+        print(f"Creating computer with MAC: {macAddress}, IP: {localV4IpAddress}, Name: {name}, OS: {os}, Status: {status}")
+        db.session.add(computer)
+        db.session.commit()
+        return computer
+    
+    @staticmethod
+    def update(macAddress:str, localV4IpAddress:str, v6IpAddress:str, name:str, hostname:str, os:str, status:str) -> None:
+        computer:Computers = Computers.query.filter_by(macAddress=macAddress).first()
+        if not computer:
+            return None
+        computer.localV4IpAddress = localV4IpAddress
+        computer.v6IpAddress = v6IpAddress
+        computer.name = name
+        computer.hostname = hostname
+        computer.os = OSList(os)
+        computer.status = StatusList(status)
+        print(f"Updating computer with MAC: {macAddress}, IP: {localV4IpAddress}, Name: {name}, OS: {os}, Status: {status}")
+        db.session.commit()
+
+    @staticmethod
+    def delete(macAddress:str) -> bool:
+        computer:Computers = Computers.query.filter_by(macAddress=macAddress).first()
+        if not computer:
+            return False
+        db.session.delete(computer)
+        db.session.commit()
+        return True
+    
+class UserComputerRightsCRUD:
+    @staticmethod
+    def get_by_email_and_mac(email:str, macAddress:str):
+        return UserComputerRights.query.filter_by(email=email, macAddress=macAddress).first()
+    
+    @staticmethod
+    def get_all_rights_by_email(email:str):
+        return UserComputerRights.query.filter_by(email=email).all()
+    
+    @staticmethod
+    def get_all_rights_by_mac(macAddress:str):
+        return UserComputerRights.query.filter_by(macAddress=macAddress).all()
+    
+    @staticmethod
+    def get_all_rights():
+        return UserComputerRights.query.all()
+    
+    @staticmethod
+    def create(email:str, macAddress:str, systemAuthorityLevel:str) -> UserComputerRights:
+        rights = UserComputerRights(email, macAddress, AccessList(systemAuthorityLevel))
+        print(f"Creating user computer rights for email: {email}, MAC: {macAddress}, Authority Level: {systemAuthorityLevel}")
+        db.session.add(rights)
+        db.session.commit()
+        return rights
+    
+    @staticmethod
+    def update(email:str, macAddress:str, systemAuthorityLevel:str) -> None:
+        rights:UserComputerRights = UserComputerRights.query.filter_by(email=email, macAddress=macAddress).first()
+        if not rights:
+            return None
+        rights.systemAuthorityLevel = AccessList(systemAuthorityLevel)
+        print(f"Updating user computer rights for email: {email}, MAC: {macAddress}, Authority Level: {systemAuthorityLevel}")
+        db.session.commit()
+
+    @staticmethod
+    def delete(email:str, macAddress:str) -> bool:
+        rights:UserComputerRights = UserComputerRights.query.filter_by(email=email, macAddress=macAddress).first()
+        if not rights:
+            return False
+        db.session.delete(rights)
+        db.session.commit()
+        return True

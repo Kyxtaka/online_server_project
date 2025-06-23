@@ -7,6 +7,8 @@ class AppRoleList(enum.Enum):
     ADMIN = "ADMIN"
     USER = "USER"
 
+    def __repr__(self):
+        return self.value
     def get_role(self):
         return self.value 
 

@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_restx import Api
 from flask_jwt_extended import JWTManager
+from flask import Blueprint
 
 authorizations = {
     'Bearer Auth': {
@@ -10,7 +11,7 @@ authorizations = {
         'description': "Entrez 'Bearer <votre_jwt>'"
     }
 }
-
+api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
 api = Api(
     title='Hikari server API',
     version='1.0',

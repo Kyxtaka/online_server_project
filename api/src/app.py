@@ -1,9 +1,8 @@
 from flask import Flask
-from src.extensions import db, api, jwt
+from src.extensions import db, api, jwt, api_bp
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
-from flask_jwt_extended import JWTManager
 app = Flask(__name__)
 
 dotentv_path = join(dirname(__file__), '.flaskenv')
@@ -24,16 +23,16 @@ app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
 app.config["JWT_ALGORITHM"] = "HS256"
 jwt.init_app(app)
 
-
 #SETUP API
 api_version_path = "/api/v1"
 api.init_app(app)
 
-#Namespaces
-# from .services.hellowviews import hello_ns
-# api.add_namespace(hello_ns, path=api_version_path)    
 
-from .services.users.users_views import user_ns
-from .services.auth.auth_views import auth_ns
-api.add_namespace(user_ns, path=api_version_path)
-api.add_namespace(auth_ns, path=api_version_path)
+#Namespaces
+from src.services.users.users_views import user_ns
+from src.services.auth.auth_views import auth_ns
+from src.services.admin.admin_views import admin_ns
+all_namespaces = [user_ns, auth_ns, admin_ns]
+for ns in all_namespaces:
+    api.add_namespace(ns)
+

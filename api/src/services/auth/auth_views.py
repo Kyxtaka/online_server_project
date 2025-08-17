@@ -15,6 +15,9 @@ class Login(Resource):
         password = auth_ns.payload["password"]
         if not username: return {"msg": "Username is required"}, 400
         elif not password: return {"msg": "Password is required"}, 400
-        token = authenticate(username, password)
-        if token is not None: return {"access_token": token}, 200
-        return {"msg": "Bad credentials"}, 401
+        try:
+            token = authenticate(username, password)
+            if token is not None: return {"access_token": token}, 200
+            return {"msg": "Bad credentials"}, 401
+        except Exception as e:
+            return {"msg": str(e)}, 401

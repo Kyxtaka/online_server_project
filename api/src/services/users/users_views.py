@@ -6,12 +6,13 @@ from src.app import api_version_path
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from src.model.auth.auth_decorators import admin_required
 
-user_ns:Namespace = Namespace("users", description="User management API", path=api_version_path + "/users", decorators=[api.doc(security='BearerAuth')])
+user_ns:Namespace = Namespace("user", description="User management API", path=api_version_path + "/user", decorators=[api.doc(security='BearerAuth')])
 
 @user_ns.route("")
 class UserCollection(Resource):
     @user_ns.expect(user_input_model)
     @user_ns.marshal_with(user_model)
+    @admin_required
     def post(self):
         print("Creating a new user with payload:", user_ns.payload)
         if 'password' not in user_ns.payload:
@@ -57,6 +58,17 @@ class UserItem(Resource):
             case None:
                 return {"msg": "Unauthorized"}, 401
         return user, 200
+    
+    @jwt_required()
+    @admin_required
+    @user_ns.response(204, "User deleted")
+    def delete(self, id):
+        is_deleted = False
+        is_deleted = UsersCRUD.delete(id)
+        if is_deleted:
+            return {"msg": "User deleted successfully"}, 204
+        else:   
+            return {"msg": "User not found"}, 404
     
    
         

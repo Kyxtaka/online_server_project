@@ -84,7 +84,7 @@ class Users(db.Model):
 class UserComputerRights(db.Model):
     __tablename__ = "USERCOMPUTERRIGHTS"
     email = Column(String(100), ForeignKey('USERS.email'), name="email", primary_key=True)
-    macAddress = Column(Integer, ForeignKey('COMPUTER.macaddress'), name="macAddress", primary_key=True)
+    macAddress = Column(Integer, ForeignKey('COMPUTERS.macAddress'), name="macAddress", primary_key=True)
     systemAuthorityLevel = Column(Enum(AccessList), name="systemAuthorityLevel", nullable=False)  # e.g., 'ADMIN', 'FRIENDS', 'GUEST'
 
     def __repr__(self):
@@ -183,15 +183,15 @@ class ComputersCRUD:
     
 class UserComputerRightsCRUD:
     @staticmethod
-    def get_by_email_and_mac(email:str, macAddress:str):
+    def get_by_email_and_mac(email:str, macAddress:str) -> UserComputerRights:
         return UserComputerRights.query.filter_by(email=email, macAddress=macAddress).first()
     
     @staticmethod
-    def get_all_rights_by_email(email:str):
+    def get_all_rights_by_email(email:str) -> list[UserComputerRights]:
         return UserComputerRights.query.filter_by(email=email).all()
     
     @staticmethod
-    def get_all_rights_by_mac(macAddress:str):
+    def get_all_rights_by_mac(macAddress:str) -> list[UserComputerRights]:
         return UserComputerRights.query.filter_by(macAddress=macAddress).all()
     
     @staticmethod
@@ -214,6 +214,7 @@ class UserComputerRightsCRUD:
         rights.systemAuthorityLevel = AccessList(systemAuthorityLevel)
         print(f"Updating user computer rights for email: {email}, MAC: {macAddress}, Authority Level: {systemAuthorityLevel}")
         db.session.commit()
+        return rights
 
     @staticmethod
     def delete(email:str, macAddress:str) -> bool:

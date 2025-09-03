@@ -22,15 +22,15 @@ class UserCollection(Resource):
             return {"msg": "Access forbidden: Admins only"}, 403
         return Users.query.all()
     
-@admin_ns.route("/users/<int:user_id>")
-class UserItem(Resource):
-    @jwt_required()
-    @admin_required
-    @admin_ns.response(204, "User deleted")
-    def delete(self, id):
-        is_deleted = False
-        is_deleted = UsersCRUD.delete(id)
-        if is_deleted:
-            return {"msg": "User deleted successfully"}, 204
-        else:   
-            return {"msg": "User not found"}, 404
+# @admin_ns.route("/users/<int:user_id>")
+# class UserItem(Resource):
+#     @jwt_required()
+#     @admin_required
+#     @admin_ns.response(204, "User deleted")
+#     def delete(self, id):
+#         is_deleted = False
+#         is_deleted = UsersCRUD.delete(id)
+#         if is_deleted:
+#             return {"msg": "User deleted successfully"}, 204
+#         else:   
+#             return {"msg": "User not found"}, 404

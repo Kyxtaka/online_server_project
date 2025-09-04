@@ -5,7 +5,7 @@ from os.path import join, dirname
 from dotenv import load_dotenv
 app = Flask(__name__)
 
-dotentv_path = join(dirname(__file__), '.flaskenv')
+dotentv_path = join(dirname(__file__), '..','.flaskenv')
 load_dotenv(dotenv_path=dotentv_path)
 prod = False
 if os.getenv("ENVIRONNEMENT") != "dev": prod = True

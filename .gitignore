@@ -1,7 +1,6 @@
 docker/mariadb/docker-compose.yml
 docker/flaskapi/DOCKERFILE
 docker/flaskapi/docker-compose.yml
-
 # Created by https://www.toptal.com/developers/gitignore/api/dotenv,flask,vuejs,vue
 # Edit at https://www.toptal.com/developers/gitignore?templates=dotenv,flask,vuejs,vue
 
@@ -194,3 +193,4 @@ yarn-error.log
 # End of https://www.toptal.com/developers/gitignore/api/dotenv,flask,vuejs,vue
 api/.flaskenv
 api/.flaskenv2
+.venv

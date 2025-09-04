@@ -97,7 +97,7 @@ class UserComputerRights(db.Model):
 
 class UsersCRUD:
     @staticmethod
-    def get_by_email(email):
+    def get_by_email(email) -> Users:
         return Users.query.filter_by(email=email).first()
     
     @staticmethod

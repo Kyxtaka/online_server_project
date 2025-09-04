@@ -15,6 +15,7 @@ admin_ns = Namespace("admin", description="Admin routes", path=api_version_path 
 class UserCollection(Resource):
     @jwt_required()
     @admin_required
+    
     @admin_ns.marshal_list_with(user_model, code=200, description="List of users")
     def get(self):
         current_user = get_user(get_jwt_identity())

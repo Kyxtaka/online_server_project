@@ -8,7 +8,7 @@ app = Flask(__name__)
 dotentv_path = join(dirname(__file__), '.flaskenv')
 load_dotenv(dotenv_path=dotentv_path)
 prod = False
-if os.getenv("ENVIRONNEMENT") == "development": prod = True
+if os.getenv("ENVIRONNEMENT") != "dev": prod = True
 #SETUP DB
 db_user = os.getenv("DB_USER")
 db_pwd = os.getenv("DB_PASSWORD")
@@ -30,10 +30,6 @@ jwt.init_app(app)
 api_version_path = "/api/v1"
 api.init_app(app)
 
-
-ssl_path = f"/etc/letsencrypt/live/{os.getenv("PROD_API_URL")}/"
-# print(ssl_path)
-
 #Namespaces
 from src.services.users.users_views import user_ns
 from src.services.auth.auth_views import auth_ns
@@ -43,20 +39,3 @@ from src.services.power.power_views import devicepower_ns
 all_namespaces = [user_ns, auth_ns, admin_ns, computer_ns, devicepower_ns]
 for ns in all_namespaces:
     api.add_namespace(ns)
-
-if __name__ == "__main__":
-    ssl_cert = os.getenv("SSL_CERT")
-    ssl_key = os.getenv("SSL_KEY")
-    if prod:
-        print("running in prod prod with prod env var")
-        app.run(
-            host="0.0.0.0",
-            port=os.getenv("PROD_PORT"),
-            ssl_context=(ssl_cert, ssl_key)
-        )
-    else: 
-        print("running in developpement prod with dev env var")
-        app.run(
-            host="0.0.0.0",
-            port=5000 
-        )

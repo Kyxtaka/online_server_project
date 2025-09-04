@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  stm-api:
+    image: python:3.11-slim
+    container_name: stm-api
+    network_mode: host
+    volumes:
+      - .:/app
+    working_dir: /app
+    mem_limit: 300M
+    memswap_limit: 4G
+    command: >
+      sh -c "pip install -r requirements.txt &&
+             gunicorn --bind 0.0.0.0:5000 app:app"    

@@ -15,4 +15,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-CMD ["gunicorn", "--bind", "0.0.0.0:81443", "--certfile=/etc/letsencrypt/live/stm.api.hikarizsu.fr/fullchain.pem", "--keyfile=/etc/letsencrypt/live/stm.api.hikarizsu.fr/privkey.pem", "src.app:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8143", "--certfile=/etc/letsencrypt/live/stm.api.hikarizsu.fr/fullchain.pem", "--keyfile=/etc/letsencrypt/live/stm.api.hikarizsu.fr/privkey.pem", "src.app:app"]

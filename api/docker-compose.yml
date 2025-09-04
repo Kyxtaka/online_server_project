@@ -2,7 +2,6 @@ version: "3.9"
 
 services:
   stm-api:
-    # image: python:3.11-slim
     build: .
     container_name: stm-api
     network_mode: host
@@ -12,7 +11,4 @@ services:
       - /etc/letsencrypt/archive/stm.api.hikarizsu.fr:/etc/letsencrypt/archive/stm.api.hikarizsu.fr:ro
     working_dir: /app
     mem_limit: 300M
-    memswap_limit: 4G
-    # command: >
-    #   sh -c "pip install -r requirements.txt &&
-    #          gunicorn --bind 0.0.0.0:5000 src.app:app"    
+    memswap_limit: 4G 

@@ -30,6 +30,73 @@ DB_PORT=<DB listen port>
 DB_HOST=<FB host url or IP>
 JWT_SECRET_KEY=<JWT secret key>
 ```
+
+## Production environnement
+1. clone the repo and move to the api root folder
+```bash
+git clone https://github.com/<your-repo>.git
+cd ./online_server_project/api
+```
+2. Generate ssl certificates with certbot
+```bash
+sudo systemctl stop nginx
+sudo certbot certonly --standalone -d <api.url>
+```
+
+**Warning** : with certbot, --standalone needs nginx to be stopped (for server check), dont forget to desactivate your nginx server before running those commands
+
+**note** : If you use nginx for a reverse proxy just like me, create your certificates in standalone
+it will make a clean certificates generation and will not override you actual nginx con in your server
+
+those certificates are stored at `/etc/letsencrypt/live/<api domaine>/`
+
+3. Configure NGINX reverse proxy (in order to communicate with the api container)
+```bash
+sudo vim /etc/nginx/sites-available/stm.api.hikarizsu.fr
+```
+personally I use vim, but you can do it with nano
+
+Edit you conf just like this
+```bash
+# API
+server {
+    listen 80;
+    server_name stm.api.hikarizsu.fr;
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl;
+    server_name stm.api.hikarizsu.fr;
+
+    ssl_certificate     /etc/letsencrypt/live/<api url>/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/<api url>/privkey.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:8143;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+4. activate this conf
+```bash
+sudo ln -s /etc/nginx/sites-available/stm.api.hikarizsu.fr /etc/nginx/sites-enabled/ #create a link
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+5. Build api container and run it 
+```bash
+docker compose build
+docker compose up -d
+```
+
+Then test it 
+
 # API Documentation
 API url : [stm.api.hikarizsu.fr](hikarizsu.fr)
 

@@ -15,7 +15,7 @@ api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
 api = Api(
     title='Hikari server API',
     version='1.0',
-    description='API for managing home automation devices',
+    description='API for managing home devices remotely',
     authorizations=authorizations,
     security='Bearer Auth'
 )

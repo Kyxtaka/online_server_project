@@ -193,3 +193,4 @@ yarn-error.log
 
 # End of https://www.toptal.com/developers/gitignore/api/dotenv,flask,vuejs,vue
 api/.flaskenv
+api/.flaskenv2

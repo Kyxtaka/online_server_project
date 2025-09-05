@@ -143,7 +143,7 @@ class UsersCRUD:
     
 class ComputersCRUD:
     @staticmethod
-    def get_by_mac(macAddress):
+    def get_by_mac(macAddress) -> Computers:
         return Computers.query.filter_by(macAddress=macAddress).first()
     
     @staticmethod

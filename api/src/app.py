@@ -8,7 +8,7 @@ app = Flask(__name__)
 dotentv_path = join(dirname(__file__), '..','.flaskenv')
 load_dotenv(dotenv_path=dotentv_path)
 prod = False
-if os.getenv("ENVIRONNEMENT") != "dev": prod = True
+if os.getenv("ENVIRONMENT") != "dev": prod = True
 #SETUP DB
 db_user = os.getenv("DB_USER")
 db_pwd = os.getenv("DB_PASSWORD")

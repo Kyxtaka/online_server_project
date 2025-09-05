@@ -21,7 +21,18 @@ class ComputerCollection(Resource):
     @computer_ns.marshal_list_with(computer_model)
     def get(self):
         """Get all computers"""
-        return ComputersCRUD.get_all_computers()
+        current_user = UsersCRUD.get_by_email(get_jwt_identity())
+        if current_user is None: return {"msg": "UNAUTHORIZED"}, 401
+        match current_user.role:
+            case AppRoleList.ADMIN:
+                return ComputersCRUD.get_all_computers()
+            case _:
+                all_user_rights = UserComputerRightsCRUD.get_all_rights_by_email(current_user.email)
+                PCs = []
+                for rights in all_user_rights: 
+                    PCs.append(ComputersCRUD.get_by_mac(rights.macAddress))
+                return PCs, 200
+        return {"msg": "error"}, 500
 
     @admin_required
     @computer_ns.expect(computer_input_model)

@@ -46,6 +46,5 @@ usercomputer_access_model = api.model("UserComputerAccessDTO", {
 
 usercomputer_access_input_model = api.model("UserComputerAccessInputDTO", {
     "email": fields.String(required=True, description="Email address of the user"),
-    "macAddress": fields.String(required=True, description="MAC address of the computer"),
     "systemAuthorityLevel": fields.String(required=True, description="System authority level of the user (e.g., ADMIN, FRIENDS, GUEST)")
 })

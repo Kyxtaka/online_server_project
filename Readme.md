@@ -16,13 +16,9 @@ I made this project to wake up and shutdown my home computers without being worr
 - MariaDB for database
 
 ### Steps on linux
-- Clone this repository
-- create python virtual environnement `python3 -m venv .venv`
-- activate the venv with `.venv/bin/activate`
-- install python project dependencies with pip `pip install -r requirements.txt` 
-- mode to the focder ./api `cd ./api`
-- create the .flaskenv ==> follow steps below
-- run the api `flask run` or `flask run --debug` for debugging mod
+1. API setup
+
+To see the API installation guide click [here](https://github.com/Kyxtaka/online_server_project/tree/main/api)
 
 
 ### Steps on vindows 

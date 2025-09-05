@@ -34,8 +34,8 @@ api.init_app(app)
 from src.services.users.users_views import user_ns
 from src.services.auth.auth_views import auth_ns
 from src.services.admin.admin_views import admin_ns
-from src.services.computers.computers_views import computer_ns
+from src.services.computers.computers_views import computer_ns, computer_rights_ns
 from src.services.power.power_views import devicepower_ns
-all_namespaces = [user_ns, auth_ns, admin_ns, computer_ns, devicepower_ns]
+all_namespaces = [user_ns, auth_ns, admin_ns, computer_ns, devicepower_ns, computer_rights_ns]
 for ns in all_namespaces:
     api.add_namespace(ns)

@@ -1,5 +1,5 @@
 from flask import Flask, request
-from flask_restx import Api, Resource, fields, Namespace
+from flask_restx import Api, Resource, fields, Namespace, reqparse
 from src.extensions import api
 from src.app import api_version_path
 from src.model.datamodel.entityORM import Users, Computers, UserComputerRights, ComputersCRUD, UsersCRUD, UserComputerRightsCRUD, AppRoleList, OSList, StatusList
@@ -13,7 +13,7 @@ import os
 import re 
 
 
-devicepower_ns  = Namespace('devicePower', description='devicePower endpoint', path=api_version_path+'/devicePower')
+devicepower_ns  = Namespace('WOL', description='WOL endpoint', path=api_version_path+'/wol')
 
 
 
@@ -47,6 +47,9 @@ def check_user_validity(mac: str) -> bool:
     else: return False
 
 
+
+wol_req_parser = reqparse.RequestParser()
+wol_req_parser.add_argument("mac", type="str", required=True, help="PC Mac Address", location="args")
 @devicepower_ns.route("/wake")
 class WakeOnLan(Resource):
     @jwt_required()

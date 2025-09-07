@@ -3,6 +3,7 @@ import { CookieService, CookieOptions } from 'ngx-cookie-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, Timestamp } from 'rxjs';
+import { ApiAuthAService} from '../api/api.service';
 
 export enum Privilege {
   USER = "USER",
@@ -17,21 +18,32 @@ export interface UserData {
   createdAt: Date | null
 }
 
-// export function tokenGetter() {
-//   cookieStore.get("access_level")
-// }
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  
-  constructor(private cookieService: CookieService, private jwtHelper: JwtHelperService) { 
+  constructor(private cookieService: CookieService, private jwtHelper: JwtHelperService, private apiAuthService: ApiAuthAService) { }
+
+  private token_name: string = "access_level";
+
+  logout(): void {
+    this.cookieService.delete(this.token_name);
     
   }
 
-  private token_name: string = "access_level";
+  login(identifier: string, password: string): void {
+    console.log("logging...");
+    this.apiAuthService.login(identifier, password)
+      .subscribe({
+        next( apiLoginResponse ) {
+          console.log(`API login token Response : ${apiLoginResponse.access_token}`)
+        },
+        error(err) {
+          console.log(`Error while retriving user access token: ${err}`)
+        },
+      });
+  }
 
   setToken(token: string): void {
     const expirationDate: Date | null = this.jwtHelper.getTokenExpirationDate(token);; // Convert to milliseconds
@@ -68,9 +80,7 @@ export class AuthService {
     });
   }
 
-  logout(): void {
-    this.cookieService.delete(this.token_name)
-  }
+  
 
 
 

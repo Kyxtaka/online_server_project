@@ -19,7 +19,7 @@ export class ApiAuthAService {
 
   login(identifier: string, password: string): Observable<accesTokenResponse> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'})
-    const body = { identifier, password}
+    const body = { "username":identifier, password}
     return this.httpClient.post<accesTokenResponse>(this.apiAuthEndpoint, body, { headers })
   }
 

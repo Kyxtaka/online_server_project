@@ -3,6 +3,7 @@ from src.extensions import db, api, jwt, api_bp
 import os
 from os.path import join, dirname
 from dotenv import load_dotenv
+from flask_cors import CORS
 app = Flask(__name__)
 
 dotentv_path = join(dirname(__file__), '..','.flaskenv')
@@ -29,6 +30,13 @@ jwt.init_app(app)
 #SETUP API
 api_version_path = "/api/v1"
 api.init_app(app)
+
+#SETUP CORS
+authorized_clients = [
+    "https://stm.hikarizsu.fr", 
+    "http://localhost:4200"
+]
+CORS(app, supports_credentials=True, origins=authorized_clients)
 
 #Namespaces
 from src.services.users.users_views import user_ns

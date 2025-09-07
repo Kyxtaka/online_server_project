@@ -14,6 +14,8 @@ export class ApiAuthAService {
   private api: string = environment.APIURL;
 
   private apiAuthEndpoint: string = `${this.api}/auth/login`;
+  private testEnd: string = `${this.api}/admin/users`;
+
 
   constructor(private httpClient: HttpClient) { }
 
@@ -21,6 +23,11 @@ export class ApiAuthAService {
     const headers = new HttpHeaders({'Content-Type': 'application/json'})
     const body = { "username":identifier, password}
     return this.httpClient.post<accesTokenResponse>(this.apiAuthEndpoint, body, { headers })
+  }
+
+  test(): Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.httpClient.get(this.testEnd, { headers })
   }
 
 }

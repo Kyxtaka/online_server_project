@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ApiAuthAService } from '../../../core/services/api/api.service';
 
 @Component({
   selector: 'app-login',
@@ -20,10 +21,23 @@ export class LoginComponent {
     }
   )
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {}
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private apiAuthS: ApiAuthAService) {}
 
   ngOnInit()  {
     console.log("onInit isLoggedIn:", this.authService.isLoggedIn())
+    if (this.authService.isLoggedIn()) {
+      // this.apiAuthS.test().subscribe( () =>{
+      //   console.log('called')
+      // })
+      this.apiAuthS.test().subscribe({
+        next: res => {
+          console.log('api called res', res)
+        },
+        error: err => {
+          console.log('err', err)
+        }
+      })
+    }
   }
   
   onSubmit() {

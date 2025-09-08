@@ -30,14 +30,14 @@ class UserCollection(Resource):
         )
         return user, 201
     
-@user_ns.route("")
-class UserItem(Resource):
     @jwt_required()
     @user_ns.marshal_with(user_model)
     def get(self):
         user = UsersCRUD.get_by_email(get_jwt_identity())
         return user
     
+@user_ns.route("/<id:int>")
+class UserItem(Resource):
     @jwt_required()
     @user_ns.expect(user_input_model)
     @user_ns.marshal_with(user_model)

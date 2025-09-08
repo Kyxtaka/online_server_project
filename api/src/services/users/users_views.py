@@ -36,7 +36,7 @@ class UserCollection(Resource):
         user = UsersCRUD.get_by_email(get_jwt_identity())
         return user
     
-@user_ns.route("/<id:int>")
+@user_ns.route("/<int:id>")
 class UserItem(Resource):
     @jwt_required()
     @user_ns.expect(user_input_model)

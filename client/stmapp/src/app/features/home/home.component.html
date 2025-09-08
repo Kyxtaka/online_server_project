@@ -1,6 +1,11 @@
-<p>home works!</p>
-<div id="main-content">
+<div *ngIf="isLoading" class="loading">
+  <p>loading...</p>
+  <!-- ou un vrai spinner -->
+  <div class="spinner"></div>
+</div>
+
+<div *ngIf="!isLoading && data" id="main-content">
     <div id="logged-msg">
-        <h2>Welcome back</h2>
+        <h2>Welcome back {{ this.data.username}}</h2>
     </div>
 </div>

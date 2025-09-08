@@ -5,6 +5,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, of, Timestamp } from 'rxjs';
 import { ApiAuthAService} from '../api/api.service';
 import { Router } from '@angular/router';
+import { UserService } from '../user/user.service';
 
 export enum Privilege {
   USER = "USER",
@@ -22,7 +23,9 @@ export class AuthService {
     private cookieService: CookieService, 
     private jwtHelper: JwtHelperService, 
     private apiAuthService: ApiAuthAService,
-    private router: Router) { }
+    private router: Router,
+    private userService: UserService
+  ) { }
 
   private token_name: string = "access_token";
 
@@ -36,6 +39,7 @@ export class AuthService {
     return this.apiAuthService.login(identifier, password).pipe(
       map(res => {
         this.setToken(res.access_token);
+        this.userService.retriveUserInfos();
         return true;
       }),
       catchError(err => {

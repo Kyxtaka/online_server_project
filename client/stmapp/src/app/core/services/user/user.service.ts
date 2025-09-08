@@ -1,11 +1,66 @@
 import { Injectable } from '@angular/core';
 import { ApiUserService } from '../api/api.service';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
+import { UserDTO } from '../../../models/dto/userDTO';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private apiService: ApiUserService) { }
+  public userDataSubject: BehaviorSubject<UserDTO | null>;
+  public userData$: Observable<UserDTO | null>
+
+  constructor(private apiService: ApiUserService) {
+    this.userDataSubject = new BehaviorSubject<UserDTO | null>(null);
+    this.userData$ = this.userDataSubject.asObservable();
+
+   }
+
+  public getUserData(): UserDTO | null {
+    return this.userDataSubject.getValue();
+  }
+ 
+  public updateUserData(data: UserDTO | null): void {
+    this.userDataSubject.next(data);
+  }
+
+  public emptyUserData():void  {
+    this.userDataSubject.next(null);
+  }
+
+  public retriveUserInfos(): void {
+    this.apiService.getUserInfos().subscribe({
+      next: (response) => {
+        const data: UserDTO = {
+          id: response.id,
+          username: response.username,
+          email: response.email,
+          role: response.role,
+          createdAt: response.createdAt
+        };
+        this.updateUserData(data);
+        return this.getUserData();
+      },
+      error: (err) => {
+        console.log("error while retriving user data", err);
+        return null
+      }
+    })
+    // this.apiService.getUserInfos().pipe(
+    //   map( (response) => {
+    //     const data: UserDTO = {
+    //       id: response.id,
+
+    //     } 
+    //     this.userDataSubject.next(response);
+    //   }),
+    //   catchError( (err) => {
+    //     console.log("error while retriving user data: ", err);
+    //     this.userDataSubject.next(null);
+    //     return of(this.userData$)
+    //   })
+    // );
+    // return this.userData$
+  }
 }

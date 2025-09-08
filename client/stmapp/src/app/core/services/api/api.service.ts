@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { accesTokenResponse } from '../../../models/api/response/auth-response';
-import { userDTO } from '../../../models/dto/userDTO';
+import { UserDTO } from '../../../models/dto/userDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -32,13 +32,13 @@ export class ApiAuthAService {
 export class ApiUserService {
 
   private api: string = environment.APIURL;
-  private testEnd: string = `${this.api}/users`;
+  private testEnd: string = `${this.api}/user`;
 
   constructor(private httpClient: HttpClient) {}
 
-  getUserInfos(): Observable<userDTO> {
+  getUserInfos(): Observable<UserDTO> {
     const headers = new HttpHeaders({'Content-Type': 'application/json'})
-    return this.httpClient.get<userDTO>(this.testEnd, { headers })
+    return this.httpClient.get<UserDTO>(this.testEnd, { headers })
   }
 }
 

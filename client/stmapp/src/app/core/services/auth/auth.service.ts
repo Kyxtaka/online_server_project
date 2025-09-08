@@ -10,13 +10,7 @@ export enum Privilege {
   ADMIN = "ADMIN"
 };
 
-export interface UserData {
-  userId: number,
-  username: string,
-  email: string,
-  roles: Privilege[] | null,
-  createdAt: Date | null
-}
+
 
 @Injectable({
   providedIn: 'root'
@@ -32,21 +26,6 @@ export class AuthService {
     
   }
 
-  // login(identifier: string, password: string): boolean {
-  //   console.log("logging...");
-  //   this.apiAuthService.login(identifier, password)
-  //     .subscribe({
-  //       next: (apiLoginResponse) => {
-  //         console.log(`API login token Response : ${apiLoginResponse.access_token}`);
-  //         const token: string = apiLoginResponse.access_token;
-  //         this.setToken(token);
-  //       },
-  //       error: (err) => {
-  //         console.log(`Error while retriving user access token: ${err}`)
-  //       },
-  //     });
-  //   return this.isLoggedIn();
-  // }
   login(identifier: string, password: string): Observable<boolean>  {
     console.log("logging...");
     return this.apiAuthService.login(identifier, password).pipe(

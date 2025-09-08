@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class HomeComponent implements OnInit{
 
-  public data: UserDTO | null = null;
+  public data: UserDTO | null = null; 
   public isLoading = true;
 
   constructor(private userService: UserService) {}

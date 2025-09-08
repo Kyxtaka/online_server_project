@@ -5,6 +5,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ApiAuthAService } from '../../../core/services/api/api.service';
+import { AppRoutes } from '../../../app.routes';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private apiAuthS: ApiAuthAService) {}
   ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['home']);
+      this.router.navigate([AppRoutes.HOME]);
     }
   }
 
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit {
     if (identifier && password) {
       this.authService.login(identifier, password).subscribe( success => { 
         // console.log("success", success)
-        success ? this.router.navigate(['/home']): alert("Incerect credentials");
+        success ? this.router.navigate([AppRoutes.HOME]): alert("Incerect credentials");
       });
     }
   }

@@ -30,12 +30,12 @@ class UserCollection(Resource):
         )
         return user, 201
     
-@user_ns.route("/<int:id>")
+@user_ns.route("")
 class UserItem(Resource):
     @jwt_required()
     @user_ns.marshal_with(user_model)
-    def get(self, id):
-        user = Users.query.get_or_404(id)
+    def get(self):
+        user = UsersCRUD.get_by_email(get_jwt_identity())
         return user
     
     @jwt_required()

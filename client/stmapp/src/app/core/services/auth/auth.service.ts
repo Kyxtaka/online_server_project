@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CookieService, CookieOptions } from 'ngx-cookie-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, Timestamp } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, Timestamp } from 'rxjs';
 import { ApiAuthAService} from '../api/api.service';
 
 export enum Privilege {
@@ -10,13 +10,7 @@ export enum Privilege {
   ADMIN = "ADMIN"
 };
 
-export interface UserData {
-  userId: number,
-  username: string,
-  email: string,
-  roles: Privilege[] | null,
-  createdAt: Date | null
-}
+
 
 @Injectable({
   providedIn: 'root'
@@ -25,25 +19,27 @@ export class AuthService {
 
   constructor(private cookieService: CookieService, private jwtHelper: JwtHelperService, private apiAuthService: ApiAuthAService) { }
 
-  private token_name: string = "access_level";
+  private token_name: string = "access_token";
 
   logout(): void {
     this.cookieService.delete(this.token_name);
     
   }
 
-  login(identifier: string, password: string): void {
+  login(identifier: string, password: string): Observable<boolean>  {
     console.log("logging...");
-    this.apiAuthService.login(identifier, password)
-      .subscribe({
-        next( apiLoginResponse ) {
-          console.log(`API login token Response : ${apiLoginResponse.access_token}`)
-        },
-        error(err) {
-          console.log(`Error while retriving user access token: ${err}`)
-        },
-      });
+    return this.apiAuthService.login(identifier, password).pipe(
+      map(res => {
+        this.setToken(res.access_token);
+        return true;
+      }),
+      catchError(err => {
+        console.error("Login error", err);
+        return of(false);
+      })
+    );
   }
+
 
   setToken(token: string): void {
     const expirationDate: Date | null = this.jwtHelper.getTokenExpirationDate(token);; // Convert to milliseconds
@@ -62,11 +58,15 @@ export class AuthService {
   isTokenExpired(): boolean {
     const token: string | null = this.getToken()
     const isExpired: boolean = this.jwtHelper.isTokenExpired(token)
-    return !token || !isExpired  
+    console.log(`token is present: ${token}`)
+    console.log(`isExpired: `, isExpired)
+    console.log(`token is null : ${!token} || isExpired ${isExpired}`)
+    return !token || isExpired  
   }
 
   isLoggedIn(): boolean {
-    return this.isTokenExpired();
+    console.log(`isLoggedIn (not expired):`, !this.isTokenExpired())
+    return !this.isTokenExpired();
   }
 
   getUserIdentifier(): string {

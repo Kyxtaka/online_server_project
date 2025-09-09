@@ -1,7 +1,14 @@
-<p>header works!</p>
-<nav class="navbar">
-  <a routerLink="/home">Accueil</a>
-  <a routerLink="/profile">Profil</a>
-  <a routerLink="/settings">Paramètres</a>
-  <!-- <a routerLink="/login" (click)="logout()">Déconnexion</a> -->
-</nav>
+<div class="app-header">
+    <div class="app-header-navigation">
+        <div class="tabs">
+            <div id="services-redirection">
+                <a routerLink="/home" *ngIf="isLogged">Account Center</a>
+                <a routerLink="/ComputerCenter" *ngIf="isLogged">Computer Center</a>
+            </div>
+            <div class="app-header-actions-buttons">
+                <button id="disconect" class="redirector-link" routerLink="/disconect" *ngIf="isLogged" >Disconect</button>
+                <button id="support"  class="redirector-link" routerLink="/support">Support</button>
+            </div>   
+        </div>
+    </div>
+</div>

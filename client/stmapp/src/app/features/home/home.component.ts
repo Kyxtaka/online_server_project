@@ -2,33 +2,40 @@ import { Component, OnInit } from '@angular/core';
 import { UserDTO } from '../../models/dto/userDTO';
 import { UserService } from '../../core/services/user/user.service';
 import { CommonModule } from '@angular/common';
+import { TableColumn, DashboardComponent } from '../../shared/dashboard/dashboard.component';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
+    DashboardComponent
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit{
 
-  public data: UserDTO | null = null; 
   public isLoading = true;
 
-  constructor(private userService: UserService) {}
-  ngOnInit(): void {
+  public userData$: Observable<UserDTO[] | null>;
+
+  constructor(private userService: UserService) {
     this.userService.retriveUserInfos();
-    this.userService.userData$.subscribe( {
-      next: () => {
-        this.data = this.userService.getUserData();
-        this.isLoading = false;
-        console.log(`id: ${this.data?.id}, email: ${this.data?.email}, username: ${this.data?.username}, role: ${this.data?.role}`);
-      },
-      error: () => {
-        this.isLoading = false;
-      }
-    });
+    this.userData$ = this.userService.userData$.pipe(
+      map(user => user != null ? [user] : [])
+    );
+  }
+
+  userColumns: TableColumn<UserDTO>[] = [
+    { key: 'id', header: 'ID' },
+    { key: 'email', header: 'Email' },
+    { key: 'username', header: 'Username' },
+    { key: 'role', header: 'Role' }
+  ];
+
+  ngOnInit(): void {
+    console.log(this.userData$)
   }
 }

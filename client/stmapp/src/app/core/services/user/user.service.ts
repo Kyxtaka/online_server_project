@@ -47,20 +47,5 @@ export class UserService {
         return null
       }
     })
-    // this.apiService.getUserInfos().pipe(
-    //   map( (response) => {
-    //     const data: UserDTO = {
-    //       id: response.id,
-
-    //     } 
-    //     this.userDataSubject.next(response);
-    //   }),
-    //   catchError( (err) => {
-    //     console.log("error while retriving user data: ", err);
-    //     this.userDataSubject.next(null);
-    //     return of(this.userData$)
-    //   })
-    // );
-    // return this.userData$
   }
 }

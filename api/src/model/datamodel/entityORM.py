@@ -9,6 +9,10 @@ class AppRoleList(enum.Enum):
 
     def __repr__(self):
         return self.value
+    
+    def __str__(self):
+        return self.value
+    
     def get_role(self):
         return self.value 
 
@@ -17,6 +21,12 @@ class AccessList(enum.Enum):
     FRIENDS = "FRIENDS"
     GUEST = "GUEST"
 
+    def __repr__(self):
+        return self.value
+
+    def __str__(self):
+        return self.value
+
     def get_role(self):
         return self.value
     
@@ -24,6 +34,12 @@ class StatusList(enum.Enum):
     ONLINE = "ONLINE"
     OFFLINE = "OFFLINE"
     UNKNOWN = "UNKNOWN"
+
+    def __repr__(self):
+        return self.value
+
+    def __str__(self):
+        return self.value
 
     def get_status(self):
         return self.value
@@ -34,6 +50,12 @@ class OSList(enum.Enum):
     MACOS = "MACOS"
     OTHER = "OTHER"
 
+    def __repr__(self):
+        return self.value
+
+    def __str__(self):
+        return self.value
+    
     def get_os(self):
         return self.value
 

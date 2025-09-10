@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { RouterModule } from '@angular/router';
+import { map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -14,12 +15,18 @@ import { RouterModule } from '@angular/router';
 export class HeaderComponent implements OnInit {
 
   public isLogged: boolean = false;
-  public username: string = "None";
+  public username: Observable<string> | null;
   
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private userService: UserService) {
+    this.userService.retriveUserInfos();
+    this.username = this.userService.userData$.pipe(
+      map( user => user?.username ? user.username : "none")
+    );
+    this.isLogged = this.authService.isLoggedIn();
+  }
 
   ngOnInit(): void {
-      this.isLogged = this.authService.isLoggedIn();
+      
   }
 
 }

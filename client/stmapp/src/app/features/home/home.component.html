@@ -1,11 +1,7 @@
-<div *ngIf="isLoading" class="loading">
-  <p>loading...</p>
-  <!-- ou un vrai spinner -->
-  <div class="spinner"></div>
-</div>
-
-<div *ngIf="!isLoading && data" id="main-content">
-    <div id="logged-msg">
-        <h2>Welcome back {{ this.data.username}}</h2>
-    </div>
+<h2 class="text-xl font-bold mb-4">Liste des utilisateurs</h2>
+<div *ngIf="userData$ | async">
+  <app-dashboard
+    [columns]="userColumns"
+    [data]="userData$ | async">
+  </app-dashboard>
 </div>

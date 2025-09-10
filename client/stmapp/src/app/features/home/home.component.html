@@ -1,6 +1,7 @@
-<p>home works!</p>
-<div id="main-content">
-    <div id="logged-msg">
-        <h2>Welcome back</h2>
-    </div>
+<h2 class="text-xl font-bold mb-4">Liste des utilisateurs</h2>
+<div *ngIf="userData$ | async">
+  <app-dashboard
+    [columns]="userColumns"
+    [data]="userData$ | async">
+  </app-dashboard>
 </div>

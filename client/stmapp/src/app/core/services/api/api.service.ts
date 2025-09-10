@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { accesTokenResponse } from '../../../models/api/response/auth-response';
+import { UserDTO } from '../../../models/dto/userDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,7 @@ export class ApiAuthAService {
     return this.httpClient.post<accesTokenResponse>(this.apiAuthEndpoint, body, { headers })
   }
 
-  test(): Observable<any> {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'})
-    return this.httpClient.get(this.testEnd, { headers })
-  }
+  
 
 }
 
@@ -32,7 +30,16 @@ export class ApiAuthAService {
   providedIn: 'root'
 })
 export class ApiUserService {
-  constructor() {}
+
+  private api: string = environment.APIURL;
+  private testEnd: string = `${this.api}/user`;
+
+  constructor(private httpClient: HttpClient) {}
+
+  getUserInfos(): Observable<UserDTO> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'})
+    return this.httpClient.get<UserDTO>(this.testEnd, { headers })
+  }
 }
 
 @Injectable({
@@ -46,6 +53,8 @@ export class ApiAdminService{
   providedIn: 'root'
 })
 export class ApiComputerService{
+
+  
   constructor() {}
 }
 

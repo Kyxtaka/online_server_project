@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ApiAuthAService } from '../../../core/services/api/api.service';
+import { AppRoutes } from '../../../app.routes';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { ApiAuthAService } from '../../../core/services/api/api.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm = this.fb.group(
     {
       identifier: [''],
@@ -22,32 +23,20 @@ export class LoginComponent {
   )
 
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private apiAuthS: ApiAuthAService) {}
-
-  ngOnInit()  {
-    console.log("onInit isLoggedIn:", this.authService.isLoggedIn())
+  ngOnInit(): void {
     if (this.authService.isLoggedIn()) {
-      // this.apiAuthS.test().subscribe( () =>{
-      //   console.log('called')
-      // })
-      this.apiAuthS.test().subscribe({
-        next: res => {
-          console.log('api called res', res)
-        },
-        error: err => {
-          console.log('err', err)
-        }
-      })
+      this.router.navigate([AppRoutes.HOME]);
     }
   }
-  
+
   onSubmit() {
-    console.log(this.loginForm.value)
+    // console.log(this.loginForm.value)
     const { identifier, password } = this.loginForm.value as { identifier: string; password: string };
-    console.log(`Submit form data get:` , identifier, password)
+    // console.log(`Submit form data get:` , identifier, password)
     if (identifier && password) {
       this.authService.login(identifier, password).subscribe( success => { 
-        console.log("success", success)
-        success ? this.router.navigate(['/home']): alert("Incerect credentials");
+        // console.log("success", success)
+        success ? this.router.navigate([AppRoutes.HOME]): alert("Incerect credentials");
       });
     }
   }

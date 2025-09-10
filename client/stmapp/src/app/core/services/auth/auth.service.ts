@@ -4,6 +4,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, catchError, map, Observable, of, Timestamp } from 'rxjs';
 import { ApiAuthAService} from '../api/api.service';
+import { Router } from '@angular/router';
+import { UserService } from '../user/user.service';
 
 export enum Privilege {
   USER = "USER",
@@ -17,13 +19,19 @@ export enum Privilege {
 })
 export class AuthService {
 
-  constructor(private cookieService: CookieService, private jwtHelper: JwtHelperService, private apiAuthService: ApiAuthAService) { }
+  constructor(
+    private cookieService: CookieService, 
+    private jwtHelper: JwtHelperService, 
+    private apiAuthService: ApiAuthAService,
+    private router: Router,
+    private userService: UserService
+  ) { }
 
   private token_name: string = "access_token";
 
   logout(): void {
     this.cookieService.delete(this.token_name);
-    
+    this.router.navigate(['/login'])
   }
 
   login(identifier: string, password: string): Observable<boolean>  {
@@ -31,6 +39,7 @@ export class AuthService {
     return this.apiAuthService.login(identifier, password).pipe(
       map(res => {
         this.setToken(res.access_token);
+        this.userService.retriveUserInfos();
         return true;
       }),
       catchError(err => {
@@ -66,6 +75,7 @@ export class AuthService {
 
   isLoggedIn(): boolean {
     console.log(`isLoggedIn (not expired):`, !this.isTokenExpired())
+    this.isTokenExpired() ? this.logout(): false;
     return !this.isTokenExpired();
   }
 

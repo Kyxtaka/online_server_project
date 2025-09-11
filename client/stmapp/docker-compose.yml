@@ -6,7 +6,7 @@ services:
     ports: 
       - "8144:80"
     volumes:
-      - :/app
+      - .:/app
       - /etc/letsencrypt/live/stm.api.hikarizsu.fr:/etc/letsencrypt/live/stm.hikarizsu.fr:ro
       - /etc/letsencrypt/archive/stm.hikarizsu.fr:/etc/letsencrypt/archive/stm.hikarizsu.fr:ro
     working_dir: /app

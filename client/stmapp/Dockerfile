@@ -7,8 +7,7 @@ RUN npm run build --configuration stmapp
 
 FROM nginx:alpine
 COPY --from=build /app/dist/stmapp /usr/share/nginx/html
-COPY ./nginx.conf /etc/nginx/sites-available
-RUN ln -s /etc/nginx/sites-available/nginx.conf /etc/nginx/sites-enabled/ 
+COPY ./nginx.conf /etc/nginx/sites-enabled
 RUN nginx -t
 RUN systemctl reaload nginx
 

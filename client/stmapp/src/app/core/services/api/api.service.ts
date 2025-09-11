@@ -4,6 +4,10 @@ import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { accesTokenResponse } from '../../../models/api/response/auth-response';
 import { UserDTO } from '../../../models/dto/userDTO';
+import { ComputerDTO } from '../../../models/dto/computerDTO';
+import { MsgResponse } from '../../../models/api/response/msg-response';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -21,9 +25,6 @@ export class ApiAuthAService {
     const body = { "username":identifier, password}
     return this.httpClient.post<accesTokenResponse>(this.apiAuthEndpoint, body, { headers })
   }
-
-  
-
 }
 
 @Injectable({
@@ -54,8 +55,23 @@ export class ApiAdminService{
 })
 export class ApiComputerService{
 
-  
-  constructor() {}
+  private api: string;
+  private computerEnpoint: string;
+
+  constructor(private httpClient: HttpClient) {
+    this.api = environment.APIURL;
+    this.computerEnpoint = `${this.api}/computers`;
+  }
+
+  getComputersInfos(): Observable<ComputerDTO[]> {
+    const headers = new HttpHeaders( {'Content-Type': 'application/json'} );
+    return this.httpClient.get<ComputerDTO[]>(this.computerEnpoint, { headers});
+  }
+
+  getIndividualComputerInfos(individualMacAdress: string): Observable<ComputerDTO> {
+    const headers = new HttpHeaders( {'Content-Type': 'application/json'} );
+    return this.httpClient.get<ComputerDTO>(`${this.computerEnpoint}/${individualMacAdress}`, { headers });
+  }
 }
 
 @Injectable({
@@ -69,5 +85,17 @@ export class ApiComputerRightsService{
   providedIn: 'root'
 })
 export class ApiWolService{
-  constructor() {}
+  private api: string
+  private wolEndpoint: string
+
+  constructor(private httpClient: HttpClient) {
+    this.api = environment.APIURL;
+    this.wolEndpoint = `${this.api}/wol/wake` 
+  }
+
+  wake(pcMac: string): Observable<MsgResponse> {
+    const headers = new HttpHeaders( {'Content-Type': 'application/json'} );
+    const body = { 'mac': pcMac}
+    return this.httpClient.post<MsgResponse>(this.wolEndpoint, body, {headers});
+  }
 }

@@ -11,6 +11,7 @@ export class WolService {
   wakePC(pcMac: string): Observable<string> {
     return this.apiWolService.wake(pcMac).pipe(
       map(res => {
+        console.log('test msg ans', res.msg);
         return res.msg;
       }),
       catchError(

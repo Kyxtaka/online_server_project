@@ -35,11 +35,14 @@ export class HomeComponent implements OnInit{
   }
 
   public wakePc(pc: ComputerDTO) {
-    // ⚠️ Il faut que ton UserDTO contienne l’adresse MAC du PC
     this.wolService.wakePC(pc.macAddress).subscribe(msg => {
       console.log(`WOL result for ${pc.hostname}: ${msg}`);
       alert(msg)
     });
+  }
+
+  onDashboardAction(event: { action: string; row: ComputerDTO }) {
+    console.log("action executed :", event.action, event.row);
   }
 
   userColumns: TableColumn<UserDTO>[] = [
@@ -61,7 +64,7 @@ export class HomeComponent implements OnInit{
   ]
 
   computerAction: TableAction<ComputerDTO>[] = [
-    {label: 'Wake me up', color: 'green', action: (pc) => this.wakePc(pc)}
+    {label: 'Wake me up', color: '#b8ff00', action: (pc) => this.wakePc(pc)}
   ]
 
   ngOnInit(): void {

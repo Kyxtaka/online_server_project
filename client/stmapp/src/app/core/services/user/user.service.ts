@@ -19,7 +19,14 @@ export class UserService {
 
   public getUserData(): UserDTO | null {
     return this.userDataSubject.getValue();
+  
   }
+
+  // public getUserData2(): Observable<UserDTO> {
+  //   if (this.userDataSubject.getValue() != null) {
+  //     return new 
+  //   }
+  // }
  
   public updateUserData(data: UserDTO | null): void {
     this.userDataSubject.next(data);

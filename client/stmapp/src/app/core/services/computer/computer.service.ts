@@ -29,6 +29,10 @@ export class ComputerService {
     this.computerDataSubject.next(null);
   }
 
+  logout(): void {
+    this.emptyComputerData();
+  }
+
   retrieveComputerData(): void {
     this.apiComputerService.getComputersInfos().subscribe({
       next: (response) => {

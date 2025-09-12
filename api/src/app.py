@@ -34,6 +34,7 @@ api.init_app(app)
 #SETUP CORS
 authorized_clients = [
     "https://stm.hikarizsu.fr", 
+    "https://stmclient.hikarizsu.fr",
     "http://localhost:4200"
 ]
 CORS(app, supports_credentials=True, origins=authorized_clients)

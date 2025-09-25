@@ -63,7 +63,7 @@ class ComputerItem(Resource):
     def put(self, computer_mac):
         """Update a computer by MAC address"""
         data = request.json
-        return ComputersCRUD.update(computer_mac, data)
+        return ComputersCRUD.update(computer_mac, data['localV4IpAddress'], data['v6IpAddress'], data['name'], data['hostname'], data['os'], data['status'])
 
     @computer_ns.response(204, 'Computer deleted')
     @admin_required

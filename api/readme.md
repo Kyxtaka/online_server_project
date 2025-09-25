@@ -41,6 +41,9 @@ cd ./online_server_project/api
 ```bash
 sudo systemctl stop nginx
 sudo certbot certonly --standalone -d <api.url>
+# or 
+sudo certbot -d "*.hikarizsu.fr" -d "hikarizsu.fr" --manual --preferred-challenges=dns certonly #certif you domaine name and all * sub domain rout ==> follow specials step to do it 
+
 ```
 
 **Warning** : with certbot, --standalone needs nginx to be stopped (for server check), dont forget to desactivate your nginx server before running those commands

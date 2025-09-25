@@ -47,7 +47,9 @@ export class ApiUserService {
   providedIn: 'root'
 })
 export class ApiAdminService{
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
+
+  // getAllUserInfos()
 }
 
 @Injectable({

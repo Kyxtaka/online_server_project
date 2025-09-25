@@ -18,10 +18,10 @@ export const appConfig: ApplicationConfig = {
         {
           config: {
             tokenGetter: () => inject(AuthService).getToken(),
-            allowedDomains: ["stm.api.hikarizsu.fr"],
+            allowedDomains: ["stm-api.hikarizsu.fr"],
             disallowedRoutes: [
-              "https://stm.api.hikarizsu.fr/api/v1/auth/login",
-              "https://stm.api.hikarizsu.fr/api/v1/auth/register",
+              "https://stm-api.hikarizsu.fr/api/v1/auth/login",
+              "https://stm-api.hikarizsu.fr/api/v1/auth/register",
             ],
           },
         }

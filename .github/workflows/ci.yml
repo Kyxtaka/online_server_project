@@ -19,7 +19,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PWD }}
       
       - name: set up buildx (builder)
-        uses: docker/setup-buildx-action@v6
+        uses: docker/setup-buildx-action@v3
 
       - name: Build image and push to registry
         uses: docker/build-push-action@v6

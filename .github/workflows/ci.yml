@@ -15,7 +15,7 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v3
         with:
-          registry: docker-registry.hikarizsu.fr:443
+          registry: https://docker-registry.hikarizsu.fr
           username: ${{ secrets.REGISTRY_LOGIN }}
           password: ${{ secrets.REGISTRY_PWD }}
       
@@ -41,7 +41,7 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v3
         with:
-          registry: docker-registry.hikarizsu.fr:443
+          registry: https://docker-registry.hikarizsu.fr
           username: ${{ secrets.REGISTRY_LOGIN }}
           password: ${{ secrets.REGISTRY_PWD }}
       

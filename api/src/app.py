@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 app = Flask(__name__)
 
-dotentv_path = join(dirname(__file__), '..','.flaskenv')
+dotentv_path = join(dirname(__file__), '..','.env')
 load_dotenv(dotenv_path=dotentv_path)
 prod = False
 if os.getenv("ENVIRONMENT") != "dev": prod = True

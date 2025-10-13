@@ -7,7 +7,7 @@ on:
 #test
 jobs:
   build-backend:
-    runs-on: [linux, ipv6]
+    runs-on: [Linux, self-hosted, X64]
     steps:
       - uses: actions/checkout@v3
 
@@ -33,7 +33,7 @@ jobs:
 
 
   build-frontend:
-    runs-on: [linux, ipv6]
+    runs-on: [Linux, self-hosted, X64]
     steps:
       - uses: actions/checkout@v3
 

@@ -47,9 +47,16 @@ export class ApiUserService {
   providedIn: 'root'
 })
 export class ApiAdminService{
+
+  private api: string = environment.APIURL;
+  private testEnd: string = `${this.api}/admin`;
+
   constructor(private httpClient: HttpClient) {}
 
-  // getAllUserInfos()
+  // getAllUserInfos(): Observable(UserDTO[]) {
+  //   const header = new HttpHeaders({'Content-Type': 'application/json'})
+  //   return this.httpClient.get<UserDTO[]>(this.)
+  // }
 }
 
 @Injectable({
@@ -92,7 +99,7 @@ export class ApiWolService{
 
   constructor(private httpClient: HttpClient) {
     this.api = environment.APIURL;
-    this.wolEndpoint = `${this.api}/wol/wake` 
+    this.wolEndpoint = `${this.api}/wol/wake`
   }
 
   wake(pcMac: string): Observable<MsgResponse> {

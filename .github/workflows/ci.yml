@@ -28,8 +28,8 @@ jobs:
           file: ./backend/Dockerfile
           push: true
           tags: |
-            ${{ secrets.REGISTRY_ADDRESS }}/osm-backend:latest
-            ${{ secrets.REGISTRY_ADDRESS }}/osm-backend:${{ github.sha }}
+            docker-registry.hikarizsu.fr/osm-backend:latest
+            docker-registry.hikarizsu.fr/osm-backend:${{ github.sha }}
 
 
   build-frontend:
@@ -54,8 +54,8 @@ jobs:
           file: ./frontend/Dockerfile
           push: true
           tags: |
-            ${{ secrets.REGISTRY_ADDRESS }}/osm-frontend:latest
-            ${{ secrets.REGISTRY_ADDRESS }}/osm-frontend:${{ github.sha }}
+            docker-registry.hikarizsu.fr/osm-frontend:latest
+            docker-registry.hikarizsu.fr/osm-frontend:${{ github.sha }}
 
 
 

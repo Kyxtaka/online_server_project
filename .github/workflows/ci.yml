@@ -51,11 +51,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: ./client
-          file: ./client/Dockerfile
+          file: ./client/stmapp/Dockerfile
           push: true
           tags: |
             docker-registry.hikarizsu.fr/osm-frontend:latest
             docker-registry.hikarizsu.fr/osm-frontend:${{ github.sha }}
-
-
-

@@ -50,7 +50,7 @@ jobs:
       - name: Build image and push to registry
         uses: docker/build-push-action@v6
         with:
-          context: ./client
+          context: ./client/stmapp
           file: ./client/stmapp/Dockerfile
           push: true
           tags: |

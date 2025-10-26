@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -49,14 +49,14 @@ export class ApiUserService {
 export class ApiAdminService{
 
   private api: string = environment.APIURL;
-  private testEnd: string = `${this.api}/admin`;
+  private endpoint: string = `${this.api}/admin`;
+  private httpClient: HttpClient = inject(HttpClient);
+  constructor() {};
 
-  constructor(private httpClient: HttpClient) {}
-
-  // getAllUserInfos(): Observable(UserDTO[]) {
-  //   const header = new HttpHeaders({'Content-Type': 'application/json'})
-  //   return this.httpClient.get<UserDTO[]>(this.)
-  // }
+  getAllUserInfos(): Observable<UserDTO[]> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.get<UserDTO[]>(`${this.endpoint}/users`, { headers });
+  }
 }
 
 @Injectable({

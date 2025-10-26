@@ -1,3 +1,3 @@
 export interface MsgResponse {
-    msg: string
+    message: string
 }

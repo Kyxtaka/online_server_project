@@ -11,12 +11,12 @@ export class WolService {
   wakePC(pcMac: string): Observable<string> {
     return this.apiWolService.wake(pcMac).pipe(
       map(res => {
-        console.log('test msg ans', res.msg);
-        return res.msg;
+        console.log('test msg ans', res.message);
+        return res.message;
       }),
       catchError(
-        res => { 
-          console.error(`Error while waking pc: ${pcMac}, API response msg: ${res.msg}`);
+        res => {
+          console.error(`Error while waking pc: ${pcMac}, API response msg: ${res.messsage}`);
           return of(`Unabled to wake pc ${pcMac}`)
          }
       )

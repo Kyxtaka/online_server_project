@@ -12,7 +12,7 @@ server {
     server_name {{server_name}};
 
     ssl_certificate     {{ domain_fullchain_pem_path }};
-    ssl_certificate_key {{ domain_privkey_pen_path }};
+    ssl_certificate_key {{ domain_privkey_pem_path }};
 
     location / {
         proxy_pass http://{{ server_ip }}:{{ server_port }};

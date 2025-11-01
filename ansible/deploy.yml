@@ -60,14 +60,26 @@
       ansible.builtin.template:
         src: "templates/reverse-proxy-nginx.conf.j2"
         dest: "/etc/nginx/sites-available/{{ api_server_name }}.conf"
-      vars: "{{ nginx_api_vars }}"
+      vars: 
+        server_name: "{{ nginx_api_vars.server_name }}"
+        server_port: "{{ nginx_api_vars.server_port }}"
+        server_ip: "{{ nginx_api_vars.server_ip }}"
+        domain_fullchain_pem_path: "{{ nginx_api_vars.domain_fullchain_pem_path }}"
+        domain_privkey_pem_path: "{{ nginx_api_vars.domain_privkey_pem_path }}"
+
 
     - name: Configure server proxy routing for Client (nginx)
       ansible.builtin.template:
         src: "templates/reverse-proxy-nginx.conf.j2"
         dest: "/etc/nginx/sites-available/{{ client_server_name }}.conf"
-      vars: "{{ nginx_client_vars }}"
+      vars:
+        server_name: "{{ nginx_client_vars.server_name }}"
+        server_port: "{{ nginx_client_vars.server_port }}"
+        server_ip: "{{ nginx_client_vars.server_ip }}"
+        domain_fullchain_pem_path: "{{ nginx_client_vars.domain_fullchain_pem_path }}"
+        domain_privkey_pem_path: "{{ nginx_client_vars.domain_privkey_pem_path }}"
 
+        
     - name: Enable nginx config for API
       ansible.builtin.file:
         src: "/etc/nginx/sites-available/{{ api_server_name }}.conf"

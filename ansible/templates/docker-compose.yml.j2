@@ -3,7 +3,7 @@ services:
     image: docker-registry.hikarizsu.fr/osm-backend:{{image_tag}}
     container_name: osm-api-server-{{deploy_mode}}
     env_file: "./api.env"
-    environement:
+    environment:
         API_PORT: {{api_server_port}} 
     network_mode: host
     restart: always

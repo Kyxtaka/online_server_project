@@ -100,5 +100,3 @@ jobs:
             -e "api_server_port=${{ inputs.api_server_port }}" \
             -e "client_server_name=${{ inputs.client_server_name }}" \
             -e "client_server_port=${{ inputs.client_server_port }}" \
-# -e "domain_fullchain_pem_path=${{ inputs.domain_fullchain_pem_path }}" \
-# -e "domain_privkey_pem_path=${{ inputs.domain_privkey_pem_path  }}" \

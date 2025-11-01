@@ -87,7 +87,7 @@ jobs:
           build-args: |
             CONFIG=test
           tags: |
-            docker-registry.hikarizsu.fr/osm-backend:latest
+            docker-registry.hikarizsu.fr/osm-backend:test
             docker-registry.hikarizsu.fr/osm-backend:${{ github.sha }}
 
   build-test-frontend:
@@ -115,7 +115,7 @@ jobs:
           build-args: |
             CONFIG=test
           tags: |
-            docker-registry.hikarizsu.fr/osm-frontend:latest
+            docker-registry.hikarizsu.fr/osm-frontend:test
             docker-registry.hikarizsu.fr/osm-frontend:${{ github.sha }}
 
   deploye-test-server:  
@@ -146,8 +146,8 @@ jobs:
       deploy_mode: prod
       # image_tag: latest
       image_tag: ${{github.sha}}
-      api_server_name: stm-api-test.hikarizsu.fr
-      client_server_name: stm-client-test.hikarizsu.fr 
+      api_server_name: stm-api.hikarizsu.fr
+      client_server_name: stm-client.hikarizsu.fr
       api_server_port: "8143"
       client_server_port: "8144"
       project_directory: /prodservices/docker/webserver/stmproject #do not set / at the end

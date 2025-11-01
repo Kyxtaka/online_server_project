@@ -27,14 +27,12 @@
     - name: create api env
       ansible.builtin.copy:
         dest: "{{app_directory}}/api.env"
-        content: |
-          {{api_env_content}}
+        content: "{{api_env_content}}"
 
     - name: create client env
       ansible.builtin.copy:
         dest: "{{ app_directory }}/client.env"
-        content: |
-          {{client_env_content}}
+        content: "{{client_env_content}}"
 
     - name: Set facts for API nginx
       ansible.builtin.set_fact:

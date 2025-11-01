@@ -42,6 +42,19 @@ on:
         default: ${{ github.sha }}
         type: string
 
+      api_env_path:
+        description: api_env path
+        required: false
+        default: ./api.env
+        type: string
+
+      client_env_path:
+        description: client env path
+        required: false
+        default: "./client.env"
+        type: string
+
+
     secrets:
       HS_SSHKEY:
         required: true

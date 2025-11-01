@@ -75,3 +75,5 @@ jobs:
       PASSWORD: ${{ secrets.PASSWORD }}
       ANSIBLE_INVENTORY: ${{ secrets.ANSIBLE_INVENTORY }}
       ADDRESS: ${{ secrets.ADDRESS }}
+      API_ENV_CONTENT: ${{ secrets.API_ENV_DEV }}
+      CLIENT_ENV_CONTENT: " "  

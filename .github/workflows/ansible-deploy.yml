@@ -23,12 +23,12 @@ on:
       api_server_port:
         description: api port (api use host network, be aware whene you set up the port)
         required: true
-        type: int
+        type: string
 
       client_server_port:
         description: server port to bind to service
         required: true
-        type: int 
+        type: string 
 
       project_directory: 
         description: path to set project
@@ -53,7 +53,7 @@ on:
         description: client container port to bind
         default: 80
         required: false
-        type: int
+        type: string
 
       domain_fullchain_pem_path:
         description: path for ssl

@@ -4,9 +4,9 @@
     - group_vars/apps.yml
   become: yes
   tasks:
-    - name: Update paquets
-      ansible.builtin.apt:
-        update_cache: yes
+    # - name: Update paquets
+    #   ansible.builtin.apt:
+    #     update_cache: yes
   
     - name: create project directory
       ansible.builtin.file:

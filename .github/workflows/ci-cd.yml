@@ -67,8 +67,6 @@ jobs:
       api_server_port: "8147"
       client_server_port: "8148"
       project_directory: /prodservices/docker/webserver/stmproject #do not set / at the end
-      api_env_content: ${{ secrets.API_ENV_DEV }}
-      client_env_content: " "
     secrets:
       HS_SSHKEY: ${{ secrets.HS_SSHKEY }}
       LOGIN: ${{ secrets.LOGIN }}

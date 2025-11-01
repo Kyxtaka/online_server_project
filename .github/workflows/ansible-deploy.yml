@@ -36,16 +36,6 @@ on:
         default: /prodservices/docker/webserver/stmproject
         type: string
 
-      api_env_content:
-        description: api env content
-        required: true
-        type: string
-
-      client_env_content:
-        description: client env content
-        required: true
-        type: string
-
     secrets:
       HS_SSHKEY:
         required: true

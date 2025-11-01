@@ -3,92 +3,60 @@ on:
   workflow_call:
     inputs:
       deploy_mode:
-        description: deployement mode (production|test|local => test by default)
-        default: test
+        description: deployment mode (production|test/local)
         required: true
+        default: test
         type: string
-      
+
       api_server_name:
         description: api url for nginx proxy
-        default: stm-api-test.hikarizsu.fr
         required: true
+        default: stm-api-test.hikarizsu.fr
         type: string
 
       client_server_name:
         description: client url for nginx proxy
-        default: stm-client-test.hikarizsu.fr 
         required: true
+        default: stm-client-test.hikarizsu.fr
         type: string
 
       api_server_port:
-        description: api port (api use host network, be aware whene you set up the port)
+        description: api port
         required: true
         type: string
 
       client_server_port:
-        description: server port to bind to service
-        required: true
-        type: string 
-
-      project_directory: 
-        description: path to set project
-        default: /prodservices/docker/webserver/stmproject/
+        description: client port
         required: true
         type: string
 
-    api_env_content:
-      description: api env, depending on mode deployement
-      default: ${{secrets.API_ENV_DEV}}
-      required: true
-      type: string
+      project_directory:
+        description: path to set project
+        required: true
+        default: /prodservices/docker/webserver/stmproject
+        type: string
+
+      api_env_content:
+        description: api env content
+        required: true
+        type: string
 
       client_env_content:
-        description: client env, depending on mode deployement
-        default: ""
+        description: client env content
         required: true
         type: string
-     
-      #########optionnal 
-      client_container_port:
-        description: client container port to bind
-        default: 80
-        required: false
-        type: string
 
-      domain_fullchain_pem_path:
-        description: path for ssl
-        required: false 
-        type: string
-
-      domain_privkey_pem_path: 
-        description: path for ssl
-        required: false 
-        type: string
-
-      api_env_path:
-        description: api env
-        required: false 
-        default: ./api.env
-        type: string
-
-      client_env_path:
-        description: client env
-        required: false 
-        default: ./client.env
-        type: string
-
-
-    secrets: 
-      HS_SSHKEY: 
-        required:
+    secrets:
+      HS_SSHKEY:
+        required: true
       LOGIN:
-        required:
-      PASSWORD: 
-        required:
+        required: true
+      PASSWORD:
+        required: true
       ANSIBLE_INVENTORY:
-        required:
+        required: true
       ADDRESS:
-        required:
+        required: true
 
 jobs: 
   reusable-deploy:

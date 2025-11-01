@@ -5,7 +5,7 @@ domain_fullchain_pem_path: /etc/letsencrypt/live/hikarizsu.fr/fullchain.pem
 domain_privkey_pen_path: /etc/letsencrypt/archive/hikarizsu.fr/privkey.pem
 server_ip: 127.0.0.1
 server_port: 443
-additional_rules: ""
+additional_rules: " "
 
 # docker-compose vars
 deploy_mode: test
@@ -29,5 +29,5 @@ registry_pwd: github_secrets
 
 
 #env 
-api_env_content: ""
-client_env_content: ""
+api_env_content: " "
+client_env_content: " "

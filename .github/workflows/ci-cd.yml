@@ -76,4 +76,4 @@ jobs:
       ANSIBLE_INVENTORY: ${{ secrets.ANSIBLE_INVENTORY }}
       ADDRESS: ${{ secrets.ADDRESS }}
       API_ENV_CONTENT: ${{ secrets.API_ENV_DEV }}
-      CLIENT_ENV_CONTENT: " "  
+      CLIENT_ENV_CONTENT: "CLIENT_API_URL=stm-api-test.hikarizsu.fr"  

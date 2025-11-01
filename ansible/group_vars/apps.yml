@@ -16,7 +16,7 @@ client_server_port:
 api_server_port: 8147 
 client_container_port: 80
 mem_limit: 350M
-memsawp_limit: 4G
+memswap_limit: 4G
 
 # client env configuration
 # no existing env ==> TODO

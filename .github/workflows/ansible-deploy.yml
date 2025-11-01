@@ -58,9 +58,9 @@ on:
       ADDRESS:
         required: true
       API_ENV_CONTENT:
-        required:
+        required: true
       CLIENT_ENV_CONTENT:
-        required:
+        required: true
 
 jobs: 
   reusable-deploy:

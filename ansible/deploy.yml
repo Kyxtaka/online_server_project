@@ -107,7 +107,7 @@
     - name: Pull Docker images
       community.docker.docker_compose_v2:
         project_src: "{{ app_directory }}"
-        pull: yes
+        pull: always
 
     - name: Launch containers
       community.docker.docker_compose_v2:

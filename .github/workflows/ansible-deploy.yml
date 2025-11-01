@@ -117,11 +117,10 @@ jobs:
             -e "api_server_port=${{ inputs.api_server_port }}" \
             -e "client_server_name=${{ inputs.client_server_name }}" \
             -e "client_server_port=${{ inputs.client_server_port }}" \
-            -e "domain_fullchain_pem_path=${{ inputs.domain_fullchain_pem_path }}" \
-            -e "domain_privkey_pem_path=${{ inputs.domain_privkey_pem_path  }}" \
             -e "api_env_path=${{ inputs.api_env_path }}" \
             -e "client_env_path=${{ inputs.client_env_path}}" \
             -e "api_env_content=${{ secrets.API_ENV_CONTENT}}" \
             -e "client_env_content=${{ secrets.CLIENT_ENV_CONTENT}}"
 
-            
+# -e "domain_fullchain_pem_path=${{ inputs.domain_fullchain_pem_path }}" \
+# -e "domain_privkey_pem_path=${{ inputs.domain_privkey_pem_path  }}" \

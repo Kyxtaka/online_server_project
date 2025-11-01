@@ -4,19 +4,19 @@ services:
   stm-api:
     container_name: stm-api
     image: docker-registry.hikarizsu.fr/OSM-backend:latest  
-    environment:
-      FLASK_APP:  #app package
-      ENVIRONMENT:  #env type
-      DB_USER:  #DB user
-      DB_PASSWORD: 
-      DB_NAME:  #DB name 
-      DB_PORT:  #DB listen port
-      DB_HOST:  #DB host 
-      JWT_SECRET_KEY: #api jwt signature
-      ACCESS_CORS: #api cors allowed client
-      API_PORT:  #API listen port (inside container)
+    # environment:
+    #   FLASK_APP:  #app package
+    #   ENVIRONMENT:  #env type
+    #   DB_USER:  #DB user
+    #   DB_PASSWORD: 
+    #   DB_NAME:  #DB name 
+    #   DB_PORT:  #DB listen port
+    #   DB_HOST:  #DB host 
+    #   JWT_SECRET_KEY: #api jwt signature
+    #   ACCESS_CORS: #api cors allowed client
+    #   API_PORT:  #API listen port (inside container)
+    enf_file: ./env #store your env into 
 
-    working_dir: /app #working dir build, 
     mem_limit: 300M
     memswap_limit: 4G 
     restart: always

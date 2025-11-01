@@ -1,0 +1,87 @@
+- name: Deploy docker container
+  hosts: apps
+  vars_files: 
+    - group_vars/apps.yml
+  become: yes
+  tasks:
+    - name: Update paquets
+      ansible.builtin.apt:
+        update_cache: yes
+  
+    - name: create project directory
+      ansible.builtin.file:
+        path: "{{ app_directory }}"
+        state: directory
+
+    - name: login to private registry
+      docker_login:
+        registry: "https://{{registry_url}}"
+        username: "{{registry_login}}"
+        password: "{{registry_pwd}}"
+
+    - name: create docker compose file from jinja template
+      ansible.builtin.template:
+        src: "templates/docker-compose.yml.j2"
+        dest: "{{ app_directory }}/docker-compose.yml"
+
+    - name: create api env
+      ansible.builtin.copy:
+        dest: "{{app_directory}}/api.env"
+        content: |
+          {{api_env_content}}
+
+    - name: create client env
+      ansible.builtin.copy:
+        dest: "{{ app_directory }}/client.env"
+        content: |
+          {{client_env_content}}
+
+    - name: Configure server proxy routing for API (nginx)
+      ansible.builtin.template:
+        src: "templates/reverse-proxy-nginx.conf.j2"
+        dest: "/etc/nginx/sites-available/{{ api_server_name }}.conf"
+
+    - name: Configure server proxy routing for Client (nginx)
+      ansible.builtin.template:
+        src: "templates/reverse-proxy-nginx.conf.j2"
+        dest: "/etc/nginx/sites-available/{{ client_server_name }}.conf"
+
+    - name: Enable nginx config for API
+      ansible.builtin.file:
+        src: "/etc/nginx/sites-available/{{ api_server_name }}.conf"
+        dest: "/etc/nginx/sites-enabled/{{ api_server_name }}.conf"
+        state: link
+
+    - name: Enable nginx config for Client
+      ansible.builtin.file:
+        src: "/etc/nginx/sites-available/{{ client_server_name }}.conf"
+        dest: "/etc/nginx/sites-enabled/{{ client_server_name }}.conf"
+        state: link
+ 
+    - name: Allow API port
+      community.general.ufw:
+        rule: allow
+        port: "{{ api_server_port }}"
+        proto: tcp
+
+    - name: Allow Client port
+      community.general.ufw:
+        rule: allow
+        port: "{{ client_server_port }}"
+        proto: tcp
+
+    - name: Pull Docker images
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_directory }}"
+        pull: yes
+
+    - name: Launch containers
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_directory }}"
+        state: present
+
+    - name: Restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
+        enabled: yes

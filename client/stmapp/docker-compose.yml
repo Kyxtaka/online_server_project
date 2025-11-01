@@ -1,14 +1,13 @@
-version: "3.9"
 services:
   stmapp:
-    build: .
-    container_name: stmapp
-    ports: 
+    container_name: stm-client
+    image: docker-registry.hikarizsu.fr/OSM-frontend:latest
+    env_file: ''
+    ports:
       - "8144:80"
     volumes:
-      # - .:/app
       - /etc/letsencrypt/live/hikarizsu.fr:/etc/letsencrypt/live/hikarizsu.fr:ro
       - /etc/letsencrypt/archive/hikarizsu.fr:/etc/letsencrypt/archive/hikarizsu.fr:ro
     working_dir: /app
     mem_limit: 350M
-    memswap_limit: 4G 
+    memswap_limit: 4G

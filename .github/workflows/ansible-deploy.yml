@@ -36,6 +36,12 @@ on:
         default: /prodservices/docker/webserver/stmproject
         type: string
 
+      image_tag:
+        description: image tags
+        required: false
+        default: ${{ github.sha }}
+        type: string
+
     secrets:
       HS_SSHKEY:
         required: true
@@ -77,6 +83,8 @@ jobs:
 
       - name: set up python
         uses: actions/setup-python@v6
+        with:
+          python-version: '3.13' 
 
       - name: Install Ansible
         run: |
@@ -87,7 +95,7 @@ jobs:
           cd ansible/ 
           ansible-playbook deploy.yml \
             -i inventory.ini \
-            -e "image_tag=${{ github.sha }}" \
+            -e "image_tag=${{ inputs.image_tag }}" \
             -e "app_directory=${{ inputs.project_directory }}-${{ inputs.deploy_mode }}" \
             -e "registry_login=${{ secrets.LOGIN }}" \
             -e "registry_pwd=${{ secrets.PASSWORD }}" \

@@ -36,7 +36,7 @@ on:
         required: true
         type: string
 
-     api_env_content:
+    api_env_content:
       description: api env, depending on mode deployement
       default: ${{secrets.API_ENV_DEV}}
       required: true
@@ -94,7 +94,7 @@ jobs:
   reusable-deploy:
     # environment: ${{ inputs.git_env }}
     name: Deploy to dev server
-    runs-on: ubuntu-latest
+    runs-on: [Linux, self-hosted, X64]
     env:
       PYTHONIOENCODING: utf-8
     steps:

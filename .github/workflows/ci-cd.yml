@@ -57,7 +57,6 @@ jobs:
             docker-registry.hikarizsu.fr/osm-frontend:${{ github.sha }}
 
   deploye-test-server:  
-    runs-on: [Linux, self-hosted, X64]
     needs: [build-backend, build-frontend]
     if: github.ref == 'refs/heads/develop' || github.base_ref == 'develop'
     uses: ./.github/workflows/ansible-deploy.yml
@@ -70,3 +69,9 @@ jobs:
       project_directory: /prodservices/docker/webserver/stmproject #do not set / at the end
       api_env_content: ${{ secrets.API_ENV_DEV }}
       client_env_content: ""
+    secrets:
+      HS_SSHKEY: ${{ secrets.HS_SSHKEY }}
+      LOGIN: ${{ secrets.LOGIN }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      ANSIBLE_INVENTORY: ${{ secrets.ANSIBLE_INVENTORY }}
+      ADDRESS: ${{ secrets.ADDRESS }}

@@ -1,0 +1,144 @@
+name: Ansible deploye workflow
+on: 
+  workflow_call:
+    inputs:
+      deploy_mode:
+        description: deployement mode (production|test|local => test by default)
+        default: test
+        required: true
+        type: string
+      
+      api_server_name:
+        description: api url for nginx proxy
+        default: stm-api-test.hikarizsu.fr
+        required: true
+        type: string
+
+      client_server_name:
+        description: client url for nginx proxy
+        default: stm-client-test.hikarizsu.fr 
+        required: true
+        type: string
+
+      api_server_port:
+        description: api port (api use host network, be aware whene you set up the port)
+        required: true
+        type: int
+
+      client_server_port:
+        description: server port to bind to service
+        required: true
+        type: int 
+
+      project_directory: 
+        description: path to set project
+        default: /prodservices/docker/webserver/stmproject/
+        required: true
+        type: string
+
+     api_env_content:
+      description: api env, depending on mode deployement
+      default: ${{secrets.API_ENV_DEV}}
+      required: true
+      type: string
+
+      client_env_content:
+        description: client env, depending on mode deployement
+        default: ""
+        required: true
+        type: string
+     
+      #########optionnal 
+      client_container_port:
+        description: client container port to bind
+        default: 80
+        required: false
+        type: int
+
+      domain_fullchain_pem_path:
+        description: path for ssl
+        required: false 
+        type: string
+
+      domain_privkey_pem_path: 
+        description: path for ssl
+        required: false 
+        type: string
+
+      api_env_path:
+        description: api env
+        required: false 
+        default: ./api.env
+        type: string
+
+      client_env_path:
+        description: client env
+        required: false 
+        default: ./client.env
+        type: string
+
+
+    secrets: 
+      HS_SSHKEY: 
+        required:
+      LOGIN:
+        required:
+      PASSWORD: 
+        required:
+      ANSIBLE_INVENTORY:
+        required:
+      ADDRESS:
+        required:
+
+jobs: 
+  reusable-deploy:
+    # environment: ${{ inputs.git_env }}
+    name: Deploy to dev server
+    runs-on: ubuntu-latest
+    env:
+      PYTHONIOENCODING: utf-8
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HS_SSHKEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p 51865 ssh-vps.hikarizsu.fr >> ~/.ssh/known_hosts
+
+      - name: set up inventory from secrets
+        run: |
+          cd ./ansible
+          echo "${{ secrets.ANSIBLE_INVENTORY }}" > inventory.ini  
+
+      - name: set up python
+        uses: actions/setup-python@v6
+
+      - name: Install Ansible
+        run: |
+          pip install ansible
+
+      - name: Run Ansible Playbook
+        run: |
+          cd ansible/ 
+          ansible-playbook deploy.yml \
+            -i inventory.ini \
+            -e "image_tag=${{ github.sha }}" \
+            -e "app_directory=${{ inputs.project_directory }}-${{ inputs.deploy_mode }}" \
+            -e "registry_login=${{ secrets.LOGIN }}" \
+            -e "registry_pwd=${{ secrets.PASSWORD }}" \
+            -e "deploy_mode=${{ inputs.deploy_mode }}" \
+            -e "api_server_name=${{ inputs.api_server_name }}" \
+            -e "api_server_port=${{ inputs.api_server_port }}" \
+            -e "client_server_name=${{ inputs.client_server_name }}" \
+            -e "client_server_port=${{ inputs.client_server_port }}" \
+            -e "domain_fullchain_pem_path=${{ inputs.domain_fullchain_pem_path }}" \
+            -e "domain_privkey_pem_path=${{ inputs.domain_privkey_pem_path  }}" \
+            -e "api_env_path=${{ inputs.api_env_path }}" \
+            -e "client_env_path=${{ inputs.client_env_path}}" \
+            -e "api_env_content=${{ inputs.api_env_content}}" \
+            -e "client_env_content=${{ inputs.client_env_content}}"
+
+            

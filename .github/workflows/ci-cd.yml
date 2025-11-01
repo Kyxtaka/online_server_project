@@ -31,7 +31,6 @@ jobs:
             docker-registry.hikarizsu.fr/osm-backend:latest
             docker-registry.hikarizsu.fr/osm-backend:${{ github.sha }}
 
-
   build-frontend:
     runs-on: [Linux, self-hosted, X64]
     steps:
@@ -56,3 +55,18 @@ jobs:
           tags: |
             docker-registry.hikarizsu.fr/osm-frontend:latest
             docker-registry.hikarizsu.fr/osm-frontend:${{ github.sha }}
+
+  deploye-test-server:  
+    runs-on: [Linux, self-hosted, X64]
+    needs: [build-backend, build-frontend]
+    if: github.ref == 'refs/heads/develop' || github.base_ref == 'develop'
+    uses: ./.github/workflows/ansible-deploy.yml
+    with:
+      deploy_mode: test
+      api_server_name: stm-api-test.hikarizsu.fr
+      client_server_name: stm-client-test.hikarizsu.fr 
+      api_server_port: 8147
+      client_server_port: 8148
+      project_directory: /prodservices/docker/webserver/stmproject #do not set / at the end
+      api_env_content: ${{ secrets.API_ENV_DEV }}
+      client_env_content: ""

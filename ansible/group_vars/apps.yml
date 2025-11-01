@@ -1,0 +1,33 @@
+# nginx proxy conf api
+api_server_name: stm-api.hikarizsu.fr
+client_server_name: stm-client.hikarizsu.fr
+domain_fullchain_pem_path: /etc/letsencrypt/live/hikarizsu.fr/fullchain.pem
+domain_privkey_pen_path: /etc/letsencrypt/archive/hikarizsu.fr/privkey.pem
+server_ip: 127.0.0.1
+server_port: 443
+additional_rules: ""
+
+# docker-compose vars
+deploy_mode: test
+image_tag: latest
+api_env_path: ./api.env
+client_env_path: ./client.env
+client_server_port:
+api_server_port: 8147 
+client_container_port: 80
+mem_limit: 350M
+memsawm_limit: 4G
+
+# client env configuration
+# no existing env ==> TODO
+
+#global
+app_directory: /prodservices/docker/webserver/stmproject/
+registry_url: docker-registry.hikarizsu.fr
+registry_login: github_secrets
+registry_pwd: github_secrets
+
+
+#env 
+api_env_content: ""
+client_env_content: ""

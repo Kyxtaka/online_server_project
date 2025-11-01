@@ -42,19 +42,6 @@ on:
         default: ${{ github.sha }}
         type: string
 
-      api_env_path:
-        description: api_env path
-        required: false
-        default: ./api.env
-        type: string
-
-      client_env_path:
-        description: client env path
-        required: false
-        default: "./client.env"
-        type: string
-
-
     secrets:
       HS_SSHKEY:
         required: true
@@ -65,10 +52,6 @@ on:
       ANSIBLE_INVENTORY:
         required: true
       ADDRESS:
-        required: true
-      API_ENV_CONTENT:
-        required: true
-      CLIENT_ENV_CONTENT:
         required: true
 
 jobs: 
@@ -117,10 +100,5 @@ jobs:
             -e "api_server_port=${{ inputs.api_server_port }}" \
             -e "client_server_name=${{ inputs.client_server_name }}" \
             -e "client_server_port=${{ inputs.client_server_port }}" \
-            -e "api_env_path=${{ inputs.api_env_path }}" \
-            -e "client_env_path=${{ inputs.client_env_path}}" \
-            -e "api_env_content=${{ secrets.API_ENV_CONTENT}}" \
-            -e "client_env_content=${{ secrets.CLIENT_ENV_CONTENT}}"
-
 # -e "domain_fullchain_pem_path=${{ inputs.domain_fullchain_pem_path }}" \
 # -e "domain_privkey_pem_path=${{ inputs.domain_privkey_pem_path  }}" \

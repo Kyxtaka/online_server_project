@@ -3,11 +3,7 @@
   vars_files: 
     - group_vars/apps.yml
   become: yes
-  tasks:
-    # - name: Update paquets
-    #   ansible.builtin.apt:
-    #     update_cache: yes
-  
+  tasks:  
     - name: create project directory
       ansible.builtin.file:
         path: "{{ app_directory }}"
@@ -23,72 +19,6 @@
       ansible.builtin.template:
         src: "templates/docker-compose.yml.j2"
         dest: "{{ app_directory }}/docker-compose.yml"
-
-    - name: create api env
-      ansible.builtin.copy:
-        dest: "{{app_directory}}/api.env"
-        content: "{{api_env_content}}"
-
-    - name: create client env
-      ansible.builtin.copy:
-        dest: "{{ app_directory }}/client.env"
-        content: "{{client_env_content}}"
-
-    - name: Set facts for API nginx
-      ansible.builtin.set_fact:
-        nginx_api_vars:
-          server_name: "{{ api_server_name }}"
-          server_port: "{{ api_server_port }}"
-          server_ip: "127.0.0.1"
-          domain_fullchain_pem_path: "{{ domain_fullchain_pem_path | default('') }}"
-          domain_privkey_pem_path: "{{ domain_privkey_pem_path | default('') }}"
-          additional_rules: ""
-
-    - name: Set facts for Client nginx
-      ansible.builtin.set_fact:
-        nginx_client_vars:
-          server_name: "{{ client_server_name }}"
-          server_port: "{{ client_server_port }}"
-          server_ip: "127.0.0.1"
-          domain_fullchain_pem_path: "{{ domain_fullchain_pem_path | default('') }}"
-          domain_privkey_pem_path: "{{ domain_privkey_pem_path | default('') }}"
-          additional_rules: ""
-
-    - name: Configure server proxy routing for API (nginx)
-      ansible.builtin.template:
-        src: "templates/reverse-proxy-nginx.conf.j2"
-        dest: "/etc/nginx/sites-available/{{ api_server_name }}.conf"
-      vars: 
-        server_name: "{{ nginx_api_vars.server_name }}"
-        server_port: "{{ nginx_api_vars.server_port }}"
-        server_ip: "{{ nginx_api_vars.server_ip }}"
-        domain_fullchain_pem_path: "{{ nginx_api_vars.domain_fullchain_pem_path }}"
-        domain_privkey_pem_path: "{{ nginx_api_vars.domain_privkey_pem_path }}"
-
-
-    - name: Configure server proxy routing for Client (nginx)
-      ansible.builtin.template:
-        src: "templates/reverse-proxy-nginx.conf.j2"
-        dest: "/etc/nginx/sites-available/{{ client_server_name }}.conf"
-      vars:
-        server_name: "{{ nginx_client_vars.server_name }}"
-        server_port: "{{ nginx_client_vars.server_port }}"
-        server_ip: "{{ nginx_client_vars.server_ip }}"
-        domain_fullchain_pem_path: "{{ nginx_client_vars.domain_fullchain_pem_path }}"
-        domain_privkey_pem_path: "{{ nginx_client_vars.domain_privkey_pem_path }}"
-
-        
-    - name: Enable nginx config for API
-      ansible.builtin.file:
-        src: "/etc/nginx/sites-available/{{ api_server_name }}.conf"
-        dest: "/etc/nginx/sites-enabled/{{ api_server_name }}.conf"
-        state: link
-
-    - name: Enable nginx config for Client
-      ansible.builtin.file:
-        src: "/etc/nginx/sites-available/{{ client_server_name }}.conf"
-        dest: "/etc/nginx/sites-enabled/{{ client_server_name }}.conf"
-        state: link
  
     - name: Allow API port
       community.general.ufw:
@@ -111,9 +41,3 @@
       community.docker.docker_compose_v2:
         project_src: "{{ app_directory }}"
         state: present
-
-    - name: Restart nginx
-      ansible.builtin.service:
-        name: nginx
-        state: restarted
-        enabled: yes

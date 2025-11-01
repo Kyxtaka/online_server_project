@@ -8,9 +8,11 @@ import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch, withInterc
 import { routes } from './app.routes';
 import { AuthService } from './core/services/auth/auth.service';
 
+import { environment } from '../environments/environment';
+
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }), 
+    provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     JwtHelperService,
     importProvidersFrom(
@@ -18,15 +20,15 @@ export const appConfig: ApplicationConfig = {
         {
           config: {
             tokenGetter: () => inject(AuthService).getToken(),
-            allowedDomains: ["stm-api.hikarizsu.fr"],
+            allowedDomains: [`${environment.APIURL}`],
             disallowedRoutes: [
-              "https://stm-api.hikarizsu.fr/api/v1/auth/login",
-              "https://stm-api.hikarizsu.fr/api/v1/auth/register",
+              `${environment.APIURL}/api/v1/auth/login`,
+              `${environment.APIURL}/api/v1/auth/register`,
             ],
           },
         }
       )
-    ), 
+    ),
     provideHttpClient(
       withInterceptorsFromDi()
     )

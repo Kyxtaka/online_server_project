@@ -4,7 +4,7 @@ COPY package*.json ./
 RUN npm install
 COPY . .
 ARG CONFIG="test"
-RUN npm run build --configuration $CONFIG
+RUN npm run build -- s--configuration $CONFIG
 
 FROM nginx:alpine
 COPY --from=build /app/dist/stmapp/browser /usr/share/nginx/html

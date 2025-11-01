@@ -3,7 +3,7 @@ services:
     image: docker-registry.hikarizsu.fr/osm-backend:{{image_tag}}
     container_name: osm-api-server-{{deploy_mode}}
     env_file: "{{api_env_path}}"
-    network: host
+    network_mode: host
     restart: always
     mem_limit: {{mem_limit}}
     memswap_limit: {{memswap_limit}}

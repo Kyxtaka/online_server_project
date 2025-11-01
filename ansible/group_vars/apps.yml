@@ -1,8 +1,8 @@
 # nginx proxy conf api
 api_server_name: stm-api.hikarizsu.fr
 client_server_name: stm-client.hikarizsu.fr
-domain_fullchain_pem_path: /etc/letsencrypt/live/hikarizsu.fr/fullchain.pem
-domain_privkey_pen_path: /etc/letsencrypt/archive/hikarizsu.fr/privkey.pem
+domain_fullchain_pem_path: "/etc/letsencrypt/live/hikarizsu.fr/fullchain.pem"
+domain_privkey_pem_path: "/etc/letsencrypt/live/hikarizsu.fr/privkey.pem"
 server_ip: 127.0.0.1
 server_port: 443
 additional_rules: " "

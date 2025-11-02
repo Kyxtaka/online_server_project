@@ -20,7 +20,8 @@ export const appConfig: ApplicationConfig = {
         {
           config: {
             tokenGetter: () => inject(AuthService).getToken(),
-            allowedDomains: [environment.API_DOMAIN],
+            // allowedDomains: [environment.API_DOMAIN],
+            allowedDomains: ["stm-api.hikarizsu.fr", "stm-api-test.hikarizsu.fr"],
             disallowedRoutes: [
               `${environment.API_URL_BASE_ROUTE_V1}/auth/login`,
               `${environment.API_URL_BASE_ROUTE_V1}/auth/register`,

@@ -44,7 +44,7 @@ default_authorized_clients = [
     "https://stm-client-test.hikarizsu.fr"
 ]
 
-authorized_clients = default_authorized_clients + ACCESS_CORS.split(",")
+authorized_clients = default_authorized_clients
 CORS(app, supports_credentials=True, origins=authorized_clients)
 
 #Namespaces

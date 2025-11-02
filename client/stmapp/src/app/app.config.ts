@@ -9,7 +9,6 @@ import { routes } from './app.routes';
 import { AuthService } from './core/services/auth/auth.service';
 
 import { environment } from '../environments/environment';
-import { CookieService } from 'ngx-cookie-service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,13 +19,7 @@ export const appConfig: ApplicationConfig = {
       JwtModule.forRoot(
         {
           config: {
-            // tokenGetter: () => inject(AuthService).getToken(),
-            tokenGetter: () => {
-              const cookieService = inject(CookieService);
-              const token: string | null = cookieService.get('token_name');
-              return token;
-            },
-            // allowedDomains: [environment.API_DOMAIN],
+            tokenGetter: () => inject(AuthService).getToken(),
             allowedDomains: ["stm-api.hikarizsu.fr", "stm-api-test.hikarizsu.fr"],
             disallowedRoutes: [
               `${environment.API_URL_BASE_ROUTE_V1}/auth/login`,

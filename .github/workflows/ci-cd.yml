@@ -2,8 +2,8 @@ name: Projet CI Docker Push Docker image
 on:
   push:
     branches: ['main', 'develop']
-  pull_request:
-    branches: ['main']
+  # pull_request:
+  #   branches: ['main']
 
 jobs:
   build-backend:

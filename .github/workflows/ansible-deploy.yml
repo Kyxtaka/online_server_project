@@ -1,0 +1,102 @@
+name: Ansible deploye workflow
+on: 
+  workflow_call:
+    inputs:
+      deploy_mode:
+        description: deployment mode (production|test/local)
+        required: true
+        default: test
+        type: string
+
+      api_server_name:
+        description: api url for nginx proxy
+        required: true
+        default: stm-api-test.hikarizsu.fr
+        type: string
+
+      client_server_name:
+        description: client url for nginx proxy
+        required: true
+        default: stm-client-test.hikarizsu.fr
+        type: string
+
+      api_server_port:
+        description: api port
+        required: true
+        type: string
+
+      client_server_port:
+        description: client port
+        required: true
+        type: string
+
+      project_directory:
+        description: path to set project
+        required: true
+        default: /prodservices/docker/webserver/stmproject
+        type: string
+
+      image_tag:
+        description: image tags
+        required: false
+        default: ${{ github.sha }}
+        type: string
+
+    secrets:
+      HS_SSHKEY:
+        required: true
+      LOGIN:
+        required: true
+      PASSWORD:
+        required: true
+      ANSIBLE_INVENTORY:
+        required: true
+      ADDRESS:
+        required: true
+
+jobs: 
+  reusable-deploy:
+    # environment: ${{ inputs.git_env }}
+    name: Deploy to dev server
+    runs-on: [Linux, self-hosted, X64]
+    env:
+      PYTHONIOENCODING: utf-8
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.HS_SSHKEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p 51865 ssh-vps.hikarizsu.fr >> ~/.ssh/known_hosts
+
+      - name: set up inventory from secrets
+        run: |
+          cd ./ansible
+          echo "${{ secrets.ANSIBLE_INVENTORY }}" > inventory.ini  
+
+      - name: set up python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13' 
+
+      - name: Install Ansible
+        run: |
+          pip install ansible
+
+      - name: Run Ansible Playbook
+        run: |
+          cd ansible/ 
+          ansible-playbook deploy.yml \
+            -i inventory.ini \
+            -e "image_tag=${{ inputs.image_tag }}" \
+            -e "app_directory=${{ inputs.project_directory }}-${{ inputs.deploy_mode }}" \
+            -e "registry_login=${{ secrets.LOGIN }}" \
+            -e "registry_pwd=${{ secrets.PASSWORD }}" \
+            -e "deploy_mode=${{ inputs.deploy_mode }}" \
+            -e "api_server_name=${{ inputs.api_server_name }}" \
+            -e "api_server_port=${{ inputs.api_server_port }}" \
+            -e "client_server_name=${{ inputs.client_server_name }}" \
+            -e "client_server_port=${{ inputs.client_server_port }}" \

@@ -2,13 +2,22 @@ version: "3.9"
 
 services:
   stm-api:
-    build: .
     container_name: stm-api
-    network_mode: host
-    volumes:
-      - .:/app
-      - /etc/letsencrypt/live/stm.api.hikarizsu.fr:/etc/letsencrypt/live/stm.api.hikarizsu.fr:ro
-      - /etc/letsencrypt/archive/stm.api.hikarizsu.fr:/etc/letsencrypt/archive/stm.api.hikarizsu.fr:ro
-    working_dir: /app
+    image: docker-registry.hikarizsu.fr/OSM-backend:latest  
+    environment:
+      FLASK_APP:  #app package
+      ENVIRONMENT:  #env type
+      DB_USER:  #DB user
+      DB_PASSWORD: 
+      DB_NAME:  #DB name 
+      DB_PORT:  #DB listen port
+      DB_HOST:  #DB host 
+      JWT_SECRET_KEY: #api jwt signature
+      ACCESS_CORS: #api cors allowed client
+      API_PORT:  #API listen port (inside container)
+    # enf_file: ./env #store your env into 
+
     mem_limit: 300M
     memswap_limit: 4G 
+    restart: always
+    network_mode: host #A requirement to 

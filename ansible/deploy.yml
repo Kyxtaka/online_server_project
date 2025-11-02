@@ -1,0 +1,43 @@
+- name: Deploy docker container
+  hosts: apps
+  vars_files: 
+    - group_vars/apps.yml
+  become: yes
+  tasks:  
+    - name: create project directory
+      ansible.builtin.file:
+        path: "{{ app_directory }}"
+        state: directory
+
+    - name: login to private registry
+      docker_login:
+        registry: "https://{{registry_url}}"
+        username: "{{registry_login}}"
+        password: "{{registry_pwd}}"
+
+    - name: create docker compose file from jinja template
+      ansible.builtin.template:
+        src: "templates/docker-compose.yml.j2"
+        dest: "{{ app_directory }}/docker-compose.yml"
+ 
+    - name: Allow API port
+      community.general.ufw:
+        rule: allow
+        port: "{{ api_server_port }}"
+        proto: tcp
+
+    - name: Allow Client port
+      community.general.ufw:
+        rule: allow
+        port: "{{ client_server_port }}"
+        proto: tcp
+
+    - name: Pull Docker images
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_directory }}"
+        pull: always
+
+    - name: Launch containers
+      community.docker.docker_compose_v2:
+        project_src: "{{ app_directory }}"
+        state: present

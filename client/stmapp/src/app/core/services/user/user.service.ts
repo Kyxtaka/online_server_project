@@ -17,14 +17,14 @@ export class UserService {
   public userData$: Observable<UserDTO | null>
 
   constructor(
-    private apiService: ApiUserService, 
-    // private authService: AuthService, 
-    private router: Router, 
+    private apiService: ApiUserService,
+    // private authService: AuthService,
+    private router: Router,
     private computerService: ComputerService) {
     this.userDataSubject = new BehaviorSubject<UserDTO | null>(null);
     this.userData$ = this.userDataSubject.asObservable();
 
-   }
+  }
 
   public getUserData(): UserDTO | null {
     return this.userDataSubject.getValue();
@@ -34,13 +34,13 @@ export class UserService {
     this.userDataSubject.next(data);
   }
 
-  public emptyUserData():void  {
+  public emptyUserData(): void {
     this.userDataSubject.next(null);
   }
 
   public logout(): void {
     this.emptyUserData();
-    this.computerService.emptyComputerData();
+    this.computerService.emptyComputerData(); //remove local computer data for connected user
   }
 
   public retriveUserInfos(): void {

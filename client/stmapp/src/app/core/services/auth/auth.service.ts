@@ -12,7 +12,7 @@ import { ComputerService } from '../computer/computer.service';
 export enum Privilege {
   USER = "USER",
   ADMIN = "ADMIN"
-};
+}
 
 
 
@@ -56,7 +56,7 @@ export class AuthService {
 
 
   setToken(token: string): void {
-    const expirationDate: Date | null = this.jwtHelper.getTokenExpirationDate(token);; // Convert to milliseconds
+    const expirationDate: Date | null = this.jwtHelper.getTokenExpirationDate(token); // Convert to milliseconds
     if (expirationDate) {
       this.cookieService.set(this.token_name, token, { expires: expirationDate, secure: true });
     }else {

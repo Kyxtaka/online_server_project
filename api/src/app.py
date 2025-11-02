@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from flask_cors import CORS
 app = Flask(__name__)
 
-dotentv_path = join(dirname(__file__), '..','.flaskenv')
+dotentv_path = join(dirname(__file__), '..','.env')
 load_dotenv(dotenv_path=dotentv_path)
 prod = False
 if os.getenv("ENVIRONMENT") != "dev": prod = True
@@ -16,8 +16,14 @@ db_pwd = os.getenv("DB_PASSWORD")
 db_host = os.getenv("DB_HOST")
 db_name = os.getenv("DB_NAME")
 db_port = os.getenv("DB_PORT")
+ACCESS_CORS = os.getenv("ACCESS_CORS")
 
-if prod: db_port = os.getenv("DB_PORT_PROD")
+if prod :
+    db_port = os.getenv("DB_PORT_PROD")
+else :
+    db_port = os.getenv("DB_PORT")
+
+
 db_uri = "mysql://"+db_user+":"+db_pwd+"@"+db_host+":"+db_port+"/"+db_name
 app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
 db.init_app(app)
@@ -32,10 +38,13 @@ api_version_path = "/api/v1"
 api.init_app(app)
 
 #SETUP CORS
-authorized_clients = [
+default_authorized_clients = [
     "https://stm-client.hikarizsu.fr",
-    "http://localhost:4200"
+    "http://localhost:4200",
+    "https://stm-client-test.hikarizsu.fr"
 ]
+
+authorized_clients = default_authorized_clients
 CORS(app, supports_credentials=True, origins=authorized_clients)
 
 #Namespaces

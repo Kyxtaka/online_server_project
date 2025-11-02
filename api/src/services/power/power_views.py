@@ -64,4 +64,4 @@ class WakeOnLan(Resource):
             except Exception as e:
                 return {"status": "error", "message": str(e)}, 400
         else: 
-            return {"msg": "You do not have this privileges"}
+            return {"message": "You do not have this privileges"}

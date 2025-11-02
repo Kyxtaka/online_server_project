@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -13,7 +13,7 @@ import { MsgResponse } from '../../../models/api/response/msg-response';
   providedIn: 'root'
 })
 export class ApiAuthAService {
-  private api: string = environment.APIURL;
+  private api: string = environment.API_URL_BASE_ROUTE_V1;
 
   private apiAuthEndpoint: string = `${this.api}/auth/login`;
   private testEnd: string = `${this.api}/admin/users`;
@@ -32,7 +32,7 @@ export class ApiAuthAService {
 })
 export class ApiUserService {
 
-  private api: string = environment.APIURL;
+  private api: string = environment.API_URL_BASE_ROUTE_V1;
   private testEnd: string = `${this.api}/user`;
 
   constructor(private httpClient: HttpClient) {}
@@ -47,9 +47,16 @@ export class ApiUserService {
   providedIn: 'root'
 })
 export class ApiAdminService{
-  constructor(private httpClient: HttpClient) {}
 
-  // getAllUserInfos()
+  private api: string = environment.API_URL_BASE_ROUTE_V1;
+  private endpoint: string = `${this.api}/admin`;
+  private httpClient: HttpClient = inject(HttpClient);
+  constructor() {};
+
+  getAllUserInfos(): Observable<UserDTO[]> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.get<UserDTO[]>(`${this.endpoint}/users`, { headers });
+  }
 }
 
 @Injectable({
@@ -61,7 +68,7 @@ export class ApiComputerService{
   private computerEnpoint: string;
 
   constructor(private httpClient: HttpClient) {
-    this.api = environment.APIURL;
+    this.api = environment.API_URL_BASE_ROUTE_V1;
     this.computerEnpoint = `${this.api}/computers`;
   }
 
@@ -91,8 +98,8 @@ export class ApiWolService{
   private wolEndpoint: string
 
   constructor(private httpClient: HttpClient) {
-    this.api = environment.APIURL;
-    this.wolEndpoint = `${this.api}/wol/wake` 
+    this.api = environment.API_URL_BASE_ROUTE_V1;
+    this.wolEndpoint = `${this.api}/wol/wake`
   }
 
   wake(pcMac: string): Observable<MsgResponse> {

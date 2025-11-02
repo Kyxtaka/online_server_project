@@ -1,5 +1,5 @@
 const protocol: string = "https"
-const apiBaseUrl: string = "stm-api-test.hikarizsu.fr"
+const apiBaseUrl: string = "stm-api.hikarizsu.fr"
 const APIBaseRoute: string= "/api/v1"
 
 

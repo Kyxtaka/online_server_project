@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit{
   public isLoading = true;
   public userData$: Observable<UserDTO[] | null>;
   public computerData$: Observable<ComputerDTO[] | null>;
+
   constructor(private userService: UserService, private computerService: ComputerService, private wolService: WolService) {
     this.userService.retriveUserInfos();
     this.userData$ = this.userService.userData$.pipe(

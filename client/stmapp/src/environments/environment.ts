@@ -1,6 +1,5 @@
 const protocol: string = "https"
 const apiBaseUrl: string = "stm-api-test.hikarizsu.fr"
-// const port: number = 8080
 const APIBaseRoute: string= "/api/v1"
 
 

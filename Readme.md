@@ -1,6 +1,8 @@
 # Deployemenmt status
 Test Server : [![Projet CI Docker Push Docker image](https://github.com/Kyxtaka/online_server_project/actions/workflows/ci-cd.yml/badge.svg?branch=develop&event=branch_protection_rule)](https://github.com/Kyxtaka/online_server_project/actions/workflows/ci-cd.yml) 
 
+[![Projet CI Docker Push Docker image](https://github.com/Kyxtaka/online_server_project/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Kyxtaka/online_server_project/actions/workflows/ci.yml)
+
 # Web application for managing big computers from online with a small ssh server
 This project is a small web based application for managing big home computers from online via a small ssh server.
 I made this project to wake up and shutdown my home computers without being worried about my electricity bill, this is usefull if you have 

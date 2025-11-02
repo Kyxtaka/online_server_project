@@ -20,10 +20,10 @@ export const appConfig: ApplicationConfig = {
         {
           config: {
             tokenGetter: () => inject(AuthService).getToken(),
-            allowedDomains: [`${environment.APIURL}`],
+            allowedDomains: [`${environment.API_DOMAIN}`],
             disallowedRoutes: [
-              `${environment.APIURL}/api/v1/auth/login`,
-              `${environment.APIURL}/api/v1/auth/register`,
+              `${environment.API_URL_BASE_ROUTE_V1}/auth/login`,
+              `${environment.API_URL_BASE_ROUTE_V1}/auth/register`,
             ],
           },
         }

@@ -3,9 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { accesTokenResponse } from '../../../models/api/response/auth-response';
-import { UserDTO } from '../../../models/dto/userDTO';
+import { UserDTO, UserRegistrationDTO, UserUpdateDTO } from '../../../models/dto/userDTO';
 import { ComputerDTO } from '../../../models/dto/computerDTO';
 import { MsgResponse } from '../../../models/api/response/msg-response';
+import { generateRandomPassword } from '../../utils/string-generator';
 
 @Injectable({
   providedIn: 'root',
@@ -39,10 +40,43 @@ export class ApiUserService {
 
   constructor() {}
 
+  register(username: string, email: string, role: string): Observable<MsgResponse> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const password = generateRandomPassword(12);
+    const body: UserRegistrationDTO = { username, email, role, password };
+    return this.httpClient.post<MsgResponse>(`${this.userEndpoint}/register`, body, { headers });
+  }
+
   getUserInfos(): Observable<UserDTO> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.httpClient.get<UserDTO>(this.userEndpoint, { headers });
   }
+
+  deleteUser(userId: number): Observable<MsgResponse> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.delete<MsgResponse>(`${this.userEndpoint}/${userId}`, {
+      headers,
+    });
+  }
+
+  updateUser(userData: UserUpdateDTO): Observable<MsgResponse> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put<MsgResponse>(this.userEndpoint, userData, {
+      headers,
+    });
+  }
+
+
+  // TODO serverside implementation needed
+  // requestPasswordReset(email: string): Observable<MsgResponse> {
+  //   const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  //   const body = { email };
+  //   return this.httpClient.post<MsgResponse>(
+  //     `${this.userEndpoint}/request-password-reset`,
+  //     body,
+  //     { headers },
+  //   );
+  // }
 }
 
 @Injectable({
@@ -66,12 +100,11 @@ export class ApiAdminService {
   providedIn: 'root',
 })
 export class ApiComputerService {
-  private api: string;
+  private api: string = environment.API_URL_BASE_ROUTE_V1;
   private computerEnpoint: string;
   private httpClient: HttpClient = inject(HttpClient);
 
   constructor() {
-    this.api = environment.API_URL_BASE_ROUTE_V1;
     this.computerEnpoint = `${this.api}/computers`;
   }
 

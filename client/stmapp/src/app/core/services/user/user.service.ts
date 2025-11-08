@@ -1,11 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { ApiUserService } from '../api/api.service';
-import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { UserDTO } from '../../../models/dto/userDTO';
-import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
-import { appConfig } from '../../../app.config';
-import { AppRoutes } from '../../../app.routes';
 import { ComputerService } from '../computer/computer.service';
 
 @Injectable({
@@ -20,8 +17,6 @@ export class UserService {
   public userData$: Observable<UserDTO | null>;
 
   /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
-
   constructor() {
     this.userDataSubject = new BehaviorSubject<UserDTO | null>(null);
     this.userData$ = this.userDataSubject.asObservable();

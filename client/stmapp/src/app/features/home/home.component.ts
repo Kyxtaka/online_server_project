@@ -28,8 +28,6 @@ export class HomeComponent implements OnInit {
   public userData$: Observable<UserDTO[] | null>;
   public computerData$: Observable<ComputerDTO[] | null>;
 
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
 
   constructor() {
     this.userService.retriveUserInfos();

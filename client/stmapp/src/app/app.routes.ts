@@ -9,41 +9,40 @@ import { LogoutComponent } from './features/auth/logout/logout.component';
 // const userConnectedPrefix: string = "connected/"
 
 export enum AppRoutes {
-    HOME = "connected/home",
-    LOGIN = "login",
-    LOGOUT = "disconnect"
+  HOME = 'connected/home',
+  LOGIN = 'login',
+  LOGOUT = 'disconnect',
 }
 
 export const routes: Routes = [
-    {
-        path: 'login',
-        component: LoginComponent
-    },
-    {
-        path: '',
-        redirectTo: 'login',
-        pathMatch: 'full'
-    },
-    {
-        path: 'logout',
-        component: LogoutComponent,
-        canActivate: [AuthGuard]
-    },
-    {
-        path: 'connected',
-        component: MainLayoutComponent,
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'connected',
+    component: MainLayoutComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: 'home',
+        component: HomeComponent,
         canActivate: [AuthGuard],
-        children: [
-            {
-                path: 'home',
-                component: HomeComponent,
-                canActivate: [AuthGuard]
-            },
-        ]
-    },
-    {
-        path: '**',
-        component: NotFoundComponent
-    },
-    
+      },
+    ],
+  },
+  {
+    path: '**',
+    component: NotFoundComponent,
+  },
 ];

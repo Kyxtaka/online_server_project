@@ -1,15 +1,14 @@
 <h2 class="text-xl font-bold mb-4">Liste des utilisateurs</h2>
 <div *ngIf="userData$ | async">
   <h3>ADMIN users dashboard</h3>
-  <app-dashboard
-    [columns]="userColumns"
-    [data]="userData$ | async">
+  <app-dashboard [columns]="userColumns" [data]="userData$ | async">
   </app-dashboard>
   <h3>PC dashboards</h3>
   <app-dashboard
     [columns]="computerColumns"
     [data]="computerData$ | async"
     [actions]="computerAction"
-    (actionClicked)="onDashboardAction($event)">
+    (actionClicked)="onDashboardAction($event)"
+  >
   </app-dashboard>
 </div>

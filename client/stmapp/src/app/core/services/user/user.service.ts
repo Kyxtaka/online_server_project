@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { ApiUserService } from '../api/api.service';
 import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
 import { UserDTO } from '../../../models/dto/userDTO';
@@ -9,21 +9,22 @@ import { AppRoutes } from '../../../app.routes';
 import { ComputerService } from '../computer/computer.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
+  private apiService = inject(ApiUserService);
+  private router = inject(Router);
+  private computerService = inject(ComputerService);
 
   public userDataSubject: BehaviorSubject<UserDTO | null>;
-  public userData$: Observable<UserDTO | null>
+  public userData$: Observable<UserDTO | null>;
 
-  constructor(
-    private apiService: ApiUserService,
-    // private authService: AuthService,
-    private router: Router,
-    private computerService: ComputerService) {
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
+
+  constructor() {
     this.userDataSubject = new BehaviorSubject<UserDTO | null>(null);
     this.userData$ = this.userDataSubject.asObservable();
-
   }
 
   public getUserData(): UserDTO | null {
@@ -51,15 +52,15 @@ export class UserService {
           username: response.username,
           email: response.email,
           role: response.role,
-          createdAt: response.createdAt
+          createdAt: response.createdAt,
         };
         this.updateUserData(data);
         return this.getUserData();
       },
       error: (err) => {
-        console.log("error while retriving user data", err);
-        return null
-      }
-    })
+        console.log('error while retriving user data', err);
+        return null;
+      },
+    });
   }
 }

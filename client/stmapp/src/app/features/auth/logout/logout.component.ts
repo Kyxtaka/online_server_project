@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { UserService } from '../../../core/services/user/user.service';
 import { AppRoutes } from '../../../app.routes';
 import { AuthService } from '../../../core/services/auth/auth.service';
@@ -8,16 +8,17 @@ import { AuthService } from '../../../core/services/auth/auth.service';
   standalone: true,
   imports: [],
   templateUrl: './logout.component.html',
-  styleUrl: './logout.component.css'
+  styleUrl: './logout.component.css',
 })
-export class LogoutComponent implements OnInit{
+export class LogoutComponent implements OnInit {
+  private authService = inject(AuthService);
 
-  logoutRedirection: string = AppRoutes.LOGIN
+  logoutRedirection: string = AppRoutes.LOGIN;
 
-  constructor(private authService: AuthService) {
-    
-  }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
+  constructor() {}
 
   ngOnInit(): void {
     this.authService.logout();

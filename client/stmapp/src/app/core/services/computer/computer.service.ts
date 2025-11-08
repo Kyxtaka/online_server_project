@@ -1,24 +1,27 @@
-import { Injectable } from '@angular/core';
-import { Observable, of, map, BehaviorSubject} from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { Observable, of, map, BehaviorSubject } from 'rxjs';
 import { ApiComputerService } from '../api/api.service';
 import { ComputerDTO } from '../../../models/dto/computerDTO';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ComputerService {
+  private apiComputerService = inject(ApiComputerService);
 
   public computerDataSubject: BehaviorSubject<ComputerDTO[] | null>;
   public computerData$: Observable<ComputerDTO[] | null>;
 
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor(...args: unknown[]);
 
-  constructor(private apiComputerService: ApiComputerService) {
+  constructor() {
     this.computerDataSubject = new BehaviorSubject<ComputerDTO[] | null>(null);
     this.computerData$ = this.computerDataSubject.asObservable();
-   }
+  }
 
   updateComputerData(data: ComputerDTO[]): void {
-    this.computerDataSubject.next(data)
+    this.computerDataSubject.next(data);
   }
 
   getComputerData(): ComputerDTO[] | null {
@@ -41,9 +44,9 @@ export class ComputerService {
         return this.getComputerData();
       },
       error: (err) => {
-        console.log("error while retriving computer data", err);
-        return null
-      }
-    })
+        console.log('error while retriving computer data', err);
+        return null;
+      },
+    });
   }
 }

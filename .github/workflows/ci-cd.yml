@@ -10,7 +10,11 @@ jobs:
     if: github.ref == 'refs/heads/main' || github.base_ref == 'main'
     runs-on: [Linux, self-hosted, X64]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  
+          submodules: recursive 
+          ref: ${{ github.ref }}
 
       - name: Docker Login
         uses: docker/login-action@v3
@@ -38,7 +42,11 @@ jobs:
     if: github.ref == 'refs/heads/main' || github.base_ref == 'main'
     runs-on: [Linux, self-hosted, X64]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  
+          submodules: recursive 
+          ref: ${{ github.ref }}
 
       - name: Docker Login
         uses: docker/login-action@v3
@@ -66,7 +74,11 @@ jobs:
     if: github.ref == 'refs/heads/develop' || github.base_ref == 'develop'
     runs-on: [Linux, self-hosted, X64]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  
+          submodules: recursive 
+          ref: ${{ github.ref }}
 
       - name: Docker Login
         uses: docker/login-action@v3
@@ -94,7 +106,11 @@ jobs:
     if: github.ref == 'refs/heads/develop' || github.base_ref == 'develop'
     runs-on: [Linux, self-hosted, X64]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  
+          submodules: recursive 
+          ref: ${{ github.ref }}
 
       - name: Docker Login
         uses: docker/login-action@v3

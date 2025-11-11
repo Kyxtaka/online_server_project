@@ -14,7 +14,6 @@ jobs:
         with:
           fetch-depth: 0  
           submodules: recursive 
-          ref: ${{ github.ref }}
       
       - name: Reset to branch
         run: |

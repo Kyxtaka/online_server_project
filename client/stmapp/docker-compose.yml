@@ -2,7 +2,7 @@ services:
   stmapp:
     container_name: stm-client
     image: docker-registry.hikarizsu.fr/OSM-frontend:latest
-    env_file: ''
+    env_file: ""
     ports:
       - "8144:80"
     volumes:

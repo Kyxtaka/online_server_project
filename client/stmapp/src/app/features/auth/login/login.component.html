@@ -1,20 +1,24 @@
 <div class="main-content">
-    <div class='loginBox'>
-        <div class="loginForm">
-            <h2 class="heading">Log in</h2>
-            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-                <div class="inputBox">
-                    <input formControlName="identifier" placeholder="identifier" />
-                    <span>Username / email</span>
-                    <i></i>
-                </div>
-                <div class="inputBox">
-                    <input type="password" formControlName="password" placeholder="Password" />
-                    <span>Password</span>
-                    <i></i>
-                </div>
-                <button type="submit">Connexion</button>
-            </form>
+  <div class="loginBox">
+    <div class="loginForm">
+      <h2 class="heading">Log in</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="inputBox">
+          <input formControlName="identifier" placeholder="identifier" />
+          <span>Username / email</span>
+          <i></i>
         </div>
+        <div class="inputBox">
+          <input
+            type="password"
+            formControlName="password"
+            placeholder="Password"
+          />
+          <span>Password</span>
+          <i></i>
+        </div>
+        <button type="submit">Connexion</button>
+      </form>
     </div>
+  </div>
 </div>

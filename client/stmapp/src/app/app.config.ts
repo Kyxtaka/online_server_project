@@ -1,9 +1,15 @@
-import { ApplicationConfig, importProvidersFrom, inject, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { JwtModule, JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
-import { HTTP_INTERCEPTORS, HttpClient, provideHttpClient, withFetch, withInterceptors, withInterceptorsFromDi } from '@angular/common/http';
-
-
+import {
+  ApplicationConfig,
+  importProvidersFrom,
+  inject,
+  provideZoneChangeDetection,
+} from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { JwtModule, JwtHelperService } from '@auth0/angular-jwt';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 
 import { routes } from './app.routes';
 import { AuthService } from './core/services/auth/auth.service';
@@ -16,21 +22,17 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     JwtHelperService,
     importProvidersFrom(
-      JwtModule.forRoot(
-        {
-          config: {
-            tokenGetter: () => inject(AuthService).getToken(),
-            allowedDomains: ["stm-api.hikarizsu.fr", "stm-api-test.hikarizsu.fr"],
-            disallowedRoutes: [
-              `${environment.API_URL_BASE_ROUTE_V1}/auth/login`,
-              `${environment.API_URL_BASE_ROUTE_V1}/auth/register`,
-            ],
-          },
-        }
-      )
+      JwtModule.forRoot({
+        config: {
+          tokenGetter: () => inject(AuthService).getToken(),
+          allowedDomains: ['stm-api.hikarizsu.fr', 'stm-api-test.hikarizsu.fr'],
+          disallowedRoutes: [
+            `${environment.API_URL_BASE_ROUTE_V1}/auth/login`,
+            `${environment.API_URL_BASE_ROUTE_V1}/auth/register`,
+          ],
+        },
+      }),
     ),
-    provideHttpClient(
-      withInterceptorsFromDi()
-    )
-  ]
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
 };

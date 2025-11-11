@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { RouterModule } from '@angular/router';
@@ -12,7 +12,7 @@ import { map, Observable } from 'rxjs';
   templateUrl: './header.component.html',
   styleUrl: './header.component.css',
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   private authService = inject(AuthService);
   private userService = inject(UserService);
 
@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   public username: Observable<string> | null;
 
   /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
+  // constructor(...args: unknown[]);
 
   constructor() {
     this.userService.retriveUserInfos();
@@ -30,5 +30,8 @@ export class HeaderComponent implements OnInit {
     this.isLogged = this.authService.isLoggedIn();
   }
 
-  ngOnInit(): void {}
+
+  logout() {
+    this.authService.logout();
+  }
 }

@@ -2,12 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpHeaders } from '@angular/common/http';
-import {
-  catchError,
-  map,
-  Observable,
-  of,
-} from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { ApiAuthAService } from '../api/api.service';
 import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
@@ -43,7 +38,6 @@ export class AuthService {
   }
 
   login(identifier: string, password: string): Observable<boolean> {
-    console.log('logging...');
     return this.apiAuthService.login(identifier, password).pipe(
       map((res) => {
         this.setToken(res.access_token);
@@ -65,8 +59,6 @@ export class AuthService {
         expires: expirationDate,
         secure: true,
       });
-    } else {
-      console.log('error, unable to set token');
     }
   }
 
@@ -78,14 +70,10 @@ export class AuthService {
   isTokenExpired(): boolean {
     const token: string | null = this.getToken();
     const isExpired: boolean = this.jwtHelper.isTokenExpired(token);
-    console.log(`token is present: ${token}`);
-    console.log(`isExpired: `, isExpired);
-    console.log(`token is null : ${!token} || isExpired ${isExpired}`);
     return !token || isExpired;
   }
 
   isLoggedIn(): boolean {
-    console.log(`isLoggedIn (not expired):`, !this.isTokenExpired());
     this.isTokenExpired() ? this.logout() : false;
     return !this.isTokenExpired();
   }

@@ -13,7 +13,6 @@ export interface UserRegistrationDTO {
   password: string;
 }
 
-
 export interface UserUpdateDTO {
   id: number;
   username?: string;

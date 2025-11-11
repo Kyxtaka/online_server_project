@@ -8,14 +8,13 @@ export class WolService {
   private apiWolService = inject(ApiWolService);
 
   /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
+  // constructor(...args: unknown[]);
 
   constructor() {}
 
   wakePC(pcMac: string): Observable<string> {
     return this.apiWolService.wake(pcMac).pipe(
       map((res) => {
-        console.log('test msg ans', res.message);
         return res.message;
       }),
       catchError((res) => {

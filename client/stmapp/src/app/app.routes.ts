@@ -3,13 +3,12 @@ import { LoginComponent } from './features/auth/login/login.component';
 import { HomeComponent } from './features/home/home.component';
 import { AuthGuard } from './core/guards/auth/auth.guard';
 import { NotFoundComponent } from './features/not-found/not-found.component';
-import { MainLayoutComponent } from './core/layouts/main-layout/main-layout.component';
 import { LogoutComponent } from './features/auth/logout/logout.component';
 
 // const userConnectedPrefix: string = "connected/"
 
 export enum AppRoutes {
-  HOME = 'connected/home',
+  HOME = 'home',
   LOGIN = 'login',
   LOGOUT = 'disconnect',
 }
@@ -30,16 +29,9 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
-    path: 'connected',
-    component: MainLayoutComponent,
+    path: 'home',
+    component: HomeComponent,
     canActivate: [AuthGuard],
-    children: [
-      {
-        path: 'home',
-        component: HomeComponent,
-        canActivate: [AuthGuard],
-      },
-    ],
   },
   {
     path: '**',

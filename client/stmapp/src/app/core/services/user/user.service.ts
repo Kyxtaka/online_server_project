@@ -52,8 +52,7 @@ export class UserService {
         this.updateUserData(data);
         return this.getUserData();
       },
-      error: (err) => {
-        console.log('error while retriving user data', err);
+      error: () => {
         return null;
       },
     });

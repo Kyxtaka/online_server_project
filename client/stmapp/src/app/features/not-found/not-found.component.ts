@@ -12,7 +12,7 @@ export class NotFoundComponent {
   private router = inject(Router);
 
   /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
+  // constructor(...args: unknown[]);
 
   constructor() {}
   home() {

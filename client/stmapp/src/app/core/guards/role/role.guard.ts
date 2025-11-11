@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import 'reflect-metadata';
 import { UserService } from '../../services/user/user.service';
 
-
 export const roleGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);

@@ -3,7 +3,6 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { ApiAuthAService } from '../../../core/services/api/api.service';
 import { AppRoutes } from '../../../app.routes';
 
@@ -26,7 +25,7 @@ export class LoginComponent implements OnInit {
   });
 
   /** Inserted by Angular inject() migration for backwards compatibility */
-  constructor(...args: unknown[]);
+  // constructor(...args: unknown[]);
 
   constructor() {}
   ngOnInit(): void {
@@ -36,18 +35,15 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    // console.log(this.loginForm.value)
     const { identifier, password } = this.loginForm.value as {
       identifier: string;
       password: string;
     };
-    // console.log(`Submit form data get:` , identifier, password)
     if (identifier && password) {
       this.authService.login(identifier, password).subscribe((success) => {
-        // console.log("success", success)
         success
           ? this.router.navigate([AppRoutes.HOME])
-          : alert('Incerect credentials');
+          : alert('Incorrect credentials');
       });
     }
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UserDTO } from '../../models/dto/userDTO';
 import { UserService } from '../../core/services/user/user.service';
 import { CommonModule } from '@angular/common';
@@ -19,7 +19,7 @@ import { WolService } from '../../core/services/wol/wol.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent{
   private userService = inject(UserService);
   private computerService = inject(ComputerService);
   private wolService = inject(WolService);
@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit {
   public isLoading = true;
   public userData$: Observable<UserDTO[] | null>;
   public computerData$: Observable<ComputerDTO[] | null>;
-
 
   constructor() {
     this.userService.retriveUserInfos();
@@ -42,13 +41,12 @@ export class HomeComponent implements OnInit {
 
   public wakePc(pc: ComputerDTO) {
     this.wolService.wakePC(pc.macAddress).subscribe((msg) => {
-      console.log(`WOL result for ${pc.hostname}: ${msg}`);
       alert(msg);
     });
   }
 
   onDashboardAction(event: { action: string; row: ComputerDTO }) {
-    console.log('action executed :', event.action, event.row);
+    event.action === 'Wake me up' && event.row;
   }
 
   userColumns: TableColumn<UserDTO>[] = [
@@ -72,8 +70,4 @@ export class HomeComponent implements OnInit {
   computerAction: TableAction<ComputerDTO>[] = [
     { label: 'Wake me up', color: '#b8ff00', action: (pc) => this.wakePc(pc) },
   ];
-
-  ngOnInit(): void {
-    console.log(this.userData$);
-  }
 }

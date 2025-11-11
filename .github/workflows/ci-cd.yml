@@ -10,7 +10,11 @@ jobs:
     if: github.ref == 'refs/heads/main' || github.base_ref == 'main'
     runs-on: [Linux, self-hosted, X64]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  
+          submodules: recursive 
+          ref: ${{ github.ref }}
 
       - name: Docker Login
         uses: docker/login-action@v3
@@ -38,7 +42,11 @@ jobs:
     if: github.ref == 'refs/heads/main' || github.base_ref == 'main'
     runs-on: [Linux, self-hosted, X64]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  
+          submodules: recursive 
+          ref: ${{ github.ref }}
 
       - name: Docker Login
         uses: docker/login-action@v3
@@ -66,7 +74,11 @@ jobs:
     if: github.ref == 'refs/heads/develop' || github.base_ref == 'develop'
     runs-on: [Linux, self-hosted, X64]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  
+          submodules: recursive 
+          ref: ${{ github.ref }}
 
       - name: Docker Login
         uses: docker/login-action@v3
@@ -94,7 +106,11 @@ jobs:
     if: github.ref == 'refs/heads/develop' || github.base_ref == 'develop'
     runs-on: [Linux, self-hosted, X64]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0  
+          submodules: recursive 
+          ref: ${{ github.ref }}
 
       - name: Docker Login
         uses: docker/login-action@v3
@@ -124,8 +140,8 @@ jobs:
     uses: ./.github/workflows/ansible-deploy.yml
     with:
       deploy_mode: test
-      # image_tag: latest
       image_tag: ${{github.sha}}
+      # image_tag: test
       api_server_name: stm-api-test.hikarizsu.fr
       client_server_name: stm-client-test.hikarizsu.fr 
       api_server_port: "8147"

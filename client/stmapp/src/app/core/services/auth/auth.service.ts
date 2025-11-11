@@ -1,103 +1,91 @@
-import { Injectable } from '@angular/core';
-import { CookieService, CookieOptions } from 'ngx-cookie-service';
+import { Injectable, inject } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, catchError, map, Observable, of, Timestamp } from 'rxjs';
-import { ApiAuthAService} from '../api/api.service';
+import { catchError, map, Observable, of } from 'rxjs';
+import { ApiAuthAService } from '../api/api.service';
 import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
 import { AppRoutes } from '../../../app.routes';
 import { ComputerService } from '../computer/computer.service';
 
 export enum Privilege {
-  USER = "USER",
-  ADMIN = "ADMIN"
+  USER = 'USER',
+  ADMIN = 'ADMIN',
 }
 
-
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  private cookieService = inject(CookieService);
+  private jwtHelper = inject(JwtHelperService);
+  private apiAuthService = inject(ApiAuthAService);
+  private router = inject(Router);
+  private userService = inject(UserService);
+  private computerService = inject(ComputerService);
 
-  constructor(
-    private cookieService: CookieService, 
-    private jwtHelper: JwtHelperService, 
-    private apiAuthService: ApiAuthAService,
-    private router: Router,
-    private userService: UserService,
-    private computerService: ComputerService
-  ) { }
+  /** Inserted by Angular inject() migration for backwards compatibility */
+  constructor() {}
 
-  private token_name: string = "access_token";
+  private token_name: string = 'access_token';
 
   logout(): void {
     this.cookieService.delete(this.token_name);
     this.userService.logout();
     this.computerService.logout();
-    this.router.navigate([AppRoutes.LOGIN])
+    this.router.navigate([AppRoutes.LOGIN]);
   }
 
-  login(identifier: string, password: string): Observable<boolean>  {
-    console.log("logging...");
+  login(identifier: string, password: string): Observable<boolean> {
     return this.apiAuthService.login(identifier, password).pipe(
-      map(res => {
+      map((res) => {
         this.setToken(res.access_token);
         this.userService.retriveUserInfos();
         return true;
       }),
-      catchError(err => {
-        console.error("Login error", err);
+      catchError((err) => {
+        console.error('Login error', err);
         return of(false);
-      })
+      }),
     );
   }
 
-
   setToken(token: string): void {
-    const expirationDate: Date | null = this.jwtHelper.getTokenExpirationDate(token); // Convert to milliseconds
+    const expirationDate: Date | null =
+      this.jwtHelper.getTokenExpirationDate(token); // Convert to milliseconds
     if (expirationDate) {
-      this.cookieService.set(this.token_name, token, { expires: expirationDate, secure: true });
-    }else {
-      console.log("error, unable to set token")
+      this.cookieService.set(this.token_name, token, {
+        expires: expirationDate,
+        secure: true,
+      });
     }
   }
 
   getToken(): string {
-    const token: string | null = this.cookieService.get(this.token_name)
-    return token
+    const token: string | null = this.cookieService.get(this.token_name);
+    return token;
   }
 
   isTokenExpired(): boolean {
-    const token: string | null = this.getToken()
-    const isExpired: boolean = this.jwtHelper.isTokenExpired(token)
-    console.log(`token is present: ${token}`)
-    console.log(`isExpired: `, isExpired)
-    console.log(`token is null : ${!token} || isExpired ${isExpired}`)
-    return !token || isExpired  
+    const token: string | null = this.getToken();
+    const isExpired: boolean = this.jwtHelper.isTokenExpired(token);
+    return !token || isExpired;
   }
 
   isLoggedIn(): boolean {
-    console.log(`isLoggedIn (not expired):`, !this.isTokenExpired())
-    this.isTokenExpired() ? this.logout(): false;
+    this.isTokenExpired() ? this.logout() : false;
     return !this.isTokenExpired();
   }
 
   getUserIdentifier(): string {
-    return ""
+    return '';
   }
 
   getHttpRequestHeader(): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${this.getToken()}`
+      Authorization: `Bearer ${this.getToken()}`,
     });
   }
-
-  
-
-
-
 }
-

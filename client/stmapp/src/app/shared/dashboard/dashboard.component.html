@@ -1,25 +1,42 @@
-<table class="table-auto border-collapse border border-gray-300 w-full">
+<table class="table table-dashboard table-hover table-auto w-full">
   <thead>
-    <tr class="bg-gray-200">
-      <th *ngFor="let col of columns" class="border border-gray-300 px-4 py-2">
-        {{ col.header }}
+    <tr id="table-row-header" class="">
+      <th class="table-head-th p-0" *ngFor="let col of columns">
+        <div
+          class="table-head-th-div d-inline-flex justify-content-center p-2 w-100 h-100"
+        >
+          <span class="text-primary">{{ col.header }}</span>
+        </div>
+      </th>
+      <th class="table-head-th p-0" *ngIf="actions.length > 0">
+        <div
+          class="table-head-th-div d-inline-flex justify-content-center p-2 w-100 h-100"
+        >
+          <span class="text-primary">Actions</span>
+        </div>
       </th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="table-dashboard-body">
     <tr *ngFor="let row of data" class="hover:bg-gray-100">
-      <td *ngFor="let col of columns" class="border border-gray-300 px-4 py-2">
-        {{ row[col.key] }}
+      <td *ngFor="let col of columns" class="px-4 py-2">
+        <div class="table-body-data-div d-inline-flex justify-content-center p-2 w-100 h-100">
+          <span class="text-primary-emphasis">
+            {{ row[col.key] }}
+          </span>
+        </div>
       </td>
-      <td *ngIf="actions.length > 0" class="border border-gray-300 px-4 py-2 flex gap-2">
-        <button
-          *ngFor="let act of actions"
-          (click)="onAction(act, row)"
-          class="px-2 py-1 rounded text-white"
-          [ngClass]="act.color || 'bg-blue-500 hover:bg-blue-600'"
-        >
-          {{ act.label }}
-        </button>
+      <td *ngIf="actions.length > 0" class="px-4 py-2 flex gap-2">
+        <div class="table-body-data-div d-inline-flex justify-content-center p-2 w-100 h-100">
+          <button
+            *ngFor="let act of actions"
+            (click)="onAction(act, row)"
+            class="btn btn-primary px-2 py-1 rounded text-white"
+            [ngClass]="act.color || 'bg-blue-500 hover:bg-blue-600'"
+          >
+            {{ act.label }}
+          </button>
+        </div>
       </td>
     </tr>
   </tbody>

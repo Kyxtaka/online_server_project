@@ -1,15 +1,26 @@
 <div class="app-header">
-    <div class="app-header-navigation">
-        <div class="tabs">
-            <div id="services-redirection">
-                <!-- <a routerLink="/home" *ngIf="isLogged">Account Center</a> -->
-                <!-- <a routerLink="/ComputerCenter" *ngIf="isLogged">Computer Center</a> -->
-            </div>
-            <div class="app-header-actions-buttons">
-                <a routerLink="/connected/myProfile" *ngIf="isLogged">{{ this.username | async}}</a>
-                <button id="disconect" class="redirector-link" routerLink="/logout" *ngIf="isLogged" >Disconect</button>
-                <button id="support"  class="redirector-link" routerLink="/support">Support</button>
-            </div>   
-        </div>
+  <div class="app-header-navigation">
+    <div class="tabs">
+      <div id="services-redirection">
+        <!-- <a routerLink="/home" *ngIf="isLogged">Account Center</a> -->
+        <!-- <a routerLink="/ComputerCenter" *ngIf="isLogged">Computer Center</a> -->
+      </div>
+      <div class="app-header-actions-buttons">
+        <a routerLink="/connected/myProfile" *ngIf="isLogged">{{
+          this.username | async
+        }}</a>
+        <button
+          id="disconect"
+          class="redirector-link"
+          routerLink="/logout"
+          *ngIf="isLogged"
+        >
+          Disconect
+        </button>
+        <button id="support" class="redirector-link" routerLink="/support">
+          Support
+        </button>
+      </div>
     </div>
+  </div>
 </div>

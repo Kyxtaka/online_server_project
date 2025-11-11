@@ -1,0 +1,9 @@
+.home-container {
+  min-height: calc(
+    100vh - 138px
+  ); /* ajuste selon la hauteur du header/footer */
+  /* padding: 1rem; */
+  box-sizing: border-box;
+  /* min-height: calc(100vh - 120px); adapte selon header/footer */
+  width: 100%;
+}

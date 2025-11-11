@@ -7,9 +7,9 @@ export interface TableColumn<T> {
 }
 
 export interface TableAction<T> {
-  label: string;             
-  color?: string;            
-  action: (row: T) => void;  
+  label: string;
+  color?: string;
+  action: (row: T) => void;
 }
 
 @Component({
@@ -17,7 +17,7 @@ export interface TableAction<T> {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css'
+  styleUrl: './dashboard.component.css',
 })
 export class DashboardComponent<T> {
   @Input() columns: TableColumn<T>[] = [];

@@ -1,26 +1,50 @@
-<div class="app-header bg-">
-  <div class="app-header-navigation">
-    <div class="tabs">
-      <div id="services-redirection">
+<div class="header-content p-3 flex justify-between items-center">
+    <div class="app-header-navigation W-100 d-flex justify-content-between text-tertiary">
+      <ng-container *ngIf="currentUser() as user; else loggedOut">
+       
+        <div id="services-redirection div-left">
+          <a
+            class="icon-link icon-link-hover text-light text-decoration-none"
+            [routerLink]="appRoutes.HOME"
+            [routerLinkActive]="['active-link', 'fa-solid', 'fa-house']"
+            [routerLinkActiveOptions]="{ exact: true }"
+            ><fa-icon [icon]="faHouse" />
+            Home
+          </a>
+          
+          
+        </div>
+        <div id="services-redirection" class="d-inline-flex align-center div-right gap-3">
+
+          <a [routerLink]="appRoutes.ACCOUNTCENTER" class="icon-link icon-link-hover text-light text-decoration-none">
+            <fa-icon [icon]="faUser"/> 
+            {{ user.username }}
+          </a>
+
+          <a class="icon-link icon-link-hover text-light text-decoration-none" style="--bs-link-hover-color-rgb: 25, 135, 84;" href="#" (click)="logout()">
+            <fa-icon [icon]="faRightFromBracket" class="h-4 w-4" />Logout
+          </a>
+
+        </div>
+        
+      </ng-container>
+      
+      <ng-template #loggedOut>
+        <i class="min-h-[5rem] "></i>
+      </ng-template>
+      
+    </div>
+</div>
+
+
+<!-- <fa-icon [icon]="faRightFromBracket" (click)="logout()" /> -->
         <!-- <a routerLink="/home" *ngIf="isLogged">Account Center</a> -->
         <!-- <a routerLink="/ComputerCenter" *ngIf="isLogged">Computer Center</a> -->
-      </div>
-      <div class="app-header-actions-buttons">
-        <a routerLink="/connected/myProfile" *ngIf="isLogged">{{
-          this.username | async
-        }}</a>
-        <button
-          id="disconect"
-          class="redirector-link"
-          routerLink="/logout"
-          *ngIf="isLogged"
-        >
-          Disconect
-        </button>
-        <button id="support" class="redirector-link" routerLink="/support">
-          Support
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+          <!-- <i class="fa-solid fa-right-from-bracket" ></i>
+      <i class="fa-solid fa-right-from-bracket" style="color: #ffffff;"></i> -->
+
+              <!-- <a routerLink="/home" *ngIf="isLogged">Account Center</a> -->
+        <!-- <a routerLink="/ComputerCenter" *ngIf="isLogged">Computer Center</a> -->
+
+         <!-- <span>Bonjour {{ user.username }}</span> -->
+        <!-- <button (click)="logout()">Logout</button> -->

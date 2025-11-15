@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, WritableSignal } from '@angular/core';
 import { UserDTO } from '../../models/dto/userDTO';
 import { UserService } from '../../core/services/user/user.service';
 import { CommonModule } from '@angular/common';
@@ -7,7 +7,7 @@ import {
   DashboardComponent,
   TableAction,
 } from '../../shared/dashboard/dashboard.component';
-import { map, Observable } from 'rxjs';
+// import { map, Observable } from 'rxjs';
 import { ComputerDTO } from '../../models/dto/computerDTO';
 import { ComputerService } from '../../core/services/computer/computer.service';
 import { WolService } from '../../core/services/wol/wol.service';
@@ -17,7 +17,7 @@ import { WolService } from '../../core/services/wol/wol.service';
   standalone: true,
   imports: [CommonModule, DashboardComponent],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent{
   private userService = inject(UserService);
@@ -25,18 +25,12 @@ export class HomeComponent{
   private wolService = inject(WolService);
 
   public isLoading = true;
-  public userData$: Observable<UserDTO[] | null>;
-  public computerData$: Observable<ComputerDTO[] | null>;
+  public userData: WritableSignal<UserDTO | null> = this.userService.userData;
+  public computerData: WritableSignal<ComputerDTO[] | null> = this.computerService.computerDataSignal;
 
   constructor() {
     this.userService.retriveUserInfos();
-    this.userData$ = this.userService.userData$.pipe(
-      map((user) => (user != null ? [user] : [])),
-    );
     this.computerService.retrieveComputerData();
-    this.computerData$ = this.computerService.computerData$.pipe(
-      map((computers) => (computers != null ? computers : [])),
-    );
   }
 
   public wakePc(pc: ComputerDTO) {

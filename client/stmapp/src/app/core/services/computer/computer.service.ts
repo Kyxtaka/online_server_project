@@ -1,5 +1,5 @@
-import { Injectable, inject } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Injectable, inject, signal } from '@angular/core';
+// import { Observable, BehaviorSubject } from 'rxjs';
 import { ApiComputerService } from '../api/api.service';
 import { ComputerDTO } from '../../../models/dto/computerDTO';
 
@@ -8,28 +8,20 @@ import { ComputerDTO } from '../../../models/dto/computerDTO';
 })
 export class ComputerService {
   private apiComputerService = inject(ApiComputerService);
+  public computerDataSignal = signal<ComputerDTO[] | null>(null);
 
-  public computerDataSubject: BehaviorSubject<ComputerDTO[] | null>;
-  public computerData$: Observable<ComputerDTO[] | null>;
-
-  /** Inserted by Angular inject() migration for backwards compatibility */
-  // constructor(...args: unknown[]);
-
-  constructor() {
-    this.computerDataSubject = new BehaviorSubject<ComputerDTO[] | null>(null);
-    this.computerData$ = this.computerDataSubject.asObservable();
-  }
+  constructor() {}
 
   updateComputerData(data: ComputerDTO[]): void {
-    this.computerDataSubject.next(data);
+    this.computerDataSignal.set(data);
   }
 
   getComputerData(): ComputerDTO[] | null {
-    return this.computerDataSubject.value;
+    return this.computerDataSignal();
   }
 
   emptyComputerData(): void {
-    this.computerDataSubject.next(null);
+    this.computerDataSignal.set(null);
   }
 
   logout(): void {

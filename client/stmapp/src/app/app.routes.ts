@@ -11,6 +11,8 @@ export enum AppRoutes {
   HOME = 'home',
   LOGIN = 'login',
   LOGOUT = 'disconnect',
+  ACCOUNTCENTER = 'accountcenter',
+  NOTFOUND = 'notfound',
 }
 
 export const routes: Routes = [
@@ -33,6 +35,7 @@ export const routes: Routes = [
     component: HomeComponent,
     canActivate: [AuthGuard],
   },
+  // TODO : Implement Account center route and component
   {
     path: '**',
     component: NotFoundComponent,

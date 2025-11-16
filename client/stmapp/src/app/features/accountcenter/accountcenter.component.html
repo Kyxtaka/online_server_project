@@ -1,0 +1,56 @@
+<div class="account-center-content d-flex flex-row vh-90 justify-content-center p-5">
+    <div id="account-center-redirection-bar" class="redirection-bar d-flex flex-column h-100" style="width: 320px;">
+        <div class="bg-custom-blue  w-100 rounded-4">
+            <div class="p-4">
+                <nav class="navbar bg-grey h-100 p-3">
+                    <div class="d-flex flex-column align-items-start">
+                        <a [routerLink]="AppRoutes.ACCOUNTSETTINGS" class="btn btn-secondary mb-2 w-100 text-start">
+                            <fa-icon [icon]="faUser" class="me-2"/>
+                            Profile Settings
+                        </a>
+                        <a [routerLink]="AppRoutes.ACCOUNTSECURITY" class="btn btn-secondary mb-2 w-100 text-start">
+                            <fa-icon [icon]="faShield" class="me-2"/>
+                            Security
+                        </a>
+                    </div>
+                </nav>
+            </div>
+            <hr>
+            <div class="p-4">
+                <nav class="navbar bg-grey h-100 p-3">
+                    <div class="d-flex flex-column align-items-start">
+                        <a [routerLink]="" class="btn btn-secondary mb-2 w-100 text-start">
+                            <fa-icon [icon]="faBell" class="me-2"/>
+                            Notifications
+                        </a>
+                        <a [routerLink]="" class="btn btn-secondary mb-2 w-100 text-start">
+                            <fa-icon [icon]="faDiscord" class="me-2"/>
+                            Integrations
+                        </a>
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+        
+    </div>
+    <div class="account-center-main-content px-5 vh-90" style="min-width: 770px; max-width: 770px;">
+        @switch (currentSection()) {
+          @case ('personnal') {
+            <ng-container>
+                <app-accountinformation></app-accountinformation>
+            </ng-container>
+          }
+          @case ('security') {
+            <ng-container>
+                <app-accountsecurity></app-accountsecurity>
+            </ng-container>
+          }
+          @default {
+            <ng-container>
+                <app-not-found></app-not-found>
+            </ng-container>
+          }
+        }
+    </div>
+</div>

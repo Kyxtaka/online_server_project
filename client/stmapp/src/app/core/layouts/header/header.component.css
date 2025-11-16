@@ -1,35 +1,6 @@
-
-.tabs {
-  display: flex;
-  justify-content: space-between;
-  color: var(--c-text-tertiary);
-
-  /* a {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    text-decoration: none;
-    border-top: 2px solid transparent;
-    display: inline-flex;
-    transition: 0.25s ease;
-    border-bottom: 1px solid grey;
-    &.active,
-    &:hover,
-    &:focus {
-      color: var(--c-text-primary);
-      border-color: var(--c-text-primary);
-    }
-  } */
-}
-
-
-
 .icon-link fa-icon {
   transition: transform .2s ease;
 }
-
-
 /* .icon-link {
   text-decoration: none;
 } */
@@ -41,3 +12,9 @@
   color: blue;
   text-decoration: none;
 } */
+
+.active-link {
+  color: var(--c-text-primary);
+  /* border-bottom: 2px solid var(--c-text-primary); */
+  box-shadow: inset 0 -2px 0 0 var(--c-text-primary);
+}

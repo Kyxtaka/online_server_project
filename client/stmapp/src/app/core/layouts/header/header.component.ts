@@ -4,7 +4,7 @@ import { UserService } from '../../services/user/user.service';
 import { AuthService } from '../../services/auth/auth.service';
 import { RouterModule } from '@angular/router';
 import { FontAwesomeModule, FaIconComponent } from '@fortawesome/angular-fontawesome';
-import { faRightFromBracket, faUser, faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faRightFromBracket, faUser, faHouse, faAddressBook, faScrewdriverWrench } from '@fortawesome/free-solid-svg-icons';
 import { UserDTO } from '../../../models/dto/userDTO';
 import { AppRoutes } from '../../../app.routes';
 
@@ -24,6 +24,8 @@ export class HeaderComponent {
   public faRightFromBracket = faRightFromBracket;
   public faUser = faUser;
   public faHouse = faHouse;
+  public faScrewdriverWrench = faScrewdriverWrench;
+  public faAddressBook = faAddressBook;
 
   // routes
   public appRoutes = AppRoutes;

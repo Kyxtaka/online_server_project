@@ -17,7 +17,12 @@
           <span>Password</span>
           <i></i>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Connexion</button>
+        <button type="submit" class="btn btn-primary mt-2">Connexion</button>
+        <ng-template [ngIf]="isCredentialsInvalid()">
+          <div class="alert alert-danger mt-3" role="alert">
+            Incorrect credentials. Please try again.
+          </div>
+        </ng-template>
       </form>
     </div>
   </div>

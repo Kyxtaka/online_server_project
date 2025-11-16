@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, WritableSignal, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -17,7 +17,11 @@ export class LoginComponent implements OnInit {
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
-  private apiAuthS = inject(ApiAuthAService);
+  private apiAuthService = inject(ApiAuthAService);
+
+
+  // reactive behavior
+  public isCredentialsInvalid: WritableSignal<boolean> = signal(false);
 
   loginForm = this.fb.group({
     identifier: [''],
@@ -43,7 +47,7 @@ export class LoginComponent implements OnInit {
       this.authService.login(identifier, password).subscribe((success) => {
         success
           ? this.router.navigate([AppRoutes.HOME])
-          : alert('Incorrect credentials');
+          : this.isCredentialsInvalid.set(true);
       });
     }
   }

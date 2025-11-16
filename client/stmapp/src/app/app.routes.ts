@@ -13,6 +13,8 @@ export enum AppRoutes {
   LOGOUT = 'disconnect',
   ACCOUNTCENTER = 'accountcenter',
   NOTFOUND = 'notfound',
+  CONTACTUS = 'contactus',
+  ADMINCENTER = 'admincenter',
 }
 
 export const routes: Routes = [

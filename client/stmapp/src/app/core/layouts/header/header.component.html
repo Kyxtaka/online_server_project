@@ -1,8 +1,8 @@
 <div class="header-content p-3 flex justify-between items-center">
-    <div class="app-header-navigation W-100 d-flex justify-content-between text-tertiary">
+    <div class="app-header-navigation W-100 d-flex justify-content-between text-tertiary gap-3">
       <ng-container *ngIf="currentUser() as user; else loggedOut">
        
-        <div id="services-redirection div-left">
+        <div id="services-redirection" class="d-inline-flex align-center div-left gap-3">
           <a
             class="icon-link icon-link-hover text-light text-decoration-none"
             [routerLink]="appRoutes.HOME"
@@ -11,6 +11,16 @@
             ><fa-icon [icon]="faHouse" />
             Home
           </a>
+
+          <ng-template [ngIf]="user?.role?.includes('ADMIN')">
+            <a
+              class="icon-link icon-link-hover text-light text-decoration-none"
+              [routerLink]="appRoutes.ADMINCENTER"
+              [routerLinkActive]="['active-link']"
+              ><fa-icon [icon]="faScrewdriverWrench" />
+              Admin Center
+            </a>
+          </ng-template>
           
           
         </div>
@@ -30,21 +40,20 @@
       </ng-container>
       
       <ng-template #loggedOut>
-        <i class="min-h-[5rem] "></i>
+          <div>
+            <h5> Hikari - Server Tool Management</h5>
+          </div>
+          <div class="d-inline-flex align-center div-right gap-3">
+            <a 
+              class="icon-link icon-link-hover text-light text-decoration-none" 
+              style="--bs-link-hover-color-rgb: 25, 135, 84;" 
+              [routerLink]="appRoutes.CONTACTUS">
+              <fa-icon [icon]="faAddressBook" class="h-4 w-4" />
+              Contact us
+            </a>
+          </div>
       </ng-template>
       
     </div>
 </div>
 
-
-<!-- <fa-icon [icon]="faRightFromBracket" (click)="logout()" /> -->
-        <!-- <a routerLink="/home" *ngIf="isLogged">Account Center</a> -->
-        <!-- <a routerLink="/ComputerCenter" *ngIf="isLogged">Computer Center</a> -->
-          <!-- <i class="fa-solid fa-right-from-bracket" ></i>
-      <i class="fa-solid fa-right-from-bracket" style="color: #ffffff;"></i> -->
-
-              <!-- <a routerLink="/home" *ngIf="isLogged">Account Center</a> -->
-        <!-- <a routerLink="/ComputerCenter" *ngIf="isLogged">Computer Center</a> -->
-
-         <!-- <span>Bonjour {{ user.username }}</span> -->
-        <!-- <button (click)="logout()">Logout</button> -->

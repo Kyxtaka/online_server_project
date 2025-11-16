@@ -1,26 +1,59 @@
-<div class="app-header">
-  <div class="app-header-navigation">
-    <div class="tabs">
-      <div id="services-redirection">
-        <!-- <a routerLink="/home" *ngIf="isLogged">Account Center</a> -->
-        <!-- <a routerLink="/ComputerCenter" *ngIf="isLogged">Computer Center</a> -->
-      </div>
-      <div class="app-header-actions-buttons">
-        <a routerLink="/connected/myProfile" *ngIf="isLogged">{{
-          this.username | async
-        }}</a>
-        <button
-          id="disconect"
-          class="redirector-link"
-          routerLink="/logout"
-          *ngIf="isLogged"
-        >
-          Disconect
-        </button>
-        <button id="support" class="redirector-link" routerLink="/support">
-          Support
-        </button>
-      </div>
+<div class="header-content p-3 flex justify-between items-center">
+    <div class="app-header-navigation W-100 d-flex justify-content-between text-tertiary gap-3">
+      <ng-container *ngIf="currentUser() as user; else loggedOut">
+       
+        <div id="services-redirection" class="d-inline-flex align-center div-left gap-3">
+          <a
+            class="icon-link icon-link-hover text-light text-decoration-none"
+            [routerLink]="appRoutes.HOME"
+            [routerLinkActive]="['active-link', 'fa-solid', 'fa-house']"
+            [routerLinkActiveOptions]="{ exact: true }"
+            ><fa-icon [icon]="faHouse" />
+            Home
+          </a>
+
+          <ng-template [ngIf]="user?.role?.includes('ADMIN')">
+            <a
+              class="icon-link icon-link-hover text-light text-decoration-none"
+              [routerLink]="appRoutes.ADMINCENTER"
+              [routerLinkActive]="['active-link']"
+              ><fa-icon [icon]="faScrewdriverWrench" />
+              Admin Center
+            </a>
+          </ng-template>
+          
+          
+        </div>
+        <div id="services-redirection" class="d-inline-flex align-center div-right gap-3">
+
+          <a [routerLink]="appRoutes.ACCOUNTCENTER" class="icon-link icon-link-hover text-light text-decoration-none">
+            <fa-icon [icon]="faUser"/> 
+            {{ user.username }}
+          </a>
+
+          <a class="icon-link icon-link-hover text-light text-decoration-none" style="--bs-link-hover-color-rgb: 25, 135, 84;" href="#" (click)="logout()">
+            <fa-icon [icon]="faRightFromBracket" class="h-4 w-4" />Logout
+          </a>
+
+        </div>
+        
+      </ng-container>
+      
+      <ng-template #loggedOut>
+          <div>
+            <h5> Hikari - Server Tool Management</h5>
+          </div>
+          <div class="d-inline-flex align-center div-right gap-3">
+            <a 
+              class="icon-link icon-link-hover text-light text-decoration-none" 
+              style="--bs-link-hover-color-rgb: 25, 135, 84;" 
+              [routerLink]="appRoutes.CONTACTUS">
+              <fa-icon [icon]="faAddressBook" class="h-4 w-4" />
+              Contact us
+            </a>
+          </div>
+      </ng-template>
+      
     </div>
-  </div>
 </div>
+

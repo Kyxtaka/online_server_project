@@ -3,7 +3,7 @@
 >
   <!-- <h2 class="text-xl font-bold mb-4">Liste des utilisateurs</h2> -->
   <div
-    *ngIf="userData$ | async"
+    *ngIf="userData() as user"
     class="d-flex flex-column justify-content-center align-items-center"
   >
     <!-- <h3>ADMIN users dashboard</h3>
@@ -12,7 +12,7 @@
     <h3>My available pc</h3>
     <app-dashboard
       [columns]="computerColumns"
-      [data]="computerData$ | async"
+      [data]="computerData()"
       [actions]="computerAction"
       (actionClicked)="onDashboardAction($event)"
     >

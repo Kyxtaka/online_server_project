@@ -1,4 +1,4 @@
-<div class="main-content">
+<div id="main-content">
   <div class="loginBox">
     <div class="loginForm">
       <h2 class="heading">Log in</h2>
@@ -17,7 +17,12 @@
           <span>Password</span>
           <i></i>
         </div>
-        <button type="submit">Connexion</button>
+        <button type="submit" class="btn btn-primary mt-2">Connexion</button>
+        <ng-template [ngIf]="isCredentialsInvalid()">
+          <div class="alert alert-danger mt-3" role="alert">
+            Incorrect credentials. Please try again.
+          </div>
+        </ng-template>
       </form>
     </div>
   </div>

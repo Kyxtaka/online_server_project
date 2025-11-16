@@ -144,6 +144,7 @@ jobs:
           context: ./client/stmapp
           file: ./client/stmapp/Dockerfile
           push: true
+          no-cache: true
           build-args: |
             CONFIG=test
           tags: |

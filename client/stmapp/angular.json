@@ -60,6 +60,7 @@
               "sourceMap": true
             },
             "test": {
+              "outputHashing": "all",
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

@@ -3,11 +3,10 @@ import { AppRoutes } from '../../../app.routes';
 import { AuthService } from '../../../core/services/auth/auth.service';
 
 @Component({
-  selector: 'app-logout',
-  standalone: true,
-  imports: [],
-  templateUrl: './logout.component.html',
-  styleUrl: './logout.component.css',
+    selector: 'app-logout',
+    imports: [],
+    templateUrl: './logout.component.html',
+    styleUrl: './logout.component.css'
 })
 export class LogoutComponent implements OnInit {
   private authService = inject(AuthService);

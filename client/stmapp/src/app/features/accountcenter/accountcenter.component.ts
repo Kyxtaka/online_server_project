@@ -14,11 +14,10 @@ import { AccountSecurityComponent } from './accountsecurity/accountsecurity.comp
 
 
 @Component({
-  selector: 'app-account-center',
-  standalone: true,
-  imports: [CommonModule, AccountInformationComponent, NotFoundComponent, RouterLink, FaIconComponent, FontAwesomeModule, AccountSecurityComponent],
-  templateUrl: './accountcenter.component.html',
-  styleUrls: ['./accountcenter.component.css']
+    selector: 'app-account-center',
+    imports: [CommonModule, AccountInformationComponent, NotFoundComponent, RouterLink, FaIconComponent, FontAwesomeModule, AccountSecurityComponent],
+    templateUrl: './accountcenter.component.html',
+    styleUrls: ['./accountcenter.component.css']
 })
 export class AccountCenterComponent {
   private router: Router = inject(Router);

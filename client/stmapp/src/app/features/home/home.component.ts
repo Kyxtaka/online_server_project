@@ -14,6 +14,7 @@ import { WolService } from '../../core/services/wol/wol.service';
 
 @Component({
     selector: 'app-home',
+    standalone: true,
     imports: [CommonModule, DashboardComponent],
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css']

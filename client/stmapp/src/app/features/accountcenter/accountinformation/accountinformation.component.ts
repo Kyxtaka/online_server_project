@@ -6,9 +6,10 @@ import {  } from '@angular/core';
 import { UserService } from '../../../core/services/user/user.service';
 import { faPen, faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 // import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
- 
+
 @Component({
     selector: 'app-accountinformation',
+    standalone: true,
     imports: [CommonModule, FaIconComponent, FontAwesomeModule],
     templateUrl: './accountinformation.component.html',
     styleUrls: ['./accountinformation.component.css']
@@ -31,7 +32,7 @@ export class AccountInformationComponent {
   // Icons
   public faPen = faPen;
   public faCircleInfo = faCircleInfo;
-  
+
   constructor() {}
 
   // submitEditInfo() {

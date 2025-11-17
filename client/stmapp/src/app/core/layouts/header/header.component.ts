@@ -10,6 +10,7 @@ import { AppRoutes } from '../../../app.routes';
 
 @Component({
     selector: 'app-header',
+    standalone: true,
     imports: [CommonModule, RouterModule, FontAwesomeModule, FaIconComponent],
     templateUrl: './header.component.html',
     styleUrl: './header.component.css'

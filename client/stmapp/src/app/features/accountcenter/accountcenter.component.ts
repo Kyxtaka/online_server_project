@@ -15,6 +15,7 @@ import { AccountSecurityComponent } from './accountsecurity/accountsecurity.comp
 
 @Component({
     selector: 'app-account-center',
+    standalone: true,
     imports: [CommonModule, AccountInformationComponent, NotFoundComponent, RouterLink, FaIconComponent, FontAwesomeModule, AccountSecurityComponent],
     templateUrl: './accountcenter.component.html',
     styleUrls: ['./accountcenter.component.css']
@@ -42,7 +43,7 @@ export class AccountCenterComponent {
   );
 
   public currentSection: Signal<string> = computed(() => {
-    const url = this.urlSignal().url; 
+    const url = this.urlSignal().url;
     const segments = url.split('/').filter(s => s.length > 0);
     return segments.length > 1 ? segments[1] : 'personnal';
   });

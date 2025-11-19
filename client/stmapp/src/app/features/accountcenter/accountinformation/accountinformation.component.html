@@ -1,43 +1,98 @@
-<div class="account-info-content">
+<div
+  class="account-info-content d-flex flex-1 justify-content-center align-items-center"
+>
+  <div class="bg-black rounded-4 p-5">
     <h3>Account Settings</h3>
     <p>Manage your account information here</p>
     <div class="account-info-form mt-5">
-        <h4>Account Information</h4>
-        <div class="d-inline-flex flex-column gap-4 mt-3" style="min-width: 400px;">
-            <div class="d-inline-flex gap-4 ">
-                <div class="d-flex flex-column px-2">
-                    <label for="" class="text-secondary py-2">Username</label>
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="d-inline-flex flex-row justify-content-between align-items-center w-100  border border-1 rounded-2 px-2">
-                            <div class="input px-2">
-                                <input type="text" [value]="userData()?.username" readonly class="form-control-plaintext text-white border-2" />
-                            </div>
-                            <div>
-                                <fa-icon [icon]="faCircleInfo" class="text-secondary ms-2"></fa-icon>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary btn-sm d-inline-flex align-items-center gap-2 p-2 rounded-3">
-                            <fa-icon [icon]="faPen" class="h-3 w-3" style="width: 1.5rem; height: 1.5rem;"></fa-icon>
-                        </button>
-                    </div>
+      <h4>Account Information</h4>
+      <div
+        class="d-inline-flex flex-column gap-4 mt-3"
+        style="min-width: 400px"
+      >
+        <div class="d-inline-flex gap-4">
+          <div class="d-flex flex-column px-2">
+            <label for="" class="text-secondary py-2">Username</label>
+            <div class="d-flex align-items-center gap-3">
+              <div
+                class="form-control-container d-inline-flex flex-row justify-content-between align-items-center w-100 border border-1 rounded-2 px-2"
+                data-edit-status="!editingUsername()"
+                data-target="username"
+              >
+                <div class="input px-2">
+                  <input
+                    type="text"
+                    [value]="userData()?.username"
+                    [disabled]="!isEditingUsername()"
+                    class="form-control-plaintext text-white border-2"
+                    data-field="username"
+                  />
                 </div>
-                <div class="d-flex flex-column px-2">
-                    <label for="" class="text-secondary py-2">Email</label>
-                    <div class="d-flex align-items-center gap-3">
-                        <div class="d-inline-flex flex-row justify-content-between align-items-center w-100  border border-1 rounded-2 px-2">
-                            <div class="input px-2">
-                                <input type="text" [value]="userData()?.email" readonly class="form-control-plaintext text-white border-2" />
-                            </div>
-                            <div>
-                                <fa-icon [icon]="faCircleInfo" class="text-secondary ms-2"></fa-icon>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary btn-sm d-inline-flex align-items-center gap-2 p-2 rounded-3">
-                            <fa-icon [icon]="faPen" class="" style="width: 1.5rem; height: 1.5rem;"></fa-icon>
-                        </button>
-                    </div>
+                <div>
+                  <fa-icon
+                    [icon]="faCircleInfo"
+                    class="text-secondary ms-2"
+                  ></fa-icon>
                 </div>
+              </div>
+              <button
+                class="btn btn-primary btn-sm d-inline-flex align-items-center gap-2 p-2 rounded-3"
+                (click)="changeEditingState($event)"
+                data-field="username"
+              >
+                <fa-icon
+                  [icon]="faPen"
+                  class="h-3 w-3"
+                  style="width: 1.5rem; height: 1.5rem"
+                ></fa-icon>
+              </button>
             </div>
+          </div>
+          <div class="d-flex flex-column px-2">
+            <label for="" class="text-secondary py-2">Email</label>
+            <div class="d-flex align-items-center gap-3">
+              <div
+                class="form-control-container d-inline-flex flex-row justify-content-between align-items-center w-100 border border-1 rounded-2 px-2"
+                data-edit-status="!editingEmail()"
+                data-target="email"
+              >
+                <div class="input px-2">
+                  <input
+                    type="text"
+                    [value]="userData()?.email"
+                    [disabled]="!isEditingEmail()"
+                    class="form-control-plaintext text-white border-2"
+                    data-field="email"
+                  />
+                </div>
+                <div>
+                  <fa-icon
+                    [icon]="faCircleInfo"
+                    class="text-secondary ms-2"
+                  ></fa-icon>
+                </div>
+              </div>
+              <button
+                class="btn btn-primary btn-sm d-inline-flex align-items-center gap-2 p-2 rounded-3"
+                (click)="changeEditingState($event)"
+                data-field="email"
+              >
+                <fa-icon
+                  [icon]="faPen"
+                  class=""
+                  style="width: 1.5rem; height: 1.5rem"
+                ></fa-icon>
+              </button>
+            </div>
+          </div>
         </div>
+        <div class="alert alert-warning d-flex align-items-center my-3" role="alert">
+          <fa-icon [icon]="faTriangleExclamation" class="me-2 text-black"></fa-icon>
+          <div class="text-black">
+            Feature under development. Account information update functionality will be available soon.
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

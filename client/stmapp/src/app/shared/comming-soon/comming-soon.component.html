@@ -1,0 +1,23 @@
+<div class="coming-soon-wrap bg-transparent" role="status" aria-live="polite">
+	<div class="coming-soon-card">
+		<div class="cs-icon" aria-hidden="true">🚧</div>
+		<!-- Allow consumers to project a custom title; otherwise show default -->
+		<ng-content select="[cs-title]">
+			<h3 class="cs-title">Feature Coming Soon</h3>
+		</ng-content>
+
+		<!-- Allow consumers to project a custom description; otherwise show default -->
+		<ng-content select="[cs-desc]">
+			<p class="cs-desc">This feature is not yet available. We're working on it — check back soon.</p>
+		</ng-content>
+
+		<!-- optional projected actions (buttons/links) -->
+		<ng-content select="[cs-actions]"></ng-content>
+
+		<!-- sensible default call-to-action if none is provided -->
+		<ng-container *ngIf="!hasProjectedActions">
+			<a class="cs-cta" href="#" (click)="$event.preventDefault()">Notify me</a>
+			<span class="cs-note">Or contact support to request early access.</span>
+		</ng-container>
+	</div>
+</div>

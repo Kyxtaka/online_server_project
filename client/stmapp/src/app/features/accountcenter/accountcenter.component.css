@@ -1,4 +1,4 @@
-.vh-90 {
+/* .vh-90 {
   height: 90vh !important;
 }
 
@@ -12,7 +12,7 @@
 
 .vw-20 {
   width: 20vw !important;
-}
+} */
 
 .bg-custom-blue {
   background-color: #03132D !important;
@@ -20,4 +20,12 @@
 
 .bg-btn-custom-blue {
   background-color: #0A3FA9 !important;
+}
+
+.active-component {
+  background-color: blue;
+}
+
+.btn:hover {
+ border-color: white;
 }

@@ -1,0 +1,7 @@
+	.coming-soon-wrap{display:flex;justify-content:center;align-items:center;padding:16px}
+	.coming-soon-card{max-width:420px;width:100%;background:#fff;border:1px solid #e6e6e6;border-radius:8px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.04);text-align:center;font-family:Arial,Helvetica,sans-serif}
+	.cs-icon{font-size:40px;margin-bottom:8px}
+	.cs-title{margin:0;font-size:20px;color:#222}
+	.cs-desc{margin:8px 0 12px;color:#666;font-size:14px}
+	.cs-note{display:block;font-size:12px;color:#999}
+	.cs-cta{display:inline-block;margin-top:12px;padding:8px 14px;background:#007bff;color:#fff;border-radius:6px;text-decoration:none;font-size:13px}

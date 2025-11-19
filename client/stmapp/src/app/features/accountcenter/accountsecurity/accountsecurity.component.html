@@ -1,4 +1,33 @@
 <div class="d-flex flex-1 justify-content-center align-items-center">
-    <H2>Coming Soon</H2>
+    <div class="bg-black rounded-4 p-5" style="width: 600px;">
+        <h2 class="text-white mb-4">Account Security</h2>
+        <form [formGroup]="editPasswordForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="mb-3">
+                <label for="currentPassword" class="form-label text-white">Current Password</label>
+                <input type="password" id="currentPassword" class="form-control" required formControlName="currentPassword" />
+            </div>
+            <div class="mb-3">
+                <label for="newPassword" class="form-label text-white">New Password</label>
+                <input type="password" id="newPassword" class="form-control" required formControlName="newPassword" />
+            </div>
+            <div class="mb-3">
+                <label for="confirmNewPassword" class="form-label text-white">Confirm New Password</label>
+                <input type="password" id="confirmNewPassword" class="form-control" required formControlName="confirmNewPassword" />
+            </div>
+            <div *ngIf="passwordMismatch()" class="alert alert-danger">
+                New passwords do not match.
+            </div>
+            <div *ngIf="oneEmptyField()" class="alert alert-danger">
+                All fields are required.
+            </div>
+            <button type="submit" class="btn btn-primary">Change Password</button>
+            <!-- generate msg feature do not works currently -->
+        </form>
+        <div class="alert alert-warning d-flex align-items-center my-3 text-black" role="alert">
+          <fa-icon [icon]="faTriangleExclamation" class="me-2 text-black"></fa-icon>
+          <div class="text-black">
+            Feature under development. Password change functionality will be available soon.
+          </div>
+        </div>
 </div>
 

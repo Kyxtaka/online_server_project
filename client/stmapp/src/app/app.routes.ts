@@ -7,6 +7,8 @@ import { LogoutComponent } from './features/auth/logout/logout.component';
 import { AccountCenterComponent } from './features/accountcenter/accountcenter.component';
 import { AccountInformationComponent } from './features/accountcenter/accountinformation/accountinformation.component';
 import { AccountSecurityComponent } from './features/accountcenter/accountsecurity/accountsecurity.component';
+import { DicordIntegrationComponent } from './features/accountcenter/dicord-integration/dicord-integration.component';
+import { CommingSoonComponent } from './shared/comming-soon/comming-soon.component';
 
 // const userConnectedPrefix: string = "connected/"
 
@@ -21,7 +23,11 @@ export enum AppRoutes {
   ACCOUNTSETTINGS_FULLPATH = `${AppRoutes.ACCOUNTCENTER}/${AppRoutes.ACCOUNTSETTINGS}`,
   ACCOUNTSECURITY ='security',
   ACCOUNTSECURITY_FULLPATH = `${AppRoutes.ACCOUNTCENTER}/${AppRoutes.ACCOUNTSECURITY}`,
-  NOTFOUND = '**', 
+  DISCORDINTEGRATION = 'discord-integration',
+  DISCORDINTEGRATION_FULLPATH = `${AppRoutes.ACCOUNTCENTER}/${AppRoutes.DISCORDINTEGRATION}`,
+  NOTIFICATIONS = 'notifications',
+  CONTACTADMIN = 'contact-admin',
+  NOTFOUND = '**',
 }
 
 export const routes: Routes = [
@@ -50,6 +56,11 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: AppRoutes.ADMINCENTER,
+    component: CommingSoonComponent,
+    canActivate: [AuthGuard],
+  },
+  {
     path: AppRoutes.ACCOUNTCENTER,
     component: AccountCenterComponent,
     canActivate: [AuthGuard],
@@ -64,11 +75,31 @@ export const routes: Routes = [
         component: AccountSecurityComponent,
         canActivate: [AuthGuard],
       },
+      {
+        path: AppRoutes.DISCORDINTEGRATION,
+        component: DicordIntegrationComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: AppRoutes.NOTIFICATIONS,
+        component: CommingSoonComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: AppRoutes.CONTACTADMIN,
+        component: CommingSoonComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: AppRoutes.NOTFOUND,
+        component: NotFoundComponent,
+        canActivate: [AuthGuard],
+      },
     ],
-    
+
   },
   {
     path: AppRoutes.NOTFOUND,
     component: NotFoundComponent,
-  },  
+  },
 ];

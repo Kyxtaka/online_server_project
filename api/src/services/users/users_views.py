@@ -94,6 +94,6 @@ class UserChangePassword(Resource):
         if not UsersCRUD.verify_password(current_user, user_ns.payload['currentPassword']):
             return {"msg": "Current password is incorrect"}, 400
         user = UsersCRUD.update(
-            id, password=user_ns.payload['password']
+            id, password=user_ns.payload['newPassword']
         )
         return {"msg": "Password changed successfully"}, 200

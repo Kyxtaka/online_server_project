@@ -46,7 +46,7 @@ user_edit_model = api.model("UserEditDTO", {
 
 user_change_password_model = api.model("UserChangePasswordDTO", {
     "currentPassword": fields.String(required=True, description="Current password of the user"),
-    "password": fields.String(required=True, description="New password of the user")
+    "newPassword": fields.String(required=True, description="New password of the user")
 })
 
 usercomputer_access_model = api.model("UserComputerAccessDTO", {

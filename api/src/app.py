@@ -57,9 +57,15 @@ all_namespaces = [user_ns, auth_ns, admin_ns, computer_ns, devicepower_ns, compu
 for ns in all_namespaces:
     api.add_namespace(ns)
 
+
+
+from threading import Thread
 from src.services.power.power_controller import loop_update_online_status
 import datetime
 delay_time = datetime.timedelta(seconds=5)
-with app.app_context():
-    loop_update_online_status(delay_time)  # Run the function within the application context
 
+def start_status_update_loop():
+    with app.app_context():
+        loop_update_online_status(delay_time)  # Run the function within the application context
+status_update_thread = Thread(target=start_status_update_loop, daemon=True)
+status_update_thread.start()

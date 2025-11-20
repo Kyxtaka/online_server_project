@@ -14,7 +14,7 @@ def role_required(role):
             print(f"remote address: {request.remote_addr}")
             current_user: Users = UsersCRUD.get_by_email(get_jwt_identity())
             if current_user.role != role:
-                return {"msg": f"Access forbidden: {role.get_role()} only"}, 403
+                return {"message": f"Access forbidden: {role.get_role()} only"}, 403
             return fn(*args, **kwargs)
         return wrapper
     return decorator

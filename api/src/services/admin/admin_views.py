@@ -20,5 +20,5 @@ class UserCollection(Resource):
     def get(self):
         current_user = get_user(get_jwt_identity())
         if is_allowed(current_user, AppRoleList.ADMIN) is False:
-            return {"msg": "Access forbidden: Admins only"}, 403
+            return {"message": "Access forbidden: Admins only"}, 403
         return Users.query.all()

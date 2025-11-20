@@ -156,7 +156,7 @@ Returns
 
 ```json
 {
-    "msg" : "string"
+    "message" : "string"
 }
 ```
 
@@ -246,7 +246,7 @@ Expects
 **Returns**
 ```json
 {
-    "msg" : "string"
+    "message" : "string"
 }
 ```
 

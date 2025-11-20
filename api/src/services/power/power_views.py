@@ -10,6 +10,8 @@ devicepower_ns  = Namespace('WOL', description='WOL endpoint', path=api_version_
 
 wol_req_parser = reqparse.RequestParser()
 wol_req_parser.add_argument("mac", type="str", required=True, help="PC Mac Address", location="args")
+
+
 @devicepower_ns.route("/wake")
 class WakeOnLan(Resource):
     @jwt_required()
@@ -25,14 +27,15 @@ class WakeOnLan(Resource):
                 return {"status": "error", "message": str(e)}, 400
         else: 
             return {"message": "You do not have this privileges"}
-        
+
+
 @devicepower_ns.route("/ping")
 class PingDevice(Resource):
     @jwt_required()
-    @devicepower_ns.expect(wol_req_parser)
+    @api.expect(wol_req_parser)
     def get(self):
-        args = wol_req_parser.parse_args()
-        mac = args.get("mac")
+        data = request.json
+        mac = data["mac"]
         if check_user_validity(mac):
             computer = ComputersCRUD.get_by_mac(mac)
             if not computer:

@@ -203,6 +203,32 @@ class ComputersCRUD:
         db.session.commit()
 
     @staticmethod
+    def update_lastseen(macAddress:str) -> None:
+        computer:Computers = Computers.query.filter_by(macAddress=macAddress).first()
+        if not computer:
+            return None
+        computer.lastseen = db.func.current_timestamp()
+        print(f"Updating lastseen for computer with MAC: {macAddress}")
+        db.session.commit()
+
+    @staticmethod
+    def update_online_status(macAddress:str, isOnline: bool) -> None:
+        computer:Computers = Computers.query.filter_by(macAddress=macAddress).first()
+        if not computer:
+            return None
+        if isOnline:
+            status = StatusList.ONLINE
+            ComputersCRUD.update_lastseen(macAddress)
+        else:
+            if computer.status == StatusList.ONLINE:
+                ComputersCRUD.update_lastseen(macAddress)
+            status = StatusList.OFFLINE
+        computer.status = StatusList(status)
+        print(f"Updating status for computer with MAC: {macAddress} to Status: {status}")
+        db.session.commit()
+    
+
+    @staticmethod
     def delete(macAddress:str) -> bool:
         computer:Computers = Computers.query.filter_by(macAddress=macAddress).first()
         if not computer:

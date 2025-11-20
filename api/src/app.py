@@ -56,3 +56,10 @@ from src.services.power.power_views import devicepower_ns
 all_namespaces = [user_ns, auth_ns, admin_ns, computer_ns, devicepower_ns, computer_rights_ns]
 for ns in all_namespaces:
     api.add_namespace(ns)
+
+from src.services.power.power_controller import loop_update_online_status
+import time
+delay_time = time.timedelta(minutes=3).total_seconds()
+with app.app_context():
+    loop_update_online_status(delay_time)  # Run the function within the application context
+

@@ -58,8 +58,8 @@ for ns in all_namespaces:
     api.add_namespace(ns)
 
 from src.services.power.power_controller import loop_update_online_status
-import time
-delay_time = time.timedelta(minutes=3).total_seconds()
+import datetime
+delay_time = datetime.timedelta(seconds=5)
 with app.app_context():
     loop_update_online_status(delay_time)  # Run the function within the application context
 

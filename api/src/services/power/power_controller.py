@@ -14,6 +14,8 @@ from flask import request
 import struct
 import os
 import re
+import datetime
+# from datetime import timedelta
 
 wol_model = api.model("WOL", {
     "mac": fields.String(required=True, description="Device MAC")
@@ -116,19 +118,42 @@ def check_user_validity(mac: str) -> bool:
         return True
     else: return False
 
-def loop_update_online_status(delay_time: time.timedelta):
+def loop_update_online_status(delay_time: datetime.timedelta):
     while True:
+        print("{:=<45}".format("="))
         print("test server debug, loop_update_online_status running...")
-        time_difference_goeal= time.timedelta(minutes=5)
+        time_difference_goeal= datetime.timedelta(minutes=5)
         computers = ComputersCRUD.get_all_computers()
-        current_time = time.time()
+        current_time = datetime.datetime.now()
+
         for computer in computers:
+            print(f"found computer: {computer.macAddress} with lastseen: {computer.lastseen}")
             lastseen_timestamp = computer.lastseen
-            time_difference = current_time - lastseen_timestamp
+            
+            print(f"lastseen_timestamp: {lastseen_timestamp}")
+
+            
+            # Handle both datetime object and Unix timestamp
+            if isinstance(lastseen_timestamp, datetime.datetime):
+                lastseen_dt = lastseen_timestamp
+            else:
+                # It's a Unix timestamp (int or float)
+                lastseen_dt = datetime.datetime.strptime(lastseen_timestamp, "%Y-%m-%d %H:%M:%S") #2025-07-24 16:09:03
+
+            time_difference = current_time - lastseen_dt
+            print(f"time_difference: {time_difference}")
+            print(f"time_difference_goeal: {time_difference_goeal}")
+
+            print(f"ping to local IPv4: {computer.localV4IpAddress}")
             isOnline = send_one_ping(computer.localV4IpAddress, 2)
-            if time_difference <= time_difference_goeal.total_seconds(): # 5 minutes
+            print(f"ping for is online result: {isOnline}")
+
+            if time_difference.total_seconds() <= time_difference_goeal.total_seconds(): # 5 minutes
+                print(f"Computer {computer.macAddress} is considered online based on lastseen.")
                 if isOnline:
+                    print(f"set statut to online for computer {computer.macAddress}")
                     ComputersCRUD.update_online_status(computer.macAddress, True)
                 else:
+                    print(f"set statut to offline for computer {computer.macAddress} due to ping failure")
                     ComputersCRUD.update_online_status(computer.macAddress, False)            
         time.sleep(delay_time.total_seconds())

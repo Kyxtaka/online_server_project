@@ -87,7 +87,7 @@ class UserChangePassword(Resource):
         current_user = UsersCRUD.get_by_email(get_jwt_identity())
         if current_user.id != id:
             return {"msg": "You can only change your own password"}, 403
-        if 'password' not in user_ns.payload:
+        if 'newPassword' not in user_ns.payload:
             return {"msg": "New password is required"}, 400
         if 'currentPassword' not in user_ns.payload:
             return {"msg": "Current password is required"}, 400

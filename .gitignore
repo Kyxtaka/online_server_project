@@ -194,3 +194,4 @@ yarn-error.log
 api/.flaskenv
 api/.flaskenv2
 .venv
+api/src/others.py

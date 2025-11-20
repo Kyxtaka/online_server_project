@@ -58,14 +58,14 @@ for ns in all_namespaces:
     api.add_namespace(ns)
 
 
-### Roll back, only expose ping endpoint for client
-# from threading import Thread
-# from src.services.power.power_controller import loop_update_online_status
-# import datetime
-# delay_time = datetime.timedelta(seconds=5)
 
-# def start_status_update_loop():
-#     with app.app_context():
-#         loop_update_online_status(delay_time)  # Run the function within the application context
-# status_update_thread = Thread(target=start_status_update_loop, daemon=True)
-# status_update_thread.start()
+from threading import Thread
+from src.services.power.power_controller import loop_update_online_status
+import datetime
+delay_time = datetime.timedelta(seconds=5)
+
+def start_status_update_loop():
+    with app.app_context():
+        loop_update_online_status(delay_time)  # Run the function within the application context
+status_update_thread = Thread(target=start_status_update_loop, daemon=True)
+status_update_thread.start()

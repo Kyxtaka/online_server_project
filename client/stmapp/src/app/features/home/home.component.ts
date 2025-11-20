@@ -13,11 +13,11 @@ import { ComputerService } from '../../core/services/computer/computer.service';
 import { WolService } from '../../core/services/wol/wol.service';
 
 @Component({
-  selector: 'app-home',
-  standalone: true,
-  imports: [CommonModule, DashboardComponent],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
+    selector: 'app-home',
+    standalone: true,
+    imports: [CommonModule, DashboardComponent],
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
 })
 export class HomeComponent{
   private userService = inject(UserService);

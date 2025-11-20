@@ -13,11 +13,11 @@ export interface TableAction<T> {
 }
 
 @Component({
-  selector: 'app-dashboard',
-  standalone: true,
-  imports: [CommonModule],
-  templateUrl: './dashboard.component.html',
-  styleUrl: './dashboard.component.css',
+    selector: 'app-dashboard',
+    standalone: true,
+    imports: [CommonModule],
+    templateUrl: './dashboard.component.html',
+    styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent<T> {
   @Input() columns: TableColumn<T>[] = [];

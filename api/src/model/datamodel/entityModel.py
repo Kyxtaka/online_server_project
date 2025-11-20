@@ -38,6 +38,17 @@ user_input_model = api.model("UserInputDTO", {
     "password": fields.String(required=True, description="Password of the user")
 })
 
+user_edit_model = api.model("UserEditDTO", {
+    "username": fields.String(required=False, description="Username of the user"),
+    "email": fields.String(required=False, description="Email address of the user"),
+    "role": fields.String(required=False, description="Role of the user (e.g.,ADMIN, FRIENDS, GUEST)"),
+})
+
+user_change_password_model = api.model("UserChangePasswordDTO", {
+    "currentPassword": fields.String(required=True, description="Current password of the user"),
+    "newPassword": fields.String(required=True, description="New password of the user")
+})
+
 usercomputer_access_model = api.model("UserComputerAccessDTO", {
     "email": fields.String(required=True, description="Email address of the user"),
     "macAddress": fields.String(required=True, description="MAC address of the computer"),

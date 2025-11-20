@@ -1,4 +1,46 @@
 <div class="d-flex flex-1 justify-content-center align-items-center">
-    <H2>Coming Soon</H2>
+    <div class="bg-black rounded-4 p-5" style="width: 600px;">
+      <h2 class="text-white mb-4">Account Security</h2>
+      <form [formGroup]="editPasswordForm" (ngSubmit)="onSubmit()" novalidate>
+          <div class="mb-3">
+              <label for="currentPassword" class="form-label text-white">Current Password</label>
+              <input type="password" id="currentPassword" class="form-control" required formControlName="currentPassword" />
+          </div>
+          <div class="mb-3">
+              <label for="newPassword" class="form-label text-white">New Password</label>
+              <input type="password" id="newPassword" class="form-control" required formControlName="newPassword" />
+          </div>
+          <div class="mb-3">
+              <label for="confirmNewPassword" class="form-label text-white">Confirm New Password</label>
+              <input type="password" id="confirmNewPassword" class="form-control" required formControlName="confirmNewPassword" />
+          </div>
+          @if (passwordMismatch()) {
+            <div class="alert alert-danger">
+              New passwords do not match.
+            </div>
+          }
+          @if (oneEmptyField()) {
+            <div class="alert alert-danger">
+              All fields are required or does not meet requirements.
+            </div>
+          }
+          @if (passwordChanged()) {
+            <div class="alert alert-success">
+              Password changed successfully.
+            </div>
+          }
+          @if (serverError()) {
+            <div class="alert alert-danger">
+              An error occurred while changing the password. Please try again later.
+            </div>
+          }
+          <button type="submit" class="btn btn-primary">
+            <fa-icon
+              [icon]="faLock">
+            </fa-icon>
+            Change Password
+          </button>
+          <!-- generate msg feature do not works currently -->
+      </form>
+  </div>
 </div>
-

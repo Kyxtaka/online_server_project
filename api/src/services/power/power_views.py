@@ -32,8 +32,8 @@ class WakeOnLan(Resource):
 @devicepower_ns.route("/ping")
 class PingDevice(Resource):
     @jwt_required()
-    @api.expect(wol_req_parser)
-    def get(self):
+    @api.expect(wol_model)
+    def post(self):
         data = request.json
         mac = data["mac"]
         if check_user_validity(mac):

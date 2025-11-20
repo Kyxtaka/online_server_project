@@ -16,7 +16,7 @@ import {
   FaIconComponent,
   FontAwesomeModule,
 } from '@fortawesome/angular-fontawesome';
-import { faUser, faShield, faBell } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faShield, faBell, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
 import { AccountSecurityComponent } from './accountsecurity/accountsecurity.component';
 import { DicordIntegrationComponent } from './dicord-integration/dicord-integration.component';
@@ -48,6 +48,7 @@ export class AccountCenterComponent {
   public faShield = faShield;
   public faBell = faBell;
   public faDiscord = faDiscord;
+  public faPhone = faPhone;
   // public faBellRegular = faBellRegular;
 
   // Routes

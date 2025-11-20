@@ -143,14 +143,18 @@ class UsersCRUD:
         return user
     
     @staticmethod
-    def update(id:int, username:str, email:str, role:str, password:str) -> None:
+    def update(id:int, username:str|None=None, email:str|None=None, role:str|None=None, password:str|None=None) -> None:
         user:Users = Users.query.get(id)
         if not user:
             return None
-        user.username = username
-        user.email = email
-        user.role = AppRoleList(role)
-        user.password = generate_password_hash(password)
+        if username is not None:
+            user.username = username
+        if email is not None:
+            user.email = email
+        if role is not None:
+            user.role = AppRoleList(role)
+        if password is not None:
+            user.password = generate_password_hash(password)
         print(f"Updating user with id: {id}, username: {username}, email: {email}, role: {role}")
         db.session.commit()
 
@@ -162,6 +166,10 @@ class UsersCRUD:
         db.session.delete(user)
         db.session.commit()
         return True
+    
+    @staticmethod
+    def verify_password(user:Users, password:str) -> bool:
+        return check_password_hash(user.password, password)
     
 class ComputersCRUD:
     @staticmethod

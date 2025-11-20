@@ -7,6 +7,7 @@ import {
   UserDTO,
   UserRegistrationDTO,
   UserUpdateDTO,
+  UserChangePasswordDTO
 } from '../../../models/dto/userDTO';
 import { ComputerDTO } from '../../../models/dto/computerDTO';
 import { MsgResponse } from '../../../models/api/response/msg-response';
@@ -74,11 +75,18 @@ export class ApiUserService {
     );
   }
 
-  updateUser(userData: UserUpdateDTO): Observable<MsgResponse> {
+  updateUser(userData: UserDTO, userUpdateDTO: UserUpdateDTO): Observable<MsgResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.put<MsgResponse>(this.userEndpoint, userData, {
-      headers,
-    });
+    return this.httpClient.put<MsgResponse>(`${this.userEndpoint}/${userData.id}`, userUpdateDTO, {headers,});
+  }
+
+  changePassword(UserData: UserDTO, userChangePasswordDTO: UserChangePasswordDTO): Observable<MsgResponse> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.httpClient.put<MsgResponse>(
+      `${this.userEndpoint}/${UserData.id}/changePassword`,
+      userChangePasswordDTO,
+      { headers },
+    );
   }
 
   // TODO serverside implementation needed

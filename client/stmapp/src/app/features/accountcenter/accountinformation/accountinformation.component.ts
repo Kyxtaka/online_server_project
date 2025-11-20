@@ -37,12 +37,8 @@ export class AccountInformationComponent {
 
   // TODO : Edit logic + backend integration and ux improvements
   changeEditingState(mouseEvent: MouseEvent): void {
-    console.log('changeEditingState called');
     const targetButton = mouseEvent.currentTarget as HTMLButtonElement;
     const field = targetButton.getAttribute('data-field');
-    // console.log('target button:', targetButton);
-    // console.log('field to edit:', field);
-    // console.log('current states - username:', this.isEditingUsername(), 'email:', this.isEditingEmail());
     if (field === 'username') {
       this.isEditingUsername.update((current) => !current);
     } else if (field === 'email') {

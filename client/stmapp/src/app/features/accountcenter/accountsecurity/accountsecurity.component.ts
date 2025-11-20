@@ -2,13 +2,10 @@ import { Component, inject, Signal, signal, WritableSignal, OnInit } from '@angu
 import { ReactiveFormsModule, FormBuilder, FormControl, Validators, FormGroup, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { UserService } from '../../../core/services/user/user.service';
 import { CommonModule } from '@angular/common';
-import { NgModel } from '@angular/forms';
-import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
+import { faTriangleExclamation, faLock} from '@fortawesome/free-solid-svg-icons';
 import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 import { UserChangePasswordDTO, UserDTO } from '../../../models/dto/userDTO';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { ApiUserService } from '../../../core/services/api/api.service';
-
 
 @Component({
     selector: 'app-accountsecurity',
@@ -25,6 +22,7 @@ export class AccountSecurityComponent  {
 
   //icons
   public faTriangleExclamation = faTriangleExclamation;
+  public faLock = faLock;
 
   // form
   public editPasswordForm: FormGroup = this.formBuilder.group({
@@ -52,7 +50,6 @@ export class AccountSecurityComponent  {
         return;
       }
       if (currentUserData() === null) {
-        console.log('error no user data found, aborting password change');
         this.serverError.set(true);
         return;
       }
@@ -60,20 +57,14 @@ export class AccountSecurityComponent  {
         currentPassword,
         newPassword
       }
-      console.log('Password change submitted:', userChangePasswordDTO);
       this.userApiService.changePassword(currentUserData()!, userChangePasswordDTO).subscribe({
         next: (response: any) => {
-          console.log('Password changed successfully:', response);
-          // Optionally reset the form here
           this.editPasswordForm.reset();
-          // Reset error signals
           this.passwordMismatch.set(false);
           this.oneEmptyField.set(false);
           this.passwordChanged.set(true);
         },
         error: (error: any) => {
-          console.error('Error changing password:', error);
-          // Handle error (e.g., show error message to user)
           this.passwordChanged.set(false);
           this.passwordMismatch.set(false);
           this.oneEmptyField.set(false);

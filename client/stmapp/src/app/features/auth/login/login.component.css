@@ -11,7 +11,8 @@
   min-height: 35vh;
   min-width: 380px;
   min-height: 420px;
-  background: #1c1c1c;
+  /* background: #1c1c1c; */
+  background-color: black;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -55,7 +56,8 @@
   position: absolute;
   inset: 2px;
   border-radius: 8px;
-  background: #28292d;
+  /* background: #28292d; */
+  background-color: black;
   z-index: 10;
   padding: 50px 40px;
   display: flex;
@@ -93,7 +95,7 @@
   left: 0;
   padding: 20px 10px 10px;
   font-size: 1em;
-  color: #8f8f8f;
+  background-color: black;
   pointer-events: none;
   letter-spacing: 0.05em;
   transition: 0.5s;
@@ -101,7 +103,8 @@
 
 .inputBox input:valid ~ span,
 .inputBox input:focus ~ span {
-  color: #8f8f8f;
+  /* background-color: black; */
+  background-color: black;
   transform: translateX(-0px) translateY(-34px);
   font-size: 0.75em;
 }
@@ -132,7 +135,7 @@
 .links a {
   margin: 10px 0;
   font-size: 0.75em;
-  color: #8f8f8f;
+  background-color: black;
   text-decoration: none;
 }
 

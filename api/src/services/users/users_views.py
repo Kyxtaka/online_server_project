@@ -1,5 +1,5 @@
 from flask_restx import Resource, Namespace, fields
-from src.model.datamodel.entityModel import user_model, user_input_model, usercomputer_access_model, usercomputer_access_input_model
+from src.model.datamodel.entityModel import user_model, user_input_model, usercomputer_access_model, usercomputer_access_input_model, user_edit_model, user_change_password_model
 from src.model.datamodel.entityORM import Users, UsersCRUD, AppRoleList
 from src.extensions import api
 from src.app import api_version_path
@@ -39,7 +39,7 @@ class UserCollection(Resource):
 @user_ns.route("/<int:id>")
 class UserItem(Resource):
     @jwt_required()
-    @user_ns.expect(user_input_model)
+    @user_ns.expect(user_edit_model)
     @user_ns.marshal_with(user_model)
     def put(self, id):
         try: 
@@ -79,5 +79,21 @@ class UserItem(Resource):
         else:   
             return {"msg": "User not found"}, 404
     
-   
-        
+@user_ns.route("/<int:id>/changePassword")
+class UserChangePassword(Resource):
+    @jwt_required()
+    @user_ns.expect(user_change_password_model)
+    def put(self, id):
+        current_user = UsersCRUD.get_by_email(get_jwt_identity())
+        if current_user.id != id:
+            return {"msg": "You can only change your own password"}, 403
+        if 'password' not in user_ns.payload:
+            return {"msg": "New password is required"}, 400
+        if 'currentPassword' not in user_ns.payload:
+            return {"msg": "Current password is required"}, 400
+        if not UsersCRUD.verify_password(current_user, user_ns.payload['currentPassword']):
+            return {"msg": "Current password is incorrect"}, 400
+        user = UsersCRUD.update(
+            id, password=user_ns.payload['password']
+        )
+        return {"msg": "Password changed successfully"}, 200

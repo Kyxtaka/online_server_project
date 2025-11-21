@@ -161,17 +161,27 @@ export class ApiComputerRightsService {
 export class ApiWolService {
   private api: string;
   private wolEndpoint: string;
+  private pingStatusEndpoint: string;
   private httpClient: HttpClient = inject(HttpClient);
 
   constructor() {
     this.api = environment.API_URL_BASE_ROUTE_V1;
     this.wolEndpoint = `${this.api}/wol/wake`;
+    this.pingStatusEndpoint = `${this.api}/wol/pingStatus`;
   }
 
   wake(pcMac: string): Observable<MsgResponse> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { mac: pcMac };
     return this.httpClient.post<MsgResponse>(this.wolEndpoint, body, {
+      headers,
+    });
+  }
+
+   pingStatusComputer(computerMac: string): Observable<{ status: string; message: string }> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = { mac: computerMac };
+    return this.httpClient.post<{ status: string; message: string }>(this.pingStatusEndpoint, body, {
       headers,
     });
   }

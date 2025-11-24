@@ -22,7 +22,7 @@ class ComputerCollection(Resource):
     def get(self):
         """Get all computers"""
         current_user = UsersCRUD.get_by_email(get_jwt_identity())
-        if current_user is None: return {"msg": "UNAUTHORIZED"}, 401
+        if current_user is None: return {"message": "UNAUTHORIZED"}, 401
         match current_user.role:
             case AppRoleList.ADMIN:
                 return ComputersCRUD.get_all_computers()
@@ -32,7 +32,7 @@ class ComputerCollection(Resource):
                 for rights in all_user_rights: 
                     PCs.append(ComputersCRUD.get_by_mac(rights.macAddress))
                 return PCs, 200
-        return {"msg": "error"}, 500
+        return {"message": "error"}, 500
 
     @admin_required
     @computer_ns.expect(computer_input_model)
@@ -95,15 +95,15 @@ class ComputerRights(Resource):
         email = args.get("email")
         select_authority_level = data.get("access_level")
         if not select_authority_level:
-            return {"msg": "access_level is required"}, 400
+            return {"message": "access_level is required"}, 400
         try:
             select_authority_level_enum = AccessList(select_authority_level.upper())
         except ValueError:
-            return {"msg": "Bad request, access_level must be one of ADMIN, FRIENDS, GUEST"}, 400
+            return {"message": "Bad request, access_level must be one of ADMIN, FRIENDS, GUEST"}, 400
         current_user = UsersCRUD.get_by_email(email)
         match current_user:
             case None:
-                return {"msg": "user not found"}, 404
+                return {"message": "user not found"}, 404
             case _:
                 currentUserRights = UserComputerRightsCRUD.get_by_email_and_mac(email, computer_mac)
                 if currentUserRights is None:
@@ -114,9 +114,9 @@ class ComputerRights(Resource):
                     )   
                 else:
                     if currentUserRights.systemAuthorityLevel == select_authority_level_enum:
-                        return {"msg": "user already has this privilege"}, 500 
+                        return {"message": "user already has this privilege"}, 500 
                     
-        return  {"msg": "User privileges created with success"}, 201  
+        return  {"message": "User privileges created with success"}, 201  
     
     @jwt_required()
     @computer_rights_ns.expect(grant_parser)
@@ -127,49 +127,49 @@ class ComputerRights(Resource):
         email = args.get("email")
         select_authority_level = data.get("access_level")
         if not select_authority_level:
-            return {"msg": "access_level is required"}, 400
+            return {"message": "access_level is required"}, 400
         try:
             select_authority_level_enum = AccessList(select_authority_level.upper())
         except ValueError:
-            return {"msg": "Bad request, access_level must be one of ADMIN, FRIENDS, GUEST"}, 400
+            return {"message": "Bad request, access_level must be one of ADMIN, FRIENDS, GUEST"}, 400
         current_user = UsersCRUD.get_by_email(email)
         match current_user:
             case None:
-                return {"msg": "user not found"}, 404
+                return {"message": "user not found"}, 404
             case _:
                 currentUserRights = UserComputerRightsCRUD.get_by_email_and_mac(email, computer_mac)
                 if currentUserRights.systemAuthorityLevel == select_authority_level_enum:
-                    return {"msg": "user already has this privilege"}, 500
+                    return {"message": "user already has this privilege"}, 500
                 else: 
                     UserComputerRightsCRUD.update(
                         email=email,
                         macAddress=computer_mac,
                         systemAuthorityLevel=select_authority_level_enum
                     )   
-        return  {"msg": "User privileges updated with success"}, 200   
+        return  {"message": "User privileges updated with success"}, 200   
     
     @admin_required
     @computer_rights_ns.expect(revoke_parser)
     def delete(self, computer_mac):
         args = request.args
         email = args.get("email")
-        if ComputersCRUD.get_by_mac(computer_mac) == None: return {"msg": "PC not found"}, 404
-        if UsersCRUD.get_by_email(email) == None: return {"msg": "user not found"}, 404
+        if ComputersCRUD.get_by_mac(computer_mac) == None: return {"message": "PC not found"}, 404
+        if UsersCRUD.get_by_email(email) == None: return {"message": "user not found"}, 404
         success = UserComputerRightsCRUD.delete(email=email, macAddress=computer_mac)
         if success:
-            return {"msg": "operation secceded"}, 204
+            return {"message": "operation secceded"}, 204
         else: 
-            return {"msg": "error, deletion failed"}, 500
+            return {"message": "error, deletion failed"}, 500
      
     @jwt_required()
     @computer_rights_ns.marshal_list_with(usercomputer_access_model)
     def get(self, computer_mac):
         current_user = UsersCRUD.get_by_email(get_jwt_identity())
         selected_computer = ComputersCRUD.get_by_mac(str.upper(computer_mac))
-        if selected_computer is None: return {"msg": "PC not found"}, 404
+        if selected_computer is None: return {"message": "PC not found"}, 404
         if not is_allowed(current_user, AppRoleList.ADMIN):
             potential_right_link = UserComputerRightsCRUD.get_by_email_and_mac(current_user.email, selected_computer.macAddress)
-            return potential_right_link if potential_right_link is not None else {"msg": "You do not have any rights for this pc"}
+            return potential_right_link if potential_right_link is not None else {"message": "You do not have any rights for this pc"}
         else: 
             return UserComputerRightsCRUD.get_all_rights_by_mac(selected_computer.macAddress)
     

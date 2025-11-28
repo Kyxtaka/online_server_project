@@ -9,6 +9,7 @@ import { AccountInformationComponent } from './features/accountcenter/accountinf
 import { AccountSecurityComponent } from './features/accountcenter/accountsecurity/accountsecurity.component';
 import { DicordIntegrationComponent } from './features/accountcenter/dicord-integration/dicord-integration.component';
 import { CommingSoonComponent } from './shared/comming-soon/comming-soon.component';
+import { AdminCenterComponent } from './features/admin-center/admin-center.component';
 
 // const userConnectedPrefix: string = "connected/"
 
@@ -57,7 +58,7 @@ export const routes: Routes = [
   },
   {
     path: AppRoutes.ADMINCENTER,
-    component: CommingSoonComponent,
+    component: AdminCenterComponent,
     canActivate: [AuthGuard],
   },
   {

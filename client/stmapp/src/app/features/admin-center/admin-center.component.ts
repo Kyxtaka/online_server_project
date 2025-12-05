@@ -1,4 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, computed, signal, inject, effect, Signal } from '@angular/core';
+import { AppRoutes } from '../../app.routes';
+import { faUser, faLock, faBell, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faDiscord } from '@fortawesome/free-brands-svg-icons';
+import { NavigationEnd, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import {CommingSoonComponent} from '../../shared/comming-soon/comming-soon.component';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-admin-center',
@@ -7,9 +15,43 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminCenterComponent implements OnInit {
 
+  // Icons
+  public faUser = faUser
+  public faLock = faLock
+  public faBell = faBell
+  public faDiscord = faDiscord
+  public faPhone = faPhone
+
+  // Routes
+  public AppRoutes = AppRoutes;
+
+
+  private router: Router = inject(Router);
+
+  public AppRoutes = AppRoutes;
+
+
   constructor() { }
 
-  ngOnInit() {
+
+  private urlSignal: Signal<NavigationEnd> = toSignal(
+    this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+    ),
+    { initialValue: { url: this.router.url } as NavigationEnd },
+  );
+
+  public currentSection: Signal<string> = computed(() => {
+    const url = this.urlSignal().url;
+    const segments = url.split('/').filter((s) => s.length > 0);
+    return segments.length > 1 ? segments[1] : 'personnal';
+  });
+
+  constructor() {
+    effect(() => {
+      console.log('URL changed:', this.urlSignal().url);
+      console.log('Current section:', this.currentSection());
+    });
   }
 
 }

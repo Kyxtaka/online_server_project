@@ -41,6 +41,25 @@ on:
         required: false
         default: ${{ github.sha }}
         type: string
+      
+      api_protocol:
+        description: protocol to access api (http|https)
+        required: false
+        default: https
+        type: string
+
+      api_base_url:
+        description: base url to access api (without protocol)
+        required: false
+        default: stm.hikarizsu.fr
+        type: string
+
+      api_base_route:
+        description: base route to access api
+        required: false
+        default: /api/v1
+        type: string
+      
 
     secrets:
       HS_SSHKEY:
@@ -100,3 +119,6 @@ jobs:
             -e "api_server_port=${{ inputs.api_server_port }}" \
             -e "client_server_name=${{ inputs.client_server_name }}" \
             -e "client_server_port=${{ inputs.client_server_port }}" \
+            -e "api_protocol=${{ inputs.api_protocol }}" \
+            -e "api_base_url=${{ inputs.api_base_url }}" \
+            -e "api_base_route=${{ inputs.api_base_route }}" \

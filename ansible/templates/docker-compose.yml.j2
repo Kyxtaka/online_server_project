@@ -1,21 +1,46 @@
 services: 
-  stm-project-api-server-{{deploy_mode}}:
+  stm-api-{{deploy_mode}}:
     image: docker-registry.hikarizsu.fr/osm-backend:{{image_tag}}
     container_name: osm-api-server-{{deploy_mode}}
     env_file: "./api.env"
     environment:
         API_PORT: {{api_server_port}} 
+          ACCESS_CORS:
+          {{ if deploy_mode == 'prod' }}
+          - stm.hikarizsu.fr
+          {{ elif deploy_mode == 'test' }}
+          - stm-test.hikarizsu.fr
+          {{ endif }}
+          - localhost
     network_mode: host
     restart: always
     mem_limit: {{mem_limit}}
     memswap_limit: {{memswap_limit}}
 
-  stm-projet-client-server-{{deploy_mode}}:
+  stm-client-{{deploy_mode}}:
     image: docker-registry.hikarizsu.fr/osm-frontend:{{image_tag}}
     container_name: osm-client-{{deploy_mode}}
     env_file: "./client.env"
     restart: always
-    ports:
-      - "{{client_server_port}}:{{client_container_port}}"
     mem_limit: {{mem_limit}}
     memswap_limit: {{memswap_limit}}
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      {% if deploy_mode == 'prod' %}
+      - "traefik.http.routers.stm-client-prod.rule=Host(`stm.home.hikarizsu.fr`)"
+      - "traefik.http.routers.stm-client-prod.entrypoints=websecure"
+      - "traefik.http.routers.stm-client-prod.tls=true"
+      - "traefik.http.services.stm-client-prod.loadbalancer.server.port=80"
+      {% elif deploy_mode == 'test' %}
+      - "traefik.http.routers.stm-client-test.rule=Host(`stm-test.home.hikarizsu.fr`)"
+      - "traefik.http.routers.stm-client-test.entrypoints=websecure"
+      - "traefik.http.routers.stm-client-test.tls=true"
+      - "traefik.http.services.stm-client-test.loadbalancer.server.port=80"
+      {% endif %}
+
+networks:
+  proxy:
+    name: proxy
+    external: true

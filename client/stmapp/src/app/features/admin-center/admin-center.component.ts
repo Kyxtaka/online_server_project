@@ -25,14 +25,7 @@ export class AdminCenterComponent implements OnInit {
   // Routes
   public AppRoutes = AppRoutes;
 
-
   private router: Router = inject(Router);
-
-  public AppRoutes = AppRoutes;
-
-
-  constructor() { }
-
 
   private urlSignal: Signal<NavigationEnd> = toSignal(
     this.router.events.pipe(
@@ -54,4 +47,6 @@ export class AdminCenterComponent implements OnInit {
     });
   }
 
+  ngOnInit(): void {
+  }
 }

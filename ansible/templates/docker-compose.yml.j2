@@ -1,11 +1,18 @@
 services: 
   stm-api-{{deploy_mode}}:
-    image: docker-registry.hikarizsu.fr/osm-backend:{{image_tag}}
+    image: docker-registry.home.hikarizsu.fr/osm-backend:{{image_tag}}
     container_name: osm-api-server-{{deploy_mode}}
     env_file: "./api.env"
     environment:
       API_PORT: {{api_server_port}}
-      ACCESS_CORS: {% if deploy_mode == 'prod' %}"https://stm.hikarizsu.fr,http://localhost"{% elif deploy_mode == 'test' %}"https://stm-test.hikarizsu.fr,http://localhost"{% endif %}
+          ACCESS_CORS:
+    {% if deploy_mode == 'prod' %}
+      - https://stm.hikarizsu.fr
+      - http://localhost
+    {% elif deploy_mode == 'test' %}
+      - https://stm-test.hikarizsu.fr
+      - http://localhost
+    {% endif %}
 
     network_mode: host
     restart: always
@@ -13,7 +20,7 @@ services:
     memswap_limit: {{memswap_limit}}
 
   stm-client-{{deploy_mode}}:
-    image: docker-registry.hikarizsu.fr/osm-frontend:{{image_tag}}
+    image: docker-registry.home.hikarizsu.fr/osm-frontend:{{image_tag}}
     container_name: osm-client-{{deploy_mode}}
     env_file: "./client.env"
     restart: always

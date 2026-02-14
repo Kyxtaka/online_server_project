@@ -6,12 +6,12 @@ services:
     environment:
         API_PORT: {{api_server_port}}
         ACCESS_CORS:
-          {%- if deploy_mode == 'prod' %}
-          - stm.hikarizsu.fr
-          {%- elif deploy_mode == 'test' %}
-          - stm-test.hikarizsu.fr
-          {%- endif %}
-          - localhost
+          {% if deploy_mode == 'prod' -%}
+          - https://stm.hikarizsu.fr
+          {% elif deploy_mode == 'test' -%}
+          - https://stm-test.hikarizsu.fr
+          {% endif -%}
+          - http://localhost
     network_mode: host
     restart: always
     mem_limit: {{mem_limit}}

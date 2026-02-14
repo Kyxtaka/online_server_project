@@ -20,7 +20,7 @@ services:
     mem_limit: {{mem_limit}}
     memswap_limit: {{memswap_limit}}
     networks:
-      - proxy
+      - traefik
     labels:
       - "traefik.enable=true"
       {% if deploy_mode == 'prod' %}
@@ -28,7 +28,7 @@ services:
       - "traefik.http.routers.stm-client-prod.entrypoints=websecure"
       - "traefik.http.routers.stm-client-prod.tls=true"
       - "traefik.http.services.stm-client-prod.loadbalancer.server.port=80"
-      {% elif deploy_mode == 'test' %}
+{% elif deploy_mode == 'test' %}
       - "traefik.http.routers.stm-client-test.rule=Host(`stm-test.home.hikarizsu.fr`)"
       - "traefik.http.routers.stm-client-test.entrypoints=websecure"
       - "traefik.http.routers.stm-client-test.tls=true"
@@ -36,6 +36,6 @@ services:
       {% endif %}
 
 networks:
-  proxy:
-    name: proxy
+  traefik:
+    name: traefik
     external: true

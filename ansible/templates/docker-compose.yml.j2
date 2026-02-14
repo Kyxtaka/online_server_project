@@ -4,13 +4,13 @@ services:
     container_name: osm-api-server-{{deploy_mode}}
     env_file: "./api.env"
     environment:
-        API_PORT: {{api_server_port}} 
-          ACCESS_CORS:
-          {{ if deploy_mode == 'prod' }}
+        API_PORT: {{api_server_port}}
+        ACCESS_CORS:
+          {% if deploy_mode == 'prod' %}
           - stm.hikarizsu.fr
-          {{ elif deploy_mode == 'test' }}
+          {% elif deploy_mode == 'test' %}
           - stm-test.hikarizsu.fr
-          {{ endif }}
+          {% endif %}
           - localhost
     network_mode: host
     restart: always

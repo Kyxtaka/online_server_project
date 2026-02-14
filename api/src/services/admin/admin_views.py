@@ -6,10 +6,8 @@ from src.model.datamodel.entityORM import Users, AppRoleList, UsersCRUD
 from src.model.auth.auth_decorators import admin_required
 from src.services.admin.admin_controller import *
 from src.services.auth.auth_controller import get_user, is_allowed
-from src.app import api_version_path
 
-
-admin_ns = Namespace("admin", description="Admin routes", path=api_version_path + "/admin")
+admin_ns = Namespace("admin", description="Admin routes", path="/admin")
 
 @admin_ns.route("/users")
 class UserCollection(Resource):

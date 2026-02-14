@@ -163,6 +163,10 @@ jobs:
       api_server_port: "8147"
       client_server_port: "8148"
       project_directory: /prodservices/docker/webserver/stmproject #do not set / at the end
+      api_protocol: https
+      api_base_url: stm-test.hikarizsu.fr
+      api_base_route: /api/v1
+
     secrets:
       HS_SSHKEY: ${{ secrets.HS_SSHKEY }}
       LOGIN: ${{ secrets.LOGIN }}
@@ -182,6 +186,10 @@ jobs:
       api_server_port: "8143"
       client_server_port: "8144"
       project_directory: /prodservices/docker/webserver/stmproject #do not set / at the end
+      api_protocol: https
+      api_base_url: stm.hikarizsu.fr
+      api_base_route: /api/v1
+
     secrets:
       HS_SSHKEY: ${{ secrets.HS_SSHKEY }}
       LOGIN: ${{ secrets.LOGIN }}

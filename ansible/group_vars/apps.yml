@@ -8,6 +8,10 @@ api_server_port: 8147
 client_container_port: 80
 mem_limit: 350M
 memswap_limit: 4G
+api_protocol: https
+api_base_url: stm.hikarizsu.fr
+api_base_route: /api/v1
+
 
 #global
 app_directory: /prodservices/docker/webserver/stmproject/

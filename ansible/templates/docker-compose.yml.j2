@@ -5,14 +5,13 @@ services:
     env_file: "./api.env"
     environment:
       API_PORT: {{api_server_port}}
-      ACCESS_CORS:
-      {% if deploy_mode == 'prod' %}
-        - https://stm.hikarizsu.fr
-        - http://localhost
-      {% elif deploy_mode == 'test' %}
-        - https://stm-test.hikarizsu.fr
-        - http://localhost
-      {% endif %}
+          ACCESS_CORS:
+    {% if deploy_mode == 'prod' %}
+    {% set access_cors = ['https://stm.hikarizsu.fr', 'http://localhost'] %}
+    {% elif deploy_mode == 'test' %}
+    {% set access_cors = ['https://stm-test.hikarizsu.fr', 'http://localhost'] %}
+    {% endif %}
+    {{ access_cors | to_yaml | indent(8) }}
 
     network_mode: host
     restart: always

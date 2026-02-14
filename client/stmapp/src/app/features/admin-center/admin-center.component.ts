@@ -2,14 +2,17 @@ import { Component, OnInit, computed, signal, inject, effect, Signal } from '@an
 import { AppRoutes } from '../../app.routes';
 import { faUser, faLock, faBell, faPhone } from '@fortawesome/free-solid-svg-icons';
 import { faDiscord } from '@fortawesome/free-brands-svg-icons';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import {CommingSoonComponent} from '../../shared/comming-soon/comming-soon.component';
+import { CommingSoonComponent } from '../../shared/comming-soon/comming-soon.component';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter } from 'rxjs';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-admin-center',
+  standalone: true,
+  imports: [CommonModule, RouterLink, RouterLinkActive, FontAwesomeModule, CommingSoonComponent],
   templateUrl: './admin-center.component.html',
   styleUrls: ['./admin-center.component.css']
 })

@@ -23,7 +23,7 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v3
         with:
-          registry: https://docker-registry.hikarizsu.fr
+          registry: https://docker-registry.home.hikarizsu.fr
           username: ${{ secrets.LOGIN }}
           password: ${{ secrets.PASSWORD }}
           
@@ -39,8 +39,8 @@ jobs:
           build-args: |
             CONFIG=production
           tags: |
-            docker-registry.hikarizsu.fr/osm-backend:latest
-            docker-registry.hikarizsu.fr/osm-backend:latest-${{ github.sha }}
+            docker-registry.home.hikarizsu.fr/osm-backend:latest
+            docker-registry.home.hikarizsu.fr/osm-backend:latest-${{ github.sha }}
 
   build-frontend:
     if: github.ref == 'refs/heads/main'
@@ -59,7 +59,7 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v3
         with:
-          registry: https://docker-registry.hikarizsu.fr
+          registry: https://docker-registry.home.hikarizsu.fr
           username: ${{ secrets.LOGIN }}
           password: ${{ secrets.PASSWORD }}
       
@@ -75,8 +75,8 @@ jobs:
           build-args: |
             CONFIG=production
           tags: |
-            docker-registry.hikarizsu.fr/osm-frontend:latest
-            docker-registry.hikarizsu.fr/osm-frontend:latest-${{ github.sha }}
+            docker-registry.home.hikarizsu.fr/osm-frontend:latest
+            docker-registry.home.hikarizsu.fr/osm-frontend:latest-${{ github.sha }}
 
   build-test-backend:
     if: github.ref == 'refs/heads/develop'
@@ -95,7 +95,7 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v3
         with:
-          registry: https://docker-registry.hikarizsu.fr
+          registry: https://docker-registry.home.hikarizsu.fr
           username: ${{ secrets.LOGIN }}
           password: ${{ secrets.PASSWORD }}
           
@@ -111,8 +111,8 @@ jobs:
           build-args: |
             CONFIG=test
           tags: |
-            docker-registry.hikarizsu.fr/osm-backend:test
-            docker-registry.hikarizsu.fr/osm-backend:test-${{ github.sha }}
+            docker-registry.home.hikarizsu.fr/osm-backend:test
+            docker-registry.home.hikarizsu.fr/osm-backend:test-${{ github.sha }}
 
   build-test-frontend:
     if: github.ref == 'refs/heads/develop'
@@ -131,7 +131,7 @@ jobs:
       - name: Docker Login
         uses: docker/login-action@v3
         with:
-          registry: https://docker-registry.hikarizsu.fr
+          registry: https://docker-registry.home.hikarizsu.fr
           username: ${{ secrets.LOGIN }}
           password: ${{ secrets.PASSWORD }}
       
@@ -148,8 +148,8 @@ jobs:
           build-args: |
             CONFIG=test
           tags: |
-            docker-registry.hikarizsu.fr/osm-frontend:test
-            docker-registry.hikarizsu.fr/osm-frontend:test-${{ github.sha }}
+            docker-registry.home.hikarizsu.fr/osm-frontend:test
+            docker-registry.home.hikarizsu.fr/osm-frontend:test-${{ github.sha }}
 
   deploye-test-server:  
     needs: [build-test-backend, build-test-frontend]

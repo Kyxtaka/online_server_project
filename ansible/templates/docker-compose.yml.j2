@@ -23,17 +23,17 @@ services:
       - proxy
     labels:
       - "traefik.enable=true"
-      {%- if deploy_mode == 'prod' %}
+{% if deploy_mode == 'prod' -%}
       - "traefik.http.routers.stm-client-prod.rule=Host(`stm.home.hikarizsu.fr`)"
       - "traefik.http.routers.stm-client-prod.entrypoints=websecure"
       - "traefik.http.routers.stm-client-prod.tls=true"
       - "traefik.http.services.stm-client-prod.loadbalancer.server.port=80"
-      {%- elif deploy_mode == 'test' %}
+{% elif deploy_mode == 'test' -%}
       - "traefik.http.routers.stm-client-test.rule=Host(`stm-test.home.hikarizsu.fr`)"
       - "traefik.http.routers.stm-client-test.entrypoints=websecure"
       - "traefik.http.routers.stm-client-test.tls=true"
       - "traefik.http.services.stm-client-test.loadbalancer.server.port=80"
-      {%- endif %}
+{% endif -%}
 
 networks:
   proxy:

@@ -28,7 +28,8 @@ services:
       - "traefik.http.routers.stm-client-prod.entrypoints=websecure"
       - "traefik.http.routers.stm-client-prod.tls=true"
       - "traefik.http.services.stm-client-prod.loadbalancer.server.port=80"
-{% elif deploy_mode == 'test' %}
+      {% elif deploy_mode == 'test' %}
+      - "test=true"
       - "traefik.http.routers.stm-client-test.rule=Host(`stm-test.home.hikarizsu.fr`)"
       - "traefik.http.routers.stm-client-test.entrypoints=websecure"
       - "traefik.http.routers.stm-client-test.tls=true"

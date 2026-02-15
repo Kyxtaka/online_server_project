@@ -21,9 +21,9 @@ app.config["JWT_ALGORITHM"] = "HS256"
 jwt.init_app(app)
 
 # SETUP API
-api_version_path = "/api/v1"  # Full path - Traefik forwards without stripping
+api_version_path = "/api/v1"  # Traefik forwards WITH prefix (no strip)
 app.register_blueprint(api_bp, url_prefix=api_version_path)
-api.init_app(app)
+# api.init_app() not needed - API is already initialized with Blueprint in extensions.py
 
 # SETUP CORS
 CORS(app, supports_credentials=True, origins=config.access_cors)

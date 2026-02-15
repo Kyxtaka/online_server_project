@@ -15,6 +15,6 @@ api_base_route: /api/v1
 
 #global
 app_directory: /prodservices/docker/webserver/stmproject/
-registry_url: docker-registry.hikarizsu.fr
+registry_url: docker-registry.home.hikarizsu.fr
 registry_login: github_secrets
 registry_pwd: github_secrets

@@ -3,7 +3,7 @@ version: "3.9"
 services:
   stm-api:
     container_name: stm-api
-    image: docker-registry.hikarizsu.fr/OSM-backend:latest  
+    image: docker-registry.home.hikarizsu.fr/OSM-backend:latest  
     environment:
       FLASK_APP:  #app package
       ENVIRONMENT:  #env type

@@ -48,9 +48,10 @@ class Config:
         else:
             self.db_port = int(os.getenv('DB_PORT', '3308'))
 
-        # Build database URL (MySQL with PyMySQL driver)
+        # Build database URL (MySQL with mysqlclient driver)
         self.database_url = (
-            f"mysql+pymysql://{self.db_user}:{self.db_password}@"
+            f"mysql+mysqldb://{self.db_user}:{self.db_password}@"
+            # f"mysql+pysql://{self.db_user}:{self.db_password}@"
             f"{self.db_host}:{self.db_port}/{self.db_name}"
         )
 

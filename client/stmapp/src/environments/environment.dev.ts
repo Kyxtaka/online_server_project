@@ -1,6 +1,6 @@
 const protocol: string = 'http';
 const apiBaseUrl: string = 'localhost:8000';
-const APIBaseRoute: string = '/api/v1';
+const APIBaseRoute: string = '/api';
 
 export const environment = {
   production: false,

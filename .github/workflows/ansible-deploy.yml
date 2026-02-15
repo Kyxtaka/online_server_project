@@ -2,32 +2,11 @@ name: Ansible deploye workflow
 on: 
   workflow_call:
     inputs:
+      #general vars
       deploy_mode:
         description: deployment mode (production|test/local)
         required: true
         default: test
-        type: string
-
-      api_server_name:
-        description: api url for nginx proxy
-        required: true
-        default: stm-api-test.hikarizsu.fr
-        type: string
-
-      client_server_name:
-        description: client url for nginx proxy
-        required: true
-        default: stm-client-test.hikarizsu.fr
-        type: string
-
-      api_server_port:
-        description: api port
-        required: true
-        type: string
-
-      client_server_port:
-        description: client port
-        required: true
         type: string
 
       project_directory:
@@ -36,29 +15,59 @@ on:
         default: /prodservices/docker/webserver/stmproject
         type: string
 
+      # for both api and client -> in the future we can split these vars in 2 sections if needed
       image_tag:
         description: image tags
         required: false
         default: ${{ github.sha }}
         type: string
+
+      # client vars
+      client_server_name:
+        description: client url for nginx proxy
+        required: true
+        default: stm-client-test.hikarizsu.fr
+        type: string
+
+      # api vars
+      api_server_port:
+        description: api port
+        required: true
+        type: string
+
       
-      api_protocol:
-        description: protocol to access api (http|https)
-        required: false
-        default: https
-        type: string
 
-      api_base_url:
-        description: base url to access api (without protocol)
-        required: false
-        default: stm.hikarizsu.fr
-        type: string
+      
 
-      api_base_route:
-        description: base route to access api
-        required: false
-        default: /api/v1
-        type: string
+      # api_server_name:
+      #   description: api url for nginx proxy
+      #   required: true
+      #   default: stm-api-test.hikarizsu.fr
+      #   type: string
+
+      # client_server_port:
+      #   description: client port
+      #   required: true
+      #   type: string
+
+      
+      # api_protocol:
+      #   description: protocol to access api (http|https)
+      #   required: false
+      #   default: https
+      #   type: string
+
+      # api_base_url:
+      #   description: base url to access api (without protocol)
+      #   required: false
+      #   default: stm.hikarizsu.fr
+      #   type: string
+
+      # api_base_route:
+      #   description: base route to access api
+      #   required: false
+      #   default: /api/v1
+      #   type: string
       
 
     secrets:
@@ -115,10 +124,5 @@ jobs:
             -e "registry_login=${{ secrets.LOGIN }}" \
             -e "registry_pwd=${{ secrets.PASSWORD }}" \
             -e "deploy_mode=${{ inputs.deploy_mode }}" \
-            -e "api_server_name=${{ inputs.api_server_name }}" \
             -e "api_server_port=${{ inputs.api_server_port }}" \
             -e "client_server_name=${{ inputs.client_server_name }}" \
-            -e "client_server_port=${{ inputs.client_server_port }}" \
-            -e "api_protocol=${{ inputs.api_protocol }}" \
-            -e "api_base_url=${{ inputs.api_base_url }}" \
-            -e "api_base_route=${{ inputs.api_base_route }}" \

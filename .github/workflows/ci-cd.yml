@@ -158,14 +158,14 @@ jobs:
     with:
       deploy_mode: test
       image_tag: test-${{github.sha}}
-      api_server_name: stm-api-test.hikarizsu.fr
-      client_server_name: stm-client-test.hikarizsu.fr 
+      client_server_name: stm-test.hikarizsu.fr 
       api_server_port: "8147"
-      client_server_port: "8148"
       project_directory: /prodservices/docker/webserver/stmproject #do not set / at the end
-      api_protocol: https
-      api_base_url: stm-test.hikarizsu.fr
-      api_base_route: /api/v1
+      # api_protocol: https
+      # api_base_url: stm-test.hikarizsu.fr
+      # api_base_route: /api/v1
+      # client_server_port: "8148"
+      # api_server_name: stm-api-test.hikarizsu.fr
 
     secrets:
       HS_SSHKEY: ${{ secrets.HS_SSHKEY }}
@@ -181,14 +181,14 @@ jobs:
     with:
       deploy_mode: prod
       image_tag: latest-${{github.sha}}
-      api_server_name: stm-api.hikarizsu.fr
-      client_server_name: stm-client.hikarizsu.fr
+      client_server_name: stm.hikarizsu.fr
       api_server_port: "8143"
-      client_server_port: "8144"
       project_directory: /prodservices/docker/webserver/stmproject #do not set / at the end
-      api_protocol: https
-      api_base_url: stm.hikarizsu.fr
-      api_base_route: /api/v1
+      # client_server_port: "8144"
+      # api_server_name: stm-api.hikarizsu.fr
+      # api_protocol: https
+      # api_base_url: stm.hikarizsu.fr
+      # api_base_route: /api/v1
 
     secrets:
       HS_SSHKEY: ${{ secrets.HS_SSHKEY }}

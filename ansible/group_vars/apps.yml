@@ -1,20 +1,23 @@
-# docker-compose vars
-deploy_mode: test
-image_tag: test
-api_env_path: ./api.env
-client_env_path: ./client.env
-client_server_port: 8148
-api_server_port: 8147
-client_container_port: 80
-mem_limit: 350M
-memswap_limit: 4G
-api_protocol: https
-api_base_url: stm.hikarizsu.fr
-api_base_route: /api/v1
-
-
 #global
 app_directory: /prodservices/docker/webserver/stmproject/
 registry_url: docker-registry.home.hikarizsu.fr
 registry_login: github_secrets
 registry_pwd: github_secrets
+
+# required for client
+client_server_name: stm-test.hikarizsu.fr
+
+# system vars
+api_server_port: 8147
+client_container_port: 80
+mem_limit: 350M
+memswap_limit: 4G
+api_env_path: ./api.env
+client_env_path: ./client.env
+
+
+#### Customisable vars
+# requred general
+deploy_mode: test
+deploy_mode: test
+image_tag: test

@@ -10,7 +10,6 @@ from src.services.auth.auth_views import is_allowed
 
 computer_ns  = Namespace('computers', description='Computers related operations', path='/computers')
 computer_rights_ns  = Namespace('computer rights', description='Computers rights related operations', path="/computers/<string:computer_mac>/rights")
-# computer_rights_resourece_ns = Namespace('Computer rights resource', description='computer rights resource', path=api_version_path+"/computers/rights")
 
 @computer_ns.route('')
 class ComputerCollection(Resource):

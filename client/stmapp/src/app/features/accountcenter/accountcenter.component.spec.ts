@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AccountCenterComponent } from './account-center.component';
+import { AccountCenterComponent } from './accountcenter.component';
 
 describe('AccountCenterComponent', () => {
   let component: AccountCenterComponent;

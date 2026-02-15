@@ -1,12 +1,11 @@
 from flask import request
 from flask_restx import Resource, Namespace, reqparse
 from src.extensions import api
-from src.app import api_version_path
 from flask_jwt_extended import jwt_required
 from src.services.power.power_controller import wol_model, send_magic_packet, check_user_validity, send_one_ping
 from src.model.datamodel.entityORM import ComputersCRUD
 
-devicepower_ns  = Namespace('WOL', description='WOL endpoint', path=api_version_path+'/wol')
+devicepower_ns  = Namespace('WOL', description='WOL endpoint', path='/wol')
 
 wol_req_parser = reqparse.RequestParser()
 wol_req_parser.add_argument("mac", type="str", required=True, help="PC Mac Address", location="args")

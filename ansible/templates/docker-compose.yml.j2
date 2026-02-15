@@ -1,21 +1,34 @@
 services: 
-  stm-project-api-server-{{deploy_mode}}:
-    image: docker-registry.hikarizsu.fr/osm-backend:{{image_tag}}
+  stm-api-{{deploy_mode}}:
+    image: docker-registry.home.hikarizsu.fr/osm-backend:{{image_tag}}
     container_name: osm-api-server-{{deploy_mode}}
     env_file: "./api.env"
     environment:
-        API_PORT: {{api_server_port}} 
+      API_PORT: {{api_server_port}}
+      ACCESS_CORS: "{{ 'https://' + client_server_name + ',http://localhost' if deploy_mode == 'prod' else 'https://'+client_server_name+',http://localhost' }}"
+
     network_mode: host
     restart: always
     mem_limit: {{mem_limit}}
     memswap_limit: {{memswap_limit}}
 
-  stm-projet-client-server-{{deploy_mode}}:
-    image: docker-registry.hikarizsu.fr/osm-frontend:{{image_tag}}
+  stm-client-{{deploy_mode}}:
+    image: docker-registry.home.hikarizsu.fr/osm-frontend:{{image_tag}}
     container_name: osm-client-{{deploy_mode}}
     env_file: "./client.env"
     restart: always
-    ports:
-      - "{{client_server_port}}:{{client_container_port}}"
     mem_limit: {{mem_limit}}
     memswap_limit: {{memswap_limit}}
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stm-client-{{deploy_mode}}.rule=Host(`{{client_server_name}}`) && !PathPrefix(`/api`)"
+      - "traefik.http.routers.stm-client-{{deploy_mode}}.entrypoints=websecure"
+      - "traefik.http.routers.stm-client-{{deploy_mode}}.tls=true"
+      - "traefik.http.services.stm-client-{{deploy_mode}}.loadbalancer.server.port=80"
+
+networks:
+  traefik:
+    name: traefik
+    external: true

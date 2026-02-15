@@ -2,12 +2,11 @@ from flask_restx import Resource, Namespace, fields
 from src.model.datamodel.entityModel import user_model, user_input_model, usercomputer_access_model, usercomputer_access_input_model, user_edit_model, user_change_password_model
 from src.model.datamodel.entityORM import Users, UsersCRUD, AppRoleList
 from src.extensions import api
-from src.app import api_version_path
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from src.model.auth.auth_decorators import admin_required
 from src.services.users.users_controller import check_role
 
-user_ns:Namespace = Namespace("user", description="User management API", path=api_version_path + "/user", decorators=[api.doc(security='BearerAuth')])
+user_ns:Namespace = Namespace("user", description="User management API", path="/user", decorators=[api.doc(security='BearerAuth')])
 
 @user_ns.route("")
 class UserCollection(Resource):

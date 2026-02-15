@@ -26,11 +26,11 @@
         port: "{{ api_server_port }}"
         proto: tcp
 
-    - name: Allow Client port
-      community.general.ufw:
-        rule: allow
-        port: "{{ client_server_port }}"
-        proto: tcp
+    # - name: Allow Client port
+    #   community.general.ufw:
+    #     rule: allow
+    #     port: "{{ client_server_port }}"
+    #     proto: tcp
 
     - name: Pull Docker images
       community.docker.docker_compose_v2:

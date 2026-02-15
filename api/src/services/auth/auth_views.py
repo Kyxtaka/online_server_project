@@ -4,8 +4,7 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from src.model.auth.auth_model import auth_input_model, auth_output_model
 from src.extensions import api
 from src.services.auth.auth_controller import *
-from src.app import api_version_path
-auth_ns = Namespace("auth", description="Authentication routes", path=api_version_path + "/auth")
+auth_ns = Namespace("auth", description="Authentication routes", path="/auth")
 
 @auth_ns.route("/login")
 class Login(Resource):

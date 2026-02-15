@@ -15,6 +15,7 @@ api_bp = Blueprint('api', __name__)
 api = Api(
     api_bp,  # Lier l'API au Blueprint
     doc='/docs',
+    prefix='/api/v1', # Traefik forwards WITH prefix (no strip)  
     title='Hikari server API',
     version='1.0',
     description='API for managing home devices remotely',

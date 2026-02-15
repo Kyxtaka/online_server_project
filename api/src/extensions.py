@@ -11,8 +11,9 @@ authorizations = {
         'description': "Entrez 'Bearer <votre_jwt>'"
     }
 }
-api_bp = Blueprint('api', __name__, url_prefix='/api/v1')
+api_bp = Blueprint('api', __name__)
 api = Api(
+    doc='/docs',
     title='Hikari server API',
     version='1.0',
     description='API for managing home devices remotely',

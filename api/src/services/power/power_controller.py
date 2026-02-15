@@ -1,7 +1,6 @@
 from flask import Flask, request
 from flask_restx import Api, Resource, fields, Namespace, reqparse
 from src.extensions import api
-from src.app import api_version_path
 from src.model.datamodel.entityORM import Users, Computers, UserComputerRights, ComputersCRUD, UsersCRUD, UserComputerRightsCRUD, AppRoleList, OSList, StatusList
 from src.model.datamodel.entityORM import AppRoleList, AccessList
 from src.model.datamodel.entityModel import  computer_model, computer_input_model, user_model, user_input_model, usercomputer_access_model, usercomputer_access_input_model

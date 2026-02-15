@@ -23,7 +23,7 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.stm-client-{{deploy_mode}}.rule=Host(`{{client_server_name}}`) && !PathPrefix(`/api`)"
+      - "traefik.http.routers.stm-client-{{deploy_mode}}.rule=Host(`{{client_server_name}}`)"
       - "traefik.http.routers.stm-client-{{deploy_mode}}.entrypoints=websecure"
       - "traefik.http.routers.stm-client-{{deploy_mode}}.tls=true"
       - "traefik.http.services.stm-client-{{deploy_mode}}.loadbalancer.server.port=80"

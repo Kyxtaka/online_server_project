@@ -25,7 +25,7 @@ export const appConfig: ApplicationConfig = {
       JwtModule.forRoot({
         config: {
           tokenGetter: () => inject(AuthService).getToken(),
-          allowedDomains: ['stm-api.hikarizsu.fr', 'stm-api-test.hikarizsu.fr'],
+          allowedDomains: environment.JWT_ALLOWED_DOMAINS,
           disallowedRoutes: [
             `${environment.API_URL_BASE_ROUTE_V1}/auth/login`,
             `${environment.API_URL_BASE_ROUTE_V1}/auth/register`,

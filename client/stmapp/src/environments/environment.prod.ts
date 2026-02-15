@@ -1,5 +1,5 @@
 const protocol: string = 'https';
-const apiBaseUrl: string = 'stm.hikarizsu.fr';
+const apiBaseUrl: string = 'stm.home.hikarizsu.fr';
 const APIBaseRoute: string = '/api/v1';
 
 export const environment = {

@@ -5,7 +5,7 @@ registry_login: github_secrets
 registry_pwd: github_secrets
 
 # required for client
-client_server_name: stm-test.hikarizsu.fr
+client_server_name: stm-test.home.hikarizsu.fr
 
 # system vars
 api_server_port: 8147

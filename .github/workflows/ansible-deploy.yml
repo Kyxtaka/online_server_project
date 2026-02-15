@@ -26,7 +26,7 @@ on:
       client_server_name:
         description: client url for nginx proxy
         required: true
-        default: stm-client-test.hikarizsu.fr
+        default: stm-test.home.hikarizsu.fr
         type: string
 
       # api vars

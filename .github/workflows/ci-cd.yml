@@ -158,7 +158,7 @@ jobs:
     with:
       deploy_mode: test
       image_tag: test-${{github.sha}}
-      client_server_name: stm-test.hikarizsu.fr 
+      client_server_name: stm-test.home.hikarizsu.fr 
       api_server_port: "8147"
       project_directory: /prodservices/docker/webserver/stmproject #do not set / at the end
       # api_protocol: https
@@ -181,7 +181,7 @@ jobs:
     with:
       deploy_mode: prod
       image_tag: latest-${{github.sha}}
-      client_server_name: stm.hikarizsu.fr
+      client_server_name: stm.home.hikarizsu.fr
       api_server_port: "8143"
       project_directory: /prodservices/docker/webserver/stmproject #do not set / at the end
       # client_server_port: "8144"

@@ -21,8 +21,7 @@ app.config["JWT_ALGORITHM"] = "HS256"
 jwt.init_app(app)
 
 # SETUP API
-# api_version_path = "/api/v1"
-api_version_path = "" # configuration on traefik side, not in the app
+api_version_path = "" # Traefik strips the prefix before forwarding
 app.register_blueprint(api_bp, url_prefix=api_version_path)
 api.init_app(app)
 

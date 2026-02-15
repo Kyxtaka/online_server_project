@@ -18,7 +18,8 @@ api = Api(
     version='1.0',
     description='API for managing home devices remotely',
     authorizations=authorizations,
-    security='Bearer Auth'
+    security='Bearer Auth',
+    prefix='/api/v1'  # External path prefix for Swagger UI URLs
 )
 db = SQLAlchemy()
 jwt = JWTManager()

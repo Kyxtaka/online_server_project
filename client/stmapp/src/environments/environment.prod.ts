@@ -7,5 +7,5 @@ export const environment = {
   API_DOMAIN: apiBaseUrl,
   API_URL: `${protocol}://${apiBaseUrl}`,
   API_URL_BASE_ROUTE_V1: `${protocol}://${apiBaseUrl}${APIBaseRoute}`,
-  JWT_ALLOWED_DOMAINS: [`${protocol}://${apiBaseUrl}`],
+  JWT_ALLOWED_DOMAINS: [`${apiBaseUrl}`],
 };

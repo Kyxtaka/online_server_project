@@ -21,7 +21,8 @@ app.config["JWT_ALGORITHM"] = "HS256"
 jwt.init_app(app)
 
 # SETUP API
-app.register_blueprint(api_bp)
+# app.register_blueprint(api_bp)
+app.register_blueprint(api_bp, url_prefix="/api")
 # api.init_app() not needed - API is already initialized with Blueprint in extensions.py
 
 # SETUP CORS
